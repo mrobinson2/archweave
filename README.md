@@ -27,10 +27,30 @@ prompt  ->  classify type  ->  plan.json  ->  hand-authored SVG  ->  check  ->  
 
 The agent plans in JSON against a small schema, draws the SVG using the shared icon defs, runs the checker until it exits zero, renders, looks at its own PNG, and repairs. Three repair rounds, then it reports what remains.
 
-## Quick start
+## Install
+
+**From the release zip** (the skill only, SKILL.md at the zip root): download `archweave-skill.zip` from the [latest release](https://github.com/mrobinson2/archweave/releases/latest) and unzip it into the skills folder your host reads.
+
+```bash
+# VS Code GitHub Copilot: inside the repository where diagrams will live
+curl -L -o archweave-skill.zip https://github.com/mrobinson2/archweave/releases/latest/download/archweave-skill.zip
+mkdir -p .github/skills/archweave && unzip -q archweave-skill.zip -d .github/skills/archweave
+
+# Claude Code, personal install
+mkdir -p ~/.claude/skills/archweave && unzip -q archweave-skill.zip -d ~/.claude/skills/archweave
+```
+
+Check the download against `archweave-skill.zip.sha256` from the same release. The zip does not include the Microsoft 365 Copilot files under `m365/`; clone the repository for those.
+
+**From source** (everything, including `m365/` and the docs):
 
 ```bash
 git clone https://github.com/mrobinson2/archweave.git
+```
+
+## Quick start
+
+```bash
 cd archweave
 python .github/skills/archweave/scripts/check-diagram.py \
   .github/skills/archweave/examples/architecture-internal-api/plan.json \

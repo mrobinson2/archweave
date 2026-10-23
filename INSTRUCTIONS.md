@@ -14,7 +14,18 @@ No npm, no pip packages, no network access at check or render time.
 
 ### Option A: inside a repository (recommended for teams)
 
-Copy `.github/skills/archweave/` into the repository where diagrams will live. VS Code Copilot and Claude Code discover skills under `.github/skills/` (Claude Code also reads `.claude/skills/`). Commit it so everyone gets the same vocabulary.
+Put the skill at `.github/skills/archweave/` in the repository where diagrams will live. VS Code Copilot and Claude Code discover skills under `.github/skills/` (Claude Code also reads `.claude/skills/`). Commit it so everyone gets the same vocabulary.
+
+From the release zip (SKILL.md is at the zip root):
+
+```bash
+curl -L -o archweave-skill.zip https://github.com/mrobinson2/archweave/releases/latest/download/archweave-skill.zip
+curl -L -o archweave-skill.zip.sha256 https://github.com/mrobinson2/archweave/releases/latest/download/archweave-skill.zip.sha256
+shasum -a 256 -c archweave-skill.zip.sha256     # Windows: certutil -hashfile archweave-skill.zip SHA256
+mkdir -p your-repo/.github/skills/archweave && unzip -q archweave-skill.zip -d your-repo/.github/skills/archweave
+```
+
+Or from source:
 
 ```bash
 git clone https://github.com/mrobinson2/archweave.git
@@ -23,10 +34,12 @@ cp -R archweave/.github/skills/archweave  your-repo/.github/skills/archweave
 
 ### Option B: personal install
 
-Copy `archweave/` to your user-level skills folder:
+Unzip the release zip, or copy `archweave/` from a clone, into your user-level skills folder:
 
 - Claude Code: `~/.claude/skills/archweave`
 - GitHub Copilot: check the current VS Code docs for the user-level skills folder; recent builds also read `~/.claude/skills/`.
+
+A specific version is at `https://github.com/mrobinson2/archweave/releases/download/v0.2.0/archweave-skill.zip`; `releases/latest/download/` always resolves to the newest release.
 
 ### Option C: Microsoft 365 Copilot
 
