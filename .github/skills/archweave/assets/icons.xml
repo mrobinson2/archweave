@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ArchWeave: shared symbol library v0.1.
+  ArchWeave: shared symbol library v0.1. Saved as .xml so the file can ship inside a Microsoft 365 skill package; it is plain SVG markup.
   Usage: copy everything between the opening and closing defs tags into the top of every diagram SVG, then
   place an icon with <use href="#i-apim" x=".." y=".." width="44" height="44"/>.
   All symbols use a 44x44 viewBox. Palette gradients: az (Azure blue), az2 (teal),

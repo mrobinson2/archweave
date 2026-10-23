@@ -73,8 +73,8 @@ Everything organization-specific lives in one file: `.github/skills/archweave/re
 7. **Classification.** The stamp text (`Internal`, `Confidential`, ...) is free text in the plan's `meta.classification`; the checker requires the same string to appear in the SVG stamp.
 
 Optional:
-- **Icons.** Add a `<symbol id="i-yourthing" viewBox="0 0 44 44">` to `assets/icons.svg`. Keep it free of `<image href="http...">`. Reference it from the vocabulary row. Official vendor sets and their terms are listed in section 8.
-- **House style.** Palette, fonts and sizes are in `references/authoring-rules.md` and `references/svg-conventions.md`. Change the hex values in `assets/icons.svg` gradients and the rules together.
+- **Icons.** Add a `<symbol id="i-yourthing" viewBox="0 0 44 44">` to `assets/icons.xml`. Keep it free of `<image href="http...">`. Reference it from the vocabulary row. Official vendor sets and their terms are listed in section 8.
+- **House style.** Palette, fonts and sizes are in `references/authoring-rules.md` and `references/svg-conventions.md`. Change the hex values in `assets/icons.xml` gradients and the rules together.
 - **Renderer.** Set `ARCHWEAVE_BROWSER` to a browser executable if auto-detection misses it or policy blocks Edge headless.
 
 ## 4. Use in VS Code Copilot or Claude Code
@@ -108,10 +108,23 @@ What the checker enforces: plan parses and matches the schema's intent (ids, ref
 
 ## 6. Use with Microsoft 365 Copilot
 
+Two routes. Pick one per agent; do not combine them, since Microsoft's preview does not allow skills and embedded files on the same agent.
+
+### Route A: skill package (Agent Builder, Frontier preview)
+
+Requires a tenant enrolled in the Microsoft Frontier Program. The skill runs inside Copilot's script sandbox (no network, no package installs).
+
+1. Build the package: `python .github/skills/archweave/scripts/build-zip.py --target agent-builder` writes `dist/archweave-skill-agent-builder.zip`. It is the same skill with the example diagrams stored as `.xml`, and without the render scripts and example PNGs, because Microsoft's upload accepts only listed file types (`.svg` and `.ps1` are not on the list). The release page carries a prebuilt copy.
+2. In Agent Builder, Configure tab, Skills, Add: upload the zip. Do not upload SKILL.md alone.
+3. Paste `m365/agent-instructions-skill.md` into Instructions. Add no embedded files and no knowledge sources for the skill's own files; the package carries them.
+4. On the Try it tab, run the prompts in `m365/README.md` under "Preview test plan". They confirm the sandbox runtime and whether files come back as downloads. If `cairosvg` is not preinstalled, the agent returns the SVG text and you render locally with `render-png` from this repository.
+
+### Route B: knowledge files (any tenant)
+
 M365 Copilot cannot run scripts on your laptop, so the loop splits: the agent writes the SVG in chat; `m365/finish.ps1` checks and renders it locally.
 
 Set up once:
-1. Upload to a SharePoint folder the agent can read: `references/vocabulary.md`, `references/authoring-rules.md`, `references/svg-conventions.md`, `assets/icons.svg`, and the three example SVGs.
+1. Upload to a SharePoint folder the agent can read: `references/vocabulary.md`, `references/authoring-rules.md`, `references/svg-conventions.md`, `assets/icons.xml`, and the three example SVGs.
 2. Create an agent in Agent Builder (M365 Copilot) or Copilot Studio. Paste `m365/agent-instructions.md` into Instructions (under 8,000 characters). Point knowledge at the SharePoint folder. For a packaged agent, `m365/declarativeAgent.json` is a manifest template; replace the placeholder URL.
 3. Copy this repository to the laptop. Run the smoke test from section 2 once.
 
@@ -139,7 +152,7 @@ The bundled glyphs are simplified originals so the skill works offline with no l
 - Google Cloud: https://cloud.google.com/icons (architecture icons, Google terms).
 - Simple Icons: https://simpleicons.org (brand logos, CC0; check each brand's own guidelines).
 
-To add one: paste its paths into a new `<symbol>` in `assets/icons.svg`, keep the 44x44 viewBox convention, add a vocabulary row.
+To add one: paste its paths into a new `<symbol>` in `assets/icons.xml`, keep the 44x44 viewBox convention, add a vocabulary row.
 
 ## 9. Troubleshooting
 

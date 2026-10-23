@@ -4,13 +4,15 @@ How to write the SVG so the checker passes, the PNG renders identically in Edge,
 
 ## Skeleton
 
+The icon library is `assets/icons.xml`. It is plain SVG markup; the `.xml` extension exists so the file can ship inside a Microsoft 365 skill package. Paste its `<defs>` block as text.
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      width="2000" height="1380" viewBox="0 0 2000 1380"
      font-family="Segoe UI, Helvetica, Arial, sans-serif" data-plan="plan.json">
   <title>rag-chatbot v1.0 RAG chatbot reference architecture</title>
-  <defs> ... paste from assets/icons.svg ... </defs>
+  <defs> ... paste from assets/icons.xml ... </defs>
   <rect width="100%" height="100%" fill="#FFFFFF"/>
   <rect width="100%" height="100%" fill="url(#grid)" opacity="0.6"/>
   <!-- 1 title block -->

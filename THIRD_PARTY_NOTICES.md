@@ -30,6 +30,6 @@ SOFTWARE.
 
 ## Icons and names
 
-`assets/icons.svg` contains original simplified glyphs drawn for this project. They are not vendor logos and imply no endorsement. Vendor and product names in the vocabulary template and examples (Microsoft Azure, Azure Firewall, Azure Traffic Manager, Microsoft Sentinel, Microsoft Entra ID, Cloudflare, Backstage, Checkov, Terraform, GitHub, and the alternatives named beside them) are trademarks of their respective owners and appear only as illustrative examples of an enterprise stack. The same applies to the vendors named in the icon-source list in `INSTRUCTIONS.md`. "Example Corporation" is fictional.
+`assets/icons.xml` contains original simplified glyphs drawn for this project. They are not vendor logos and imply no endorsement. Vendor and product names in the vocabulary template and examples (Microsoft Azure, Azure Firewall, Azure Traffic Manager, Microsoft Sentinel, Microsoft Entra ID, Cloudflare, Backstage, Checkov, Terraform, GitHub, and the alternatives named beside them) are trademarks of their respective owners and appear only as illustrative examples of an enterprise stack. The same applies to the vendors named in the icon-source list in `INSTRUCTIONS.md`. "Example Corporation" is fictional.
 
 For official vendor icon sets and their terms see `INSTRUCTIONS.md`, section "Official icon sets".

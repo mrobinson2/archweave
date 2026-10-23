@@ -15,9 +15,9 @@ It was built for enterprise architecture teams who need diagrams that say what i
 - **Authoring rules and SVG conventions** the agent reads before drawing: color means ownership, numbered request paths, metadata stamp, legend, no invented facts.
 - **A checker** (`check-diagram.py`, Python 3.9+, standard library only) that validates the plan, matches every planned node, zone and edge to the SVG, blocks scripts and external references, estimates text overflow, and requires the metadata stamp.
 - **Local renderers** for Windows (headless Edge or Chrome), macOS and Linux (rsvg or headless Chrome).
-- **A 40-symbol icon library** of simplified glyphs, so output needs no vendor assets.
+- **A 40-symbol icon library** (`assets/icons.xml`, plain SVG markup) of simplified glyphs, so output needs no vendor assets.
 - **Three worked examples** that pass the checker: internal API architecture by DR strategy, API request sequence, Golden Path workflow.
-- **Two hosts from one source:** VS Code GitHub Copilot agent mode or Claude Code (the agent runs the whole loop), and Microsoft 365 Copilot declarative agents (the agent writes the SVG, a local script finishes it).
+- **Three hosts from one source:** VS Code GitHub Copilot agent mode or Claude Code (the agent runs the whole loop), Microsoft 365 Copilot custom skills (the checker runs in Copilot's sandbox, Frontier preview), and Microsoft 365 Copilot with knowledge files (the agent writes the SVG, a local script finishes it).
 
 ## How it works
 
@@ -41,6 +41,8 @@ mkdir -p ~/.claude/skills/archweave && unzip -q archweave-skill.zip -d ~/.claude
 ```
 
 Check the download against `archweave-skill.zip.sha256` from the same release. The zip does not include the Microsoft 365 Copilot files under `m365/`; clone the repository for those.
+
+**Microsoft 365 Copilot custom skill** (Agent Builder, Frontier preview): download `archweave-skill-agent-builder.zip` from the same release and upload it under Configure, Skills, Add. It is the same skill packaged to Microsoft's upload rules. See `INSTRUCTIONS.md` section 6.
 
 **From source** (everything, including `m365/` and the docs):
 

@@ -3,7 +3,7 @@ name: archweave
 description: "Turn system intent into architecture. Produce architecture, sequence, workflow, dataflow and lifecycle diagrams as static SVG and PNG from a prompt, in your organization's house style and vocabulary. Use when asked to draw, diagram, sketch, visualize or illustrate a system, request flow, process, pipeline or state model for a reference architecture, reference implementation, design pattern, implementation guide or ADR. Output is one SVG rendered to PNG; no interactive viewer. Not for dashboards, charts or slides."
 license: MIT
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
   homepage: https://github.com/mrobinson2/archweave
 ---
 
@@ -16,7 +16,7 @@ Turn a prompt into one checked, house-styled static diagram: an SVG you author d
 1. **Classify.** Pick one type from the router below. If ambiguous, ask one question; otherwise choose and name the choice in the title.
 2. **Plan.** Write `plan.json` matching `schemas/<type>.schema.json`: nodes, zones or lanes, edges, legend, metadata stamp. Keep it small; it exists so the checker can catch structural mistakes before you draw.
 3. **Read conventions.** Read `references/authoring-rules.md` once per session, `references/vocabulary.md` whenever the diagram touches named platform components, and `references/svg-conventions.md` before the first SVG of the session.
-4. **Draw.** Write `<slug>.svg` by hand following `svg-conventions.md`. Paste the defs block from `assets/icons.svg` at the top. Use the shared symbols with `<use href="#i-...">`. Every node, zone and edge in `plan.json` must appear; nothing in the SVG may be absent from the plan.
+4. **Draw.** Write `<slug>.svg` by hand following `svg-conventions.md`. Paste the defs block from `assets/icons.xml` at the top. Use the shared symbols with `<use href="#i-...">`. Every node, zone and edge in `plan.json` must appear; nothing in the SVG may be absent from the plan.
 5. **Check.** Run from the skill folder (Python 3.9+, standard library only):
    ```bash
    python scripts/check-diagram.py <folder>/plan.json <folder>/<slug>.svg
@@ -30,8 +30,9 @@ Turn a prompt into one checked, house-styled static diagram: an SVG you author d
    ```bash
    scripts/render-png.sh <folder>/<slug>.svg
    ```
+   If `scripts/render-png.*` are not present (Microsoft 365 skill sandbox), skip this step. The checker already wrote the PNG if `cairosvg` was available; otherwise deliver the SVG text and tell the user to render locally with `render-png` from the repository.
 7. **Look.** Open the PNG and inspect it yourself. Look for text overflowing boxes, lines crossing text, arrowheads hidden behind boxes, orphaned nodes, missing legend, missing metadata stamp. Fix in the SVG, rerun check and render. Three repair rounds maximum; after that, report what still fails.
-8. **Deliver.** Reply with the SVG and PNG paths, the diagram type, and any assumptions you made about platform components not stated in the prompt.
+8. **Deliver.** Reply with the SVG and PNG paths, the diagram type, and any assumptions you made about platform components not stated in the prompt. In Microsoft 365, return the SVG as a file if the host allows it, otherwise as a code block, and always include the checker output.
 
 Output folder: `out/<type>-<slug>-<YYYYMMDD-HHMM>/` under the workspace unless the user names a location. Keep `plan.json`, `<slug>.svg`, `<slug>.png` together.
 
@@ -46,6 +47,8 @@ Output folder: `out/<type>-<slug>-<YYYYMMDD-HHMM>/` under the workspace unless t
 | `lifecycle` | State transitions: pattern status, deployment release, incident, ticket. | `schemas/lifecycle.schema.json` | (author from rules) |
 
 Deployment views by DR strategy (Active/Active, Warm standby, Pilot light, Backup and restore) are `architecture` with a `dr_strategy` stamp and a secondary-region zone.
+
+Each example folder holds `plan.json` and the finished diagram. The diagram is `<slug>.svg` in the repository and `<slug>.xml` in the Microsoft 365 skill package (same content, renamed so the package upload accepts it). Read it as text for structure; copy its structure, not its facts.
 
 ## Non-negotiables
 
