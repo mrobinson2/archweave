@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0 (2026-10-22)
+
+- The skill folder moved from `.github/skills/archweave/` to `skills/archweave/` so references, examples and scripts are visible in file browsers and on GitHub. Install targets are unchanged: copy or unzip into `.github/skills/archweave/` (VS Code Copilot) or `~/.claude/skills/archweave/` (Claude Code), or upload the Agent Builder zip. Both release zips still have SKILL.md at the root.
+- `m365/finish.ps1`, `build-zip.py` and every doc path updated.
+
 ## 0.4.2 (2026-10-22)
 
 - New worked example `examples/workflow-golden-path-dark/`: the Golden Path workflow in the dark theme. Every shipped example now has a dark counterpart.

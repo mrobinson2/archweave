@@ -25,11 +25,11 @@ shasum -a 256 -c archweave-skill.zip.sha256     # Windows: certutil -hashfile ar
 mkdir -p your-repo/.github/skills/archweave && unzip -q archweave-skill.zip -d your-repo/.github/skills/archweave
 ```
 
-Or from source:
+Or from source (in this repository the skill lives at `skills/archweave/`, outside the dotfolder, so it is easy to browse):
 
 ```bash
 git clone https://github.com/mrobinson2/archweave.git
-cp -R archweave/.github/skills/archweave  your-repo/.github/skills/archweave
+cp -R archweave/skills/archweave  your-repo/.github/skills/archweave
 ```
 
 ### Option B: personal install
@@ -49,20 +49,20 @@ See section 6. Uses the same skill files as knowledge plus a short instruction b
 
 ```bash
 cd archweave
-python .github/skills/archweave/scripts/check-diagram.py \
-  .github/skills/archweave/examples/architecture-internal-api/plan.json \
-  .github/skills/archweave/examples/architecture-internal-api/internal-api.svg
+python skills/archweave/scripts/check-diagram.py \
+  skills/archweave/examples/architecture-internal-api/plan.json \
+  skills/archweave/examples/architecture-internal-api/internal-api.svg
 # expect: 0 fail, 0 warn, then a hint that the PNG is rendered locally (unless cairosvg is installed)
-.github/skills/archweave/scripts/render-png.sh .github/skills/archweave/examples/architecture-internal-api/internal-api.svg
+skills/archweave/scripts/render-png.sh skills/archweave/examples/architecture-internal-api/internal-api.svg
 # Windows:
-.github\skills\archweave\scripts\render-png.ps1 .github\skills\archweave\examples\architecture-internal-api\internal-api.svg
+skills\archweave\scripts\render-png.ps1 skills\archweave\examples\architecture-internal-api\internal-api.svg
 ```
 
 A PNG appears next to the SVG. If PowerShell blocks the script: `Set-ExecutionPolicy -Scope Process Bypass`.
 
 ## 3. Configure for your organization
 
-Everything organization-specific lives in one file: `.github/skills/archweave/references/vocabulary.md`. It ships with a fictional "Example Corporation" so the examples render. Replace it.
+Everything organization-specific lives in one file: `skills/archweave/references/vocabulary.md`. It ships with a fictional "Example Corporation" so the examples render. Replace it.
 
 1. **Zones.** Keep the ids (`hub`, `spoke`, `edge`, `control`, `observability`, ...) and rewrite the labels and default content to match your landing zone.
 2. **Components.** One row per platform component: the name your organization uses, icon id, color (ownership, not product), and the position-and-default sentence. That sentence is what the agent writes into sublabels and notes, so make it true: hub or spoke, inherited or built, who owns it, the SKU or address if it is fixed.
@@ -101,8 +101,8 @@ Repairing by hand: edit the SVG, rerun the checker and the renderer. The agent w
 ## 5. The check-render loop by hand
 
 ```bash
-python .github/skills/archweave/scripts/check-diagram.py out/<folder>/plan.json out/<folder>/<slug>.svg
-.github/skills/archweave/scripts/render-png.sh out/<folder>/<slug>.svg 1.3      # second arg is scale
+python skills/archweave/scripts/check-diagram.py out/<folder>/plan.json out/<folder>/<slug>.svg
+skills/archweave/scripts/render-png.sh out/<folder>/<slug>.svg 1.3      # second arg is scale
 ```
 
 What the checker enforces: plan parses and matches the schema's intent (ids, references, label lengths, required legend); every plan node, zone and edge has a matching `data-node`, `data-zone`, `data-edge` in the SVG and nothing extra; nothing active or external (`<script>`, `<animate>`, `<set>`, `<foreignObject>`, DOCTYPE or entity declarations, `on*=` handlers, `javascript:`, `http(s)` and `file:` URLs, `@import`, `@font-face`, any `href` or `url()` that is not a local `#id` or `data:`); font floor 11 px; estimated text width inside node boxes; metadata stamp with pattern ID, date and classification. Exit code 0 is the only pass.
@@ -115,7 +115,7 @@ Two routes. Pick one per agent; do not combine them, since Microsoft's preview d
 
 Requires a tenant enrolled in the Microsoft Frontier Program. The skill runs inside Copilot's script sandbox (no network, no package installs).
 
-1. Build the package: `python .github/skills/archweave/scripts/build-zip.py --target agent-builder` writes `dist/archweave-skill-agent-builder.zip`. It is the same skill with the example diagrams stored as `.xml`, and without the render scripts and example PNGs, because Microsoft's upload accepts only listed file types (`.svg` and `.ps1` are not on the list). The release page carries a prebuilt copy.
+1. Build the package: `python skills/archweave/scripts/build-zip.py --target agent-builder` writes `dist/archweave-skill-agent-builder.zip`. It is the same skill with the example diagrams stored as `.xml`, and without the render scripts and example PNGs, because Microsoft's upload accepts only listed file types (`.svg` and `.ps1` are not on the list). The release page carries a prebuilt copy.
 2. In Agent Builder, Configure tab, Skills, Add: upload the zip. Do not upload SKILL.md alone.
 3. Paste `m365/agent-instructions-skill.md` into Instructions. Add no embedded files and no knowledge sources for the skill's own files; the package carries them.
 4. On the Try it tab, run the prompts in `m365/README.md` under "Preview test plan". They confirm the sandbox runtime and whether files come back as downloads. If `cairosvg` is not preinstalled, the agent returns the SVG text and you render locally with `render-png` from this repository.
@@ -138,7 +138,7 @@ Copilot Studio's code interpreter can render server-side, but diagram content th
 
 ## 7. Writing a good prompt
 
-Worked prompts for a dozen common diagrams, one per diagram type, are in `.github/skills/archweave/references/prompt-cookbook.md`.
+Worked prompts for a dozen common diagrams, one per diagram type, are in `skills/archweave/references/prompt-cookbook.md`.
 
 Give the agent what the vocabulary cannot know: the pattern ID, the DR strategy, which components are in scope, and anything that differs from the defaults ("this one uses AKS, not App Service", "partner-facing, so the external APIM"). Do not give it addresses or hostnames unless they are real; it will otherwise use the vocabulary defaults and say so.
 

@@ -2,8 +2,8 @@
 """Build the ArchWeave skill zip. Python 3.9+, standard library only.
 
 Usage (from the repository root or anywhere):
-    python .github/skills/archweave/scripts/build-zip.py                      # dist/archweave-skill.zip
-    python .github/skills/archweave/scripts/build-zip.py --target agent-builder
+    python skills/archweave/scripts/build-zip.py                      # dist/archweave-skill.zip
+    python skills/archweave/scripts/build-zip.py --target agent-builder
                                                                                # dist/archweave-skill-agent-builder.zip
 
 Both zips put SKILL.md at the zip root with assets/, examples/, references/,
@@ -24,8 +24,8 @@ import sys
 import zipfile
 from pathlib import Path
 
-SKILL = Path(__file__).resolve().parent.parent          # .github/skills/archweave
-REPO = SKILL.parent.parent.parent                       # repository root
+SKILL = Path(__file__).resolve().parent.parent          # skills/archweave
+REPO = SKILL.parent.parent                              # repository root
 DIST = REPO / 'dist'
 
 # From https://learn.microsoft.com/microsoft-365/copilot/extensibility/declarative-agent-skills

@@ -7,7 +7,7 @@ Two routes, not to be combined on one agent (Microsoft's preview does not allow 
 
 ## What is shared with the VS Code version
 
-Everything under `.github/skills/archweave/` is the single source: vocabulary, rules, SVG conventions, icons, schemas, examples, checker, renderer. This folder only adds an instruction file, an agent manifest template, and the local finisher.
+Everything under `skills/archweave/` is the single source: vocabulary, rules, SVG conventions, icons, schemas, examples, checker, renderer. This folder only adds an instruction file, an agent manifest template, and the local finisher.
 
 | Step | VS Code Copilot or Claude Code | M365 Copilot declarative agent |
 |---|---|---|
@@ -31,7 +31,7 @@ Everything under `.github/skills/archweave/` is the single source: vocabulary, r
 3. Copy the whole repository to the laptop. Confirm Python 3.9 or later (`python` or `py -3`) and Edge. Run once:
    ```powershell
    Set-ExecutionPolicy -Scope Process Bypass
-   .\m365\finish.ps1 .\.github\skills\archweave\examples\architecture-internal-api\internal-api.svg
+   .\m365\finish.ps1 .\skills\archweave\examples\architecture-internal-api\internal-api.svg
    ```
    A PNG should open. If Edge headless is blocked by policy, set `ARCHWEAVE_BROWSER` to Chrome, or open the SVG in PowerPoint and export.
 
@@ -49,7 +49,7 @@ What Microsoft's docs state for the preview (checked 2026-10-22): zip up to 50 M
 
 Build and upload:
 ```bash
-python .github/skills/archweave/scripts/build-zip.py --target agent-builder
+python skills/archweave/scripts/build-zip.py --target agent-builder
 # -> dist/archweave-skill-agent-builder.zip (examples as .xml, no render scripts, no example PNGs)
 ```
 Agent Builder, Configure tab, Skills, Add, upload the zip. Paste `agent-instructions-skill.md` into Instructions. Add nothing else.

@@ -12,7 +12,7 @@ param(
 )
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot          # diagram-skill\
-$skill = Join-Path $root ".github\skills\archweave"
+$skill = Join-Path $root "skills\archweave"
 $outDir = Join-Path $root "out"
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 

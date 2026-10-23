@@ -6,7 +6,7 @@ ArchWeave is an agent skill that turns a plain-language prompt into a static, ho
 
 It was built for enterprise architecture teams who need diagrams that say what is unique about *their* platform (which hub, which shared gateway, which owner, which DR strategy) rather than restating vendor documentation.
 
-![Internal API reference implementation by DR strategy](.github/skills/archweave/examples/architecture-internal-api/internal-api.png)
+![Internal API reference implementation by DR strategy](skills/archweave/examples/architecture-internal-api/internal-api.png)
 
 ## What you get
 
@@ -46,7 +46,7 @@ Check the download against `archweave-skill.zip.sha256` from the same release. T
 
 **Microsoft 365 Copilot custom skill** (Agent Builder, Frontier preview): download `archweave-skill-agent-builder.zip` from the same release and upload it under Configure, Skills, Add. It is the same skill packaged to Microsoft's upload rules. See `INSTRUCTIONS.md` section 6.
 
-**From source** (everything, including `m365/` and the docs):
+**From source** (everything, including `m365/` and the docs). In this repository the skill folder is `skills/archweave/` so it is easy to browse; the hosts look in `.github/skills/` (VS Code Copilot) and `~/.claude/skills/` (Claude Code), so copy it there or use the zip:
 
 ```bash
 git clone https://github.com/mrobinson2/archweave.git
@@ -56,10 +56,10 @@ git clone https://github.com/mrobinson2/archweave.git
 
 ```bash
 cd archweave
-python .github/skills/archweave/scripts/check-diagram.py \
-  .github/skills/archweave/examples/architecture-internal-api/plan.json \
-  .github/skills/archweave/examples/architecture-internal-api/internal-api.svg
-.github/skills/archweave/scripts/render-png.sh .github/skills/archweave/examples/architecture-internal-api/internal-api.svg
+python skills/archweave/scripts/check-diagram.py \
+  skills/archweave/examples/architecture-internal-api/plan.json \
+  skills/archweave/examples/architecture-internal-api/internal-api.svg
+skills/archweave/scripts/render-png.sh skills/archweave/examples/architecture-internal-api/internal-api.svg
 ```
 
 Then open the repo in VS Code with GitHub Copilot agent mode (or Claude Code) and ask:
@@ -71,7 +71,7 @@ Full install, configuration and usage, including the Microsoft 365 Copilot route
 ## Repository layout
 
 ```
-.github/skills/archweave/   the skill (SKILL.md, references, schemas, assets, examples, scripts)
+skills/archweave/            the skill (SKILL.md, references, schemas, assets, examples, scripts)
 m365/                        Microsoft 365 Copilot variant: instructions, manifest, local finisher
 out/                         generated diagrams land here (git-ignored)
 INSTRUCTIONS.md              install, configure, use
