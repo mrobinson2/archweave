@@ -65,5 +65,11 @@
     <symbol id="i-monitor" viewBox="0 0 44 44"><rect x="4" y="7" width="36" height="24" rx="3" fill="url(#az2)"/><polyline points="9,24 15,17 20,21 27,12 35,19" stroke="#fff" stroke-width="2.5" fill="none" stroke-linejoin="round"/><rect x="17" y="33" width="10" height="4" fill="#1E8A7E"/></symbol>
     <symbol id="i-ticket" viewBox="0 0 44 44"><rect x="5" y="10" width="34" height="24" rx="3" fill="url(#gy)"/><circle cx="5" cy="22" r="4" fill="#fff"/><circle cx="39" cy="22" r="4" fill="#fff"/><path d="M14 18h16M14 26h10" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></symbol>
     <symbol id="i-gate" viewBox="0 0 44 44"><path d="M22 4l16 18-16 18L6 22z" fill="url(#or)"/><path d="M15 22h14M24 17l5 5-5 5" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/></symbol>
+    <!-- dark theme: markers and grid (same geometry, dark palette) -->
+    <marker id="ab-d" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#60A5FA"/></marker>
+    <marker id="ao-d" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#F59E0B"/></marker>
+    <marker id="ag-d" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#94A3B8"/></marker>
+    <marker id="agb-d" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M12,0 L0,6 L12,12 z" fill="#94A3B8"/></marker>
+    <pattern id="grid-d" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0 H0 V20" fill="none" stroke="#1E293B" stroke-width="1"/></pattern>
   </defs>
 </svg>

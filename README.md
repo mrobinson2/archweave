@@ -16,6 +16,7 @@ It was built for enterprise architecture teams who need diagrams that say what i
 - **A checker** (`check-diagram.py`, Python 3.9+, standard library only) that validates the plan, matches every planned node, zone and edge to the SVG, blocks scripts, event handlers, SMIL, entities and every external or file reference, estimates text overflow, and requires the metadata stamp.
 - **Local renderers** for Windows (headless Edge or Chrome), macOS and Linux (rsvg or headless Chrome).
 - **A 40-symbol icon library** (`assets/icons.xml`, plain SVG markup) of simplified glyphs, so output needs no vendor assets.
+- **Light and dark themes.** Default light; set `meta.theme` to `dark` (or just ask) for dark slides. Same layout, same icons, dark palette, checked by the checker.
 - **A prompt cookbook** (`references/prompt-cookbook.md`) with worked prompts for a dozen common technology diagrams.
 - **Three worked examples** that pass the checker: internal API architecture by DR strategy, API request sequence, Golden Path workflow.
 - **Three hosts from one source:** VS Code GitHub Copilot agent mode or Claude Code (the agent runs the whole loop), Microsoft 365 Copilot custom skills (the checker runs in Copilot's sandbox, Frontier preview), and Microsoft 365 Copilot with knowledge files (the agent writes the SVG, a local script finishes it).

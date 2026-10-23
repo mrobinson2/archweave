@@ -26,6 +26,18 @@ The icon library is `assets/icons.xml`. It is plain SVG markup; the `.xml` exten
 
 Draw order matters: zones, then edges, then nodes, then labels. Edges under nodes hide arrowhead stubs. Labels last so nothing covers text.
 
+## Dark theme
+
+Same skeleton with the dark values from `authoring-rules.md`, section Theme. Differences from the light skeleton:
+
+```xml
+<svg ... data-plan="plan.json" data-theme="dark">
+  <rect width="100%" height="100%" fill="#0F172A"/>
+  <rect width="100%" height="100%" fill="url(#grid-d)" opacity="0.6"/>
+```
+
+Use the `-d` markers (`ab-d`, `ao-d`, `ag-d`, `agb-d`) on every edge, `#0F172A` for edge label halos, and add `Dark` to the stamp, for example `... · 2026-10-20 · Internal · Draft · Dark`. The checker fails a dark plan whose canvas rect is not `#0F172A` or whose stamp lacks `Dark`, and warns on white halos. A worked example: `examples/sequence-api-request-dark/`.
+
 ## Node
 
 ```xml

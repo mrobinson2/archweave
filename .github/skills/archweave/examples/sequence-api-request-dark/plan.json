@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Internal API request, happy path (dark)",
+    "subtitle": "internal-api v1.0 · what every hop checks and what it adds",
+    "pattern_id": "internal-api",
+    "version": "1.0",
+    "diagram_index": "Diagram 3 of 4",
+    "dr_strategy": "n/a",
+    "date": "2026-10-20",
+    "status": "Draft",
+    "classification": "Internal",
+    "output": "api-request-dark.svg",
+    "canvas": [
+      1600,
+      900
+    ],
+    "theme": "dark"
+  },
+  "participants": [
+    {
+      "id": "user",
+      "label": "Client",
+      "sublabel": "browser or service",
+      "color": "blue",
+      "icon": "i-user",
+      "owner": "User"
+    },
+    {
+      "id": "entra",
+      "label": "Entra ID",
+      "sublabel": "workforce tenant",
+      "color": "blue",
+      "icon": "i-idp",
+      "owner": "Security"
+    },
+    {
+      "id": "tm",
+      "label": "Traffic Manager",
+      "sublabel": "DNS steering",
+      "color": "orange",
+      "icon": "i-dns-lb",
+      "owner": "Network"
+    },
+    {
+      "id": "apim",
+      "label": "Internal APIM",
+      "sublabel": "shared · hub",
+      "color": "grey",
+      "icon": "i-apim",
+      "owner": "Platform Engineering"
+    },
+    {
+      "id": "app",
+      "label": "App Service",
+      "sublabel": "spoke · PE inbound",
+      "color": "blue",
+      "icon": "i-app",
+      "owner": "App team"
+    },
+    {
+      "id": "kv",
+      "label": "Key Vault",
+      "sublabel": "PE · access policy",
+      "color": "blue",
+      "icon": "i-kv",
+      "owner": "App team"
+    },
+    {
+      "id": "sql",
+      "label": "Azure SQL",
+      "sublabel": "PE · Entra auth",
+      "color": "blue",
+      "icon": "i-sql",
+      "owner": "App team"
+    },
+    {
+      "id": "law",
+      "label": "Log Analytics",
+      "sublabel": "to SIEM",
+      "color": "teal",
+      "icon": "i-law",
+      "owner": "SRE"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "user",
+      "to": "entra",
+      "label": "sign-in (MSAL), request token for the API app registration",
+      "kind": "sync"
+    },
+    {
+      "id": "m2",
+      "from": "entra",
+      "to": "user",
+      "label": "JWT with app roles",
+      "kind": "return"
+    },
+    {
+      "id": "m3",
+      "from": "user",
+      "to": "tm",
+      "label": "resolve api-internal.example.com",
+      "kind": "sync"
+    },
+    {
+      "id": "m4",
+      "from": "tm",
+      "to": "user",
+      "label": "regional APIM address (health-based steering)",
+      "kind": "return"
+    },
+    {
+      "id": "m5",
+      "from": "user",
+      "to": "apim",
+      "label": "GET /v1/... · Bearer JWT · x-correlation-id",
+      "kind": "sync",
+      "activates": true
+    },
+    {
+      "id": "m6",
+      "from": "apim",
+      "to": "entra",
+      "label": "validate-jwt (cached JWKS), rate-limit by subscription",
+      "kind": "sync",
+      "note": "Policy is inherited from the hub product; workload sets only its backend and scopes"
+    },
+    {
+      "id": "m7",
+      "from": "apim",
+      "to": "app",
+      "label": "forward over private endpoint, correlation id preserved",
+      "kind": "sync",
+      "activates": true
+    },
+    {
+      "id": "m8",
+      "from": "app",
+      "to": "kv",
+      "label": "get cert or secret (managed identity, cached 1 h)",
+      "kind": "sync"
+    },
+    {
+      "id": "m9",
+      "from": "app",
+      "to": "sql",
+      "label": "query · Entra token · TDS 1433 over PE",
+      "kind": "sync"
+    },
+    {
+      "id": "m10",
+      "from": "sql",
+      "to": "app",
+      "label": "rows",
+      "kind": "return"
+    },
+    {
+      "id": "m11",
+      "from": "app",
+      "to": "law",
+      "label": "log event: app_id, env, tier, correlation_id, latency",
+      "kind": "async"
+    },
+    {
+      "id": "m12",
+      "from": "app",
+      "to": "apim",
+      "label": "200 JSON",
+      "kind": "return"
+    },
+    {
+      "id": "m13",
+      "from": "apim",
+      "to": "user",
+      "label": "200 · rate-limit headers · correlation id echoed",
+      "kind": "return"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g-policy",
+      "kind": "opt",
+      "label": "APIM inbound policy (hub owned)",
+      "from_message": "m5",
+      "to_message": "m7"
+    }
+  ],
+  "legend": {
+    "lines": [
+      "solid: synchronous call",
+      "dashed: return",
+      "dashed teal: async telemetry"
+    ]
+  }
+}

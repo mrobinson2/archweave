@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0 (2026-10-22)
+
+- Dark theme. `meta.theme` (`light` default, `dark`) in the plan schema; a full light/dark palette table in `references/authoring-rules.md` (section Theme) and a dark skeleton in `references/svg-conventions.md`; dark markers `ab-d`, `ao-d`, `ag-d`, `agb-d` and grid `grid-d` in `assets/icons.xml`.
+- Checker: the full-canvas rect must match the theme (`#FFFFFF` light, `#0F172A` dark), a dark plan's stamp must say `Dark`, and white halos on a dark canvas warn.
+- New worked example `examples/sequence-api-request-dark/`.
+- SKILL.md, the M365 instructions and the prompt cookbook say how to ask for dark mode.
+
 ## 0.3.1 (2026-10-22)
 
 Security hardening after a review of the checker, the render scripts and the package build. No network call exists anywhere in the skill; this release closes gaps in what the checker lets through to a browser.

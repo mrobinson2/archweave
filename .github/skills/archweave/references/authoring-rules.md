@@ -73,3 +73,32 @@ Bottom-left block, 11 px grey: `rag-chatbot v1.0 · Diagram 1 of 6 · Reference 
 
 - Happy path left to right on one row. Failure and wait states below. Terminal states double-bordered.
 - Every transition labeled with the trigger and the actor.
+
+## Theme
+
+Default is light. Use dark when the prompt says dark mode, dark theme, or the output goes on dark slides. Set `meta.theme` to `dark` in the plan; the checker then expects the dark canvas color and the word `Dark` in the stamp. Same layout, same icons, same line meanings; only the palette changes.
+
+| Role | Light | Dark |
+|---|---|---|
+| Canvas rect | `#FFFFFF` | `#0F172A` |
+| Grid pattern | `url(#grid)` | `url(#grid-d)` |
+| Title text | `#111827` | `#F1F5F9` |
+| Subtitle, stamp, sublabel, dashed telemetry and control lines | `#6B7280` / `#4B5563` | `#94A3B8` |
+| Node label text | `#1F2937` | `#F1F5F9` |
+| Edge label text | `#374151` | `#CBD5E1` |
+| Edge label halo (`stroke` with `paint-order="stroke"`) | `#FFFFFF` | `#0F172A` |
+| Workload node fill / stroke | `#FFFFFF` / `#CBD5E1` | `#1E293B` / `#475569` |
+| Shared or inherited node fill / stroke | `#F3F4F6` / `#9CA3AF` | `#334155` / `#64748B` |
+| Zone fill (workload) / stroke | `#F7F9FC` / `#0F6CBD` | `#1E293B` / `#60A5FA` |
+| Zone fill (platform) / stroke | `#F3F4F6` / `#6B7280` | `#1F2937` / `#64748B` |
+| Observability zone fill / stroke | `#F0FAF8` / `#1E8A7E` | `#0F2A28` / `#2DD4BF` |
+| Request line and badge | `#0F4C81`, marker `ab` | `#60A5FA`, marker `ab-d` |
+| Ingestion line and badge | `#D97706`, marker `ao` | `#F59E0B`, marker `ao-d` |
+| Telemetry or control line | `#6B7280` or `#1E8A7E`, marker `ag` | `#94A3B8` or `#2DD4BF`, marker `ag-d` |
+| Note fill / stroke / title text | `#FFFBEB` / `#F59E0B` / `#92400E` | `#3B2F0B` / `#F59E0B` / `#FCD34D` |
+| Removed hand-off fill / stroke | `#FEF2F2` / `#B91C1C` | `#3F1D1D` / `#F87171` |
+| Legend box fill / stroke | `#FFFFFF` / `#E5E7EB` | `#1E293B` / `#334155` |
+| Sequence activation (hub / workload) | `#D1D5DB` / `#BFDBFE` | `#475569` / `#1E3A8A` |
+| Badge text | `#FFF` | `#FFF` |
+
+Icon gradients are unchanged; they read well on both canvases. The drop shadow filter is harmless on dark.

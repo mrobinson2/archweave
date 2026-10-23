@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="900" viewBox="0 0 1600 900" font-family="Segoe UI, Helvetica, Arial, sans-serif" data-plan="plan.json" data-theme="dark">
+  <title>internal-api v1.0 internal API request sequence (dark)</title>
+  <defs>
+    <marker id="ab" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#0F4C81"/></marker>
+    <marker id="ao" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#D97706"/></marker>
+    <marker id="ag" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#6B7280"/></marker>
+    <marker id="agb" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M12,0 L0,6 L12,12 z" fill="#6B7280"/></marker>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000" flood-opacity="0.12"/></filter>
+    <linearGradient id="az" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B9CE6"/><stop offset="1" stop-color="#0F6CBD"/></linearGradient>
+    <linearGradient id="az2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4FB3A9"/><stop offset="1" stop-color="#1E8A7E"/></linearGradient>
+    <linearGradient id="or" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6A623"/><stop offset="1" stop-color="#D97706"/></linearGradient>
+    <linearGradient id="gy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9CA3AF"/><stop offset="1" stop-color="#6B7280"/></linearGradient>
+    <linearGradient id="pu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9F7AEA"/><stop offset="1" stop-color="#6D44C9"/></linearGradient>
+
+    <!-- icon symbols, 44x44 -->
+    <symbol id="i-user" viewBox="0 0 44 44"><circle cx="22" cy="14" r="9" fill="url(#az)"/><path d="M5 42 C5 29 39 29 39 42 Z" fill="url(#az)"/></symbol>
+    <symbol id="i-edge" viewBox="0 0 44 44"><path d="M12 34 a8 8 0 0 1 -1 -16 a10 10 0 0 1 19 -4 a8 8 0 0 1 6 14 a6 6 0 0 1 -2 6 Z" fill="url(#or)"/><path d="M14 30 h16" stroke="#FFF" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="i-apim" viewBox="0 0 44 44"><path d="M22 3 L39 12.5 V31.5 L22 41 L5 31.5 V12.5 Z" fill="url(#az)"/><text x="22" y="26" font-size="11" font-weight="700" fill="#FFF" text-anchor="middle" font-family="Helvetica">API</text></symbol>
+    <symbol id="i-app" viewBox="0 0 44 44"><rect x="4" y="7" width="36" height="30" rx="4" fill="url(#az)"/><rect x="4" y="7" width="36" height="8" rx="4" fill="#0A4F8F"/><circle cx="9" cy="11" r="1.6" fill="#FFF"/><circle cx="14" cy="11" r="1.6" fill="#FFF"/><circle cx="22" cy="26" r="7" fill="none" stroke="#FFF" stroke-width="2"/><path d="M15 26 h14 M22 19 v14 M17 22 q5 3 10 0 M17 30 q5 -3 10 0" stroke="#FFF" stroke-width="1.5" fill="none"/></symbol>
+    <symbol id="i-func" viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="6" fill="url(#or)"/><path d="M25 7 L13 25 h9 l-3 12 L32 19 h-9 Z" fill="#FFF"/></symbol>
+    <symbol id="i-cosmos" viewBox="0 0 44 44"><circle cx="22" cy="22" r="13" fill="url(#az)"/><ellipse cx="22" cy="22" rx="20" ry="7" fill="none" stroke="#0A4F8F" stroke-width="2.5" transform="rotate(-25 22 22)"/><circle cx="34" cy="12" r="3" fill="#F6A623"/></symbol>
+    <symbol id="i-search" viewBox="0 0 44 44"><circle cx="18" cy="18" r="12" fill="url(#az)"/><circle cx="18" cy="18" r="6" fill="none" stroke="#FFF" stroke-width="2.5"/><path d="M27 27 L39 39" stroke="#0A4F8F" stroke-width="6" stroke-linecap="round"/></symbol>
+    <symbol id="i-openai" viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="8" fill="url(#az2)"/><path d="M22 9 L25 19 L35 22 L25 25 L22 35 L19 25 L9 22 L19 19 Z" fill="#FFF"/><circle cx="32" cy="12" r="2.5" fill="#FFF"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 44 44"><path d="M10 4 h16 l10 10 v26 h-26 Z" fill="url(#az2)"/><path d="M26 4 v10 h10" fill="#1E8A7E"/><path d="M15 20 h14 M15 26 h14 M15 32 h9" stroke="#FFF" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-speech" viewBox="0 0 44 44"><rect x="15" y="5" width="14" height="22" rx="7" fill="url(#az2)"/><path d="M10 20 a12 12 0 0 0 24 0" fill="none" stroke="#1E8A7E" stroke-width="3"/><path d="M22 32 v7 M15 39 h14" stroke="#1E8A7E" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="i-kv" viewBox="0 0 44 44"><circle cx="16" cy="16" r="11" fill="url(#or)"/><circle cx="16" cy="16" r="4" fill="#FFF"/><path d="M24 24 L38 38 M31 31 l4 -4 M35 35 l4 -4" stroke="#D97706" stroke-width="5" stroke-linecap="round"/></symbol>
+    <symbol id="i-storage" viewBox="0 0 44 44"><rect x="5" y="8" width="34" height="9" rx="2" fill="url(#az)"/><rect x="5" y="19" width="34" height="9" rx="2" fill="url(#az)"/><rect x="5" y="30" width="34" height="9" rx="2" fill="url(#az)"/><circle cx="33" cy="12.5" r="1.8" fill="#FFF"/><circle cx="33" cy="23.5" r="1.8" fill="#FFF"/><circle cx="33" cy="34.5" r="1.8" fill="#FFF"/></symbol>
+    <symbol id="i-ai" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="url(#pu)"/><path d="M8 24 h7 l4 -9 l6 16 l4 -10 l3 3 h4" fill="none" stroke="#FFF" stroke-width="2.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-law" viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="6" fill="url(#az)"/><rect x="10" y="24" width="6" height="11" fill="#FFF"/><rect x="19" y="16" width="6" height="19" fill="#FFF"/><rect x="28" y="10" width="6" height="25" fill="#FFF"/></symbol>
+    <symbol id="i-eh" viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="6" fill="url(#az)"/><path d="M9 14 h12 l6 8 l-6 8 h-12 Z" fill="#FFF"/><path d="M23 14 h5 l6 8 l-6 8 h-5 l6 -8 Z" fill="#CFE6F8"/></symbol>
+    <symbol id="i-siem" viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="6" fill="url(#az2)"/><path d="M22 9 L33 13 V22 C33 29 28 33.5 22 36 C16 33.5 11 29 11 22 V13 Z" fill="none" stroke="#FFF" stroke-width="2.5" stroke-linejoin="round"/><circle cx="20" cy="21" r="4.5" fill="none" stroke="#FFF" stroke-width="2.5"/><path d="M23.5 24.5 L28 29" stroke="#FFF" stroke-width="2.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-policy" viewBox="0 0 44 44"><path d="M22 3 L38 9 V22 C38 32 30 38 22 41 C14 38 6 32 6 22 V9 Z" fill="url(#az)"/><path d="M14 22 l6 6 l11 -12" fill="none" stroke="#FFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cmdb" viewBox="0 0 44 44"><ellipse cx="22" cy="10" rx="15" ry="6" fill="#0A4F8F"/><path d="M7 10 v24 a15 6 0 0 0 30 0 V10" fill="url(#az)"/><ellipse cx="22" cy="10" rx="15" ry="6" fill="#3B9CE6"/></symbol>
+    <symbol id="i-idp" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="url(#az)"/><circle cx="22" cy="22" r="9" fill="none" stroke="#FFF" stroke-width="3"/><circle cx="22" cy="22" r="3" fill="#FFF"/></symbol>
+    <symbol id="i-nva" viewBox="0 0 44 44"><rect x="4" y="8" width="36" height="28" rx="3" fill="#B91C1C"/><path d="M4 17 h36 M4 26 h36 M16 8 v9 M28 17 v9 M16 26 v10" stroke="#FFF" stroke-width="2"/></symbol>
+    <symbol id="i-dns" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="url(#az)"/><ellipse cx="22" cy="22" rx="8" ry="18" fill="none" stroke="#FFF" stroke-width="2"/><path d="M4 22 h36 M7 13 h30 M7 31 h30" stroke="#FFF" stroke-width="2"/></symbol>
+    <symbol id="i-pe" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#FFF" stroke="#0F6CBD" stroke-width="2.5"/><circle cx="10" cy="10" r="3.5" fill="#0F6CBD"/></symbol>
+      <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0 H0 V20" fill="none" stroke="#E9ECF0" stroke-width="1"/></pattern>
+
+    <!-- additional symbols v0.1 (network, compute, data, process) -->
+    <symbol id="i-dns-lb" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="url(#or)"/><circle cx="22" cy="11" r="3.5" fill="#FFF"/><path d="M22 14.5 V21 M11 21 H33 M11 21 V28 M22 21 V28 M33 21 V28" fill="none" stroke="#FFF" stroke-width="2.5" stroke-linecap="round"/><circle cx="11" cy="31" r="3" fill="#FFF"/><circle cx="22" cy="31" r="3" fill="#FFF"/><circle cx="33" cy="31" r="3" fill="#FFF"/></symbol>
+    <symbol id="i-switch" viewBox="0 0 44 44"><rect x="4" y="12" width="36" height="20" rx="3" fill="#1BA0D7"/><path d="M11 22h8M11 19l3 3-3 3M33 22h-8M33 19l-3 3 3 3" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="i-router" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="#1BA0D7"/><path d="M12 18h20M28 14l4 4-4 4M32 26H12M16 22l-4 4 4 4" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="i-firewall" viewBox="0 0 44 44"><rect x="4" y="8" width="36" height="28" rx="3" fill="#C0392B"/><path d="M4 17h36M4 27h36M16 8v9M28 8v9M10 17v10M22 17v10M34 17v10M16 27v9M28 27v9" stroke="#fff" stroke-width="2"/></symbol>
+    <symbol id="i-lb" viewBox="0 0 44 44"><rect x="14" y="4" width="16" height="12" rx="2" fill="url(#az)"/><rect x="3" y="28" width="12" height="12" rx="2" fill="url(#az)"/><rect x="16" y="28" width="12" height="12" rx="2" fill="url(#az)"/><rect x="29" y="28" width="12" height="12" rx="2" fill="url(#az)"/><path d="M22 16v6M22 22H9v6M22 22v6M22 22h13v6" stroke="#0F4C81" stroke-width="2" fill="none"/></symbol>
+    <symbol id="i-aks" viewBox="0 0 44 44"><path d="M22 3l17 10v18L22 41 5 31V13z" fill="url(#az)"/><path d="M22 12l9 5v10l-9 5-9-5V17z" fill="#fff" opacity="0.9"/><circle cx="22" cy="22" r="3" fill="#0F6CBD"/></symbol>
+    <symbol id="i-vm" viewBox="0 0 44 44"><rect x="4" y="7" width="36" height="24" rx="3" fill="url(#az)"/><rect x="8" y="11" width="28" height="16" fill="#fff" opacity="0.9"/><rect x="15" y="33" width="14" height="4" fill="#0F6CBD"/><rect x="10" y="37" width="24" height="3" fill="#0F6CBD"/></symbol>
+    <symbol id="i-sql" viewBox="0 0 44 44"><ellipse cx="22" cy="10" rx="15" ry="6" fill="url(#az)"/><path d="M7 10v22c0 3.3 6.7 6 15 6s15-2.7 15-6V10" fill="url(#az)"/><ellipse cx="22" cy="10" rx="15" ry="6" fill="#fff" opacity="0.35"/><path d="M7 21c0 3.3 6.7 6 15 6s15-2.7 15-6" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.8"/></symbol>
+    <symbol id="i-sb" viewBox="0 0 44 44"><rect x="4" y="16" width="36" height="12" rx="3" fill="url(#az)"/><rect x="8" y="19" width="6" height="6" fill="#fff"/><rect x="16" y="19" width="6" height="6" fill="#fff"/><rect x="24" y="19" width="6" height="6" fill="#fff"/><path d="M33 22h4M35 20l2 2-2 2" stroke="#fff" stroke-width="2" fill="none"/></symbol>
+    <symbol id="i-redis" viewBox="0 0 44 44"><path d="M22 6l16 8-16 8L6 14z" fill="#D82C20"/><path d="M6 22l16 8 16-8v6L22 36 6 28z" fill="#A41E11"/></symbol>
+    <symbol id="i-datacenter" viewBox="0 0 44 44"><rect x="6" y="4" width="32" height="36" rx="2" fill="url(#gy)"/><rect x="10" y="8" width="24" height="7" fill="#fff" opacity="0.85"/><rect x="10" y="18" width="24" height="7" fill="#fff" opacity="0.85"/><rect x="10" y="28" width="24" height="7" fill="#fff" opacity="0.85"/><circle cx="31" cy="11.5" r="1.5" fill="#16A34A"/><circle cx="31" cy="21.5" r="1.5" fill="#16A34A"/><circle cx="31" cy="31.5" r="1.5" fill="#16A34A"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 44 44"><path d="M12 34a8 8 0 0 1-1-15.9A11 11 0 0 1 32 15a7.5 7.5 0 0 1 2 14.8V34z" fill="url(#az)"/></symbol>
+    <symbol id="i-repo" viewBox="0 0 44 44"><rect x="6" y="5" width="32" height="34" rx="4" fill="#24292F"/><path d="M14 13h16M14 20h16M14 27h10" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-pipeline" viewBox="0 0 44 44"><circle cx="9" cy="22" r="5" fill="url(#az)"/><circle cx="22" cy="22" r="5" fill="url(#az)"/><circle cx="35" cy="22" r="5" fill="url(#az)"/><path d="M14 22h3M27 22h3" stroke="#0F4C81" stroke-width="2.5"/></symbol>
+    <symbol id="i-pim" viewBox="0 0 44 44"><circle cx="22" cy="13" r="8" fill="url(#or)"/><path d="M6 40c0-11 32-11 32 0z" fill="url(#or)"/><circle cx="33" cy="32" r="8" fill="#fff"/><path d="M33 27v5l3 2" stroke="#D97706" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 44 44"><rect x="4" y="7" width="36" height="24" rx="3" fill="url(#az2)"/><polyline points="9,24 15,17 20,21 27,12 35,19" stroke="#fff" stroke-width="2.5" fill="none" stroke-linejoin="round"/><rect x="17" y="33" width="10" height="4" fill="#1E8A7E"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 44 44"><rect x="5" y="10" width="34" height="24" rx="3" fill="url(#gy)"/><circle cx="5" cy="22" r="4" fill="#fff"/><circle cx="39" cy="22" r="4" fill="#fff"/><path d="M14 18h16M14 26h10" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-gate" viewBox="0 0 44 44"><path d="M22 4l16 18-16 18L6 22z" fill="url(#or)"/><path d="M15 22h14M24 17l5 5-5 5" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/></symbol>
+    <!-- dark theme: markers and grid (same geometry, dark palette) -->
+    <marker id="ab-d" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#60A5FA"/></marker>
+    <marker id="ao-d" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#F59E0B"/></marker>
+    <marker id="ag-d" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#94A3B8"/></marker>
+    <marker id="agb-d" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M12,0 L0,6 L12,12 z" fill="#94A3B8"/></marker>
+    <pattern id="grid-d" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0 H0 V20" fill="none" stroke="#1E293B" stroke-width="1"/></pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="#0F172A"/>
+  <rect width="100%" height="100%" fill="url(#grid-d)" opacity="0.6"/>
+  <text x="40" y="48" font-size="28" font-weight="700" fill="#F1F5F9">Internal API request · happy path</text>
+  <text x="40" y="74" font-size="14" fill="#94A3B8">internal-api v1.0 · what every hop checks and what it adds · hub-owned steps in grey</text>
+
+  <!-- lifelines -->
+  <g stroke="#64748B" stroke-width="1.5" stroke-dasharray="5 5">
+    <line x1="140" y1="170" x2="140" y2="800"/><line x1="330" y1="170" x2="330" y2="800"/><line x1="520" y1="170" x2="520" y2="800"/>
+    <line x1="710" y1="170" x2="710" y2="800"/><line x1="900" y1="170" x2="900" y2="800"/><line x1="1090" y1="170" x2="1090" y2="800"/>
+    <line x1="1280" y1="170" x2="1280" y2="800"/><line x1="1470" y1="170" x2="1470" y2="800"/>
+  </g>
+  <!-- activations -->
+  <rect x="704" y="372" width="12" height="372" fill="#475569" stroke="#94A3B8"/>
+  <rect x="894" y="462" width="12" height="236" fill="#1E3A8A" stroke="#60A5FA"/>
+
+  <!-- group -->
+  <g id="g-policy">
+    <rect x="60" y="352" width="900" height="130" fill="none" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="60" y="352" width="250" height="20" fill="#334155"/>
+    <text x="68" y="366" font-size="12" font-weight="600" fill="#CBD5E1">opt · APIM inbound policy (hub owned)</text>
+  </g>
+
+  <!-- participants -->
+  <g id="n-user" data-node="user" transform="translate(55,100)"><rect width="170" height="64" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" filter="url(#sh)"/><use href="#i-user" x="8" y="10" width="44" height="44"/><text x="60" y="30" font-size="14" font-weight="600" fill="#F1F5F9">Client</text><text x="60" y="48" font-size="11" fill="#94A3B8">browser or service</text></g>
+  <g id="n-entra" data-node="entra" transform="translate(245,100)"><rect width="170" height="64" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" filter="url(#sh)"/><use href="#i-idp" x="8" y="10" width="44" height="44"/><text x="60" y="30" font-size="14" font-weight="600" fill="#F1F5F9">Entra ID</text><text x="60" y="48" font-size="11" fill="#94A3B8">workforce tenant</text></g>
+  <g id="n-tm" data-node="tm" transform="translate(430,100)"><rect width="180" height="64" rx="8" fill="#1E293B" stroke="#F59E0B" stroke-width="1.5" filter="url(#sh)"/><use href="#i-dns-lb" x="8" y="10" width="44" height="44"/><text x="60" y="30" font-size="14" font-weight="600" fill="#F1F5F9">Traffic Manager</text><text x="60" y="48" font-size="11" fill="#94A3B8">DNS steering</text></g>
+  <g id="n-apim" data-node="apim" transform="translate(625,100)"><rect width="170" height="64" rx="8" fill="#334155" stroke="#64748B" stroke-width="1.5" filter="url(#sh)"/><use href="#i-apim" x="8" y="10" width="44" height="44"/><text x="60" y="30" font-size="14" font-weight="600" fill="#F1F5F9">Internal APIM</text><text x="60" y="48" font-size="11" fill="#94A3B8">shared · hub</text></g>
+  <g id="n-app" data-node="app" transform="translate(815,100)"><rect width="170" height="64" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" filter="url(#sh)"/><use href="#i-app" x="8" y="10" width="44" height="44"/><text x="60" y="30" font-size="14" font-weight="600" fill="#F1F5F9">App Service</text><text x="60" y="48" font-size="11" fill="#94A3B8">spoke · PE inbound</text></g>
+  <g id="n-kv" data-node="kv" transform="translate(1005,100)"><rect width="170" height="64" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" filter="url(#sh)"/><use href="#i-kv" x="8" y="10" width="44" height="44"/><text x="60" y="30" font-size="14" font-weight="600" fill="#F1F5F9">Key Vault</text><text x="60" y="48" font-size="11" fill="#94A3B8">PE · access policy</text></g>
+  <g id="n-sql" data-node="sql" transform="translate(1195,100)"><rect width="170" height="64" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" filter="url(#sh)"/><use href="#i-sql" x="8" y="10" width="44" height="44"/><text x="60" y="30" font-size="14" font-weight="600" fill="#F1F5F9">Azure SQL</text><text x="60" y="48" font-size="11" fill="#94A3B8">PE · Entra auth</text></g>
+  <g id="n-law" data-node="law" transform="translate(1385,100)"><rect width="170" height="64" rx="8" fill="#1E293B" stroke="#2DD4BF" stroke-width="1.5" filter="url(#sh)"/><use href="#i-law" x="8" y="10" width="44" height="44"/><text x="60" y="30" font-size="14" font-weight="600" fill="#F1F5F9">Log Analytics</text><text x="60" y="48" font-size="11" fill="#94A3B8">to SIEM</text></g>
+
+  <!-- messages -->
+  <path id="m1" data-edge="m1" d="M140 200 H328" fill="none" stroke="#60A5FA" stroke-width="2" marker-end="url(#ab-d)"/>
+  <text x="146" y="194" font-size="12" fill="#CBD5E1">sign-in (MSAL), request token for the API app registration</text>
+  <path id="m2" data-edge="m2" d="M330 240 H142" fill="none" stroke="#60A5FA" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ab-d)"/>
+  <text x="146" y="234" font-size="12" fill="#CBD5E1">JWT with app roles</text>
+  <path id="m3" data-edge="m3" d="M140 290 H518" fill="none" stroke="#60A5FA" stroke-width="2" marker-end="url(#ab-d)"/>
+  <text x="146" y="284" font-size="12" fill="#CBD5E1">resolve api-internal.example.com</text>
+  <path id="m4" data-edge="m4" d="M520 325 H142" fill="none" stroke="#60A5FA" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ab-d)"/>
+  <text x="146" y="319" font-size="12" fill="#CBD5E1">regional APIM address (health-based steering)</text>
+  <path id="m5" data-edge="m5" d="M140 385 H702" fill="none" stroke="#60A5FA" stroke-width="2" marker-end="url(#ab-d)"/>
+  <text x="146" y="379" font-size="12" fill="#CBD5E1">GET /v1/… · Bearer JWT · x-correlation-id</text>
+  <path id="m6" data-edge="m6" d="M704 420 H332" fill="none" stroke="#94A3B8" stroke-width="2" marker-end="url(#ag-d)"/>
+  <text x="340" y="414" font-size="12" fill="#CBD5E1">validate-jwt (cached JWKS), rate-limit by subscription</text>
+  <g transform="translate(980,392)"><rect width="300" height="40" rx="4" fill="#3B2F0B" stroke="#F59E0B"/><text x="8" y="16" font-size="11" fill="#FCD34D">Policy inherited from the hub product; the workload</text><text x="8" y="31" font-size="11" fill="#FCD34D">sets only its backend and scopes</text></g>
+  <path id="m7" data-edge="m7" d="M716 465 H892" fill="none" stroke="#60A5FA" stroke-width="2" marker-end="url(#ab-d)"/>
+  <text x="722" y="459" font-size="12" fill="#CBD5E1">forward over PE, correlation id kept</text>
+  <path id="m8" data-edge="m8" d="M906 515 H1088" fill="none" stroke="#60A5FA" stroke-width="2" marker-end="url(#ab-d)"/>
+  <text x="912" y="509" font-size="12" fill="#CBD5E1">get cert or secret (MI, cached 1 h)</text>
+  <path id="m9" data-edge="m9" d="M906 560 H1278" fill="none" stroke="#60A5FA" stroke-width="2" marker-end="url(#ab-d)"/>
+  <text x="912" y="554" font-size="12" fill="#CBD5E1">query · Entra token · TDS 1433 over PE</text>
+  <path id="m10" data-edge="m10" d="M1280 600 H908" fill="none" stroke="#60A5FA" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ab-d)"/>
+  <text x="912" y="594" font-size="12" fill="#CBD5E1">rows</text>
+  <path id="m11" data-edge="m11" d="M906 640 H1468" fill="none" stroke="#2DD4BF" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ag-d)"/>
+  <text x="912" y="634" font-size="12" fill="#2DD4BF">log event: app_id, env, tier, correlation_id, latency (async)</text>
+  <path id="m12" data-edge="m12" d="M894 690 H718" fill="none" stroke="#60A5FA" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ab-d)"/>
+  <text x="722" y="684" font-size="12" fill="#CBD5E1">200 JSON</text>
+  <path id="m13" data-edge="m13" d="M704 735 H142" fill="none" stroke="#60A5FA" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ab-d)"/>
+  <text x="146" y="729" font-size="12" fill="#CBD5E1">200 · rate-limit headers · correlation id echoed</text>
+
+  <!-- legend -->
+  <g transform="translate(40,820)">
+    <line x1="0" y1="10" x2="40" y2="10" stroke="#60A5FA" stroke-width="2" marker-end="url(#ab-d)"/><text x="50" y="14" font-size="12" fill="#CBD5E1">synchronous call</text>
+    <line x1="190" y1="10" x2="230" y2="10" stroke="#60A5FA" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ab-d)"/><text x="240" y="14" font-size="12" fill="#CBD5E1">return</text>
+    <line x1="320" y1="10" x2="360" y2="10" stroke="#2DD4BF" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ag-d)"/><text x="370" y="14" font-size="12" fill="#CBD5E1">async telemetry</text>
+    <rect x="500" y="3" width="16" height="14" fill="#475569" stroke="#94A3B8"/><text x="524" y="14" font-size="12" fill="#CBD5E1">hub-owned processing</text>
+    <rect x="690" y="3" width="16" height="14" fill="#1E3A8A" stroke="#60A5FA"/><text x="714" y="14" font-size="12" fill="#CBD5E1">workload processing</text>
+    <text x="0" y="40" font-size="12" fill="#94A3B8">Not shown: token refresh, APIM cache hit, SQL retry policy (see the idempotent-api design pattern), Sentinel ingestion from Log Analytics via Event Hubs.</text>
+  </g>
+  <g id="meta" data-meta="true"><text x="40" y="885" font-size="11" fill="#94A3B8">internal-api v1.0 · Diagram 3 of 4 · Request sequence · 2026-10-20 · Internal · Draft · Architecture · Dark</text></g>
+</svg>

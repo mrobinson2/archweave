@@ -14,7 +14,8 @@
 #         every sequence participant as data-node, message as data-edge,
 #         data-meta stamp containing pattern_id, date, meta.classification and v<version> when set,
 #         text overflow heuristic for node labels/sublabels inside data-node groups,
-#         fonts not smaller than 11px, SVG elements not in plan (data-node unknown).
+#         fonts not smaller than 11px, SVG elements not in plan (data-node unknown),
+#         canvas color matches meta.theme (light default, dark = #0F172A) and dark stamps say Dark.
 #
 # Optional render: after a passing check, if cairosvg imports, <slug>.png is written
 # beside the SVG at 1.3x scale. Otherwise a one-line hint says to render locally.
@@ -295,6 +296,23 @@ else:
 
 # body without <defs> (symbols may carry their own font sizes and rects)
 body = re.sub(r'<defs>[\s\S]*?</defs>', '', svg)
+
+# theme: canvas color must match meta.theme (light when absent); dark stamps say Dark
+theme = meta.get('theme') if truthy(meta.get('theme')) else 'light'
+if theme not in ('light', 'dark'):
+    fail('plan/meta', f'meta.theme "{js_str(theme)}" must be light or dark')
+    theme = 'light'
+m_bg = re.search(r'<rect[^>]*width="100%"[^>]*height="100%"[^>]*fill="(#[0-9A-Fa-f]{3,6})"', body)
+want_bg = '#0F172A' if theme == 'dark' else '#FFFFFF'
+if not m_bg:
+    fail('svg/theme', 'missing full-canvas background rect (<rect width="100%" height="100%" fill="...">)')
+elif m_bg.group(1).upper() != want_bg:
+    fail('svg/theme', f'canvas fill {m_bg.group(1)} does not match theme {theme} (expected {want_bg})')
+if theme == 'dark':
+    if meta_block and 'Dark' not in meta_block:
+        fail('svg/meta', 'stamp lacks "Dark" for a dark-theme plan')
+    if re.search(r'stroke="#FFFFFF"', body, re.IGNORECASE):
+        warn('svg/theme', 'white halo or stroke on a dark canvas; use #0F172A for label halos')
 
 # font floor
 for m in re.finditer(r'font-size="(\d+(?:\.\d+)?)"', body):

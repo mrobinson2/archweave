@@ -110,6 +110,14 @@ Variations: swap `Warm standby` for `Active/Active`, `Pilot light` or `Backup an
 
 > Use archweave to turn the attached whiteboard photo into an architecture diagram for order-events v1.0. Read it for components and arrows only. Where the photo is unclear, label the item TBD and list the assumptions in your reply.
 
+## Dark mode
+
+Any prompt above works in dark mode. Say so once; the agent sets `meta.theme` to `dark` and uses the dark palette from `authoring-rules.md`.
+
+> Use archweave to draw the request sequence for the internal API in dark mode, for a dark slide deck. Same content as the light version.
+
+> Redraw the last diagram in dark mode; keep every node and label the same.
+
 ## After the first diagram
 
 - "Now the sequence diagram for the request path in that architecture, including the token validation hop."

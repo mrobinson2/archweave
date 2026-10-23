@@ -94,6 +94,7 @@ Prompts that work well:
 - "Dataflow from App Service diagnostics to the SIEM with the required log fields on the edges."
 - "Lifecycle of a pattern from Draft to Deprecated with the gate owners."
 - "Redraw this Mermaid in house style:" followed by the Mermaid block.
+- "Same diagram in dark mode for the slide deck." (sets `meta.theme` to `dark`; palette in `references/authoring-rules.md`, section Theme).
 
 Repairing by hand: edit the SVG, rerun the checker and the renderer. The agent will pick up your version on the next request if you point it at the folder.
 
