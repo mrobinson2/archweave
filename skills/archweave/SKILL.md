@@ -3,7 +3,7 @@ name: archweave
 description: "Turn system intent into architecture. Produce architecture, sequence, workflow, dataflow and lifecycle diagrams as static SVG and PNG from a prompt, in your organization's house style and vocabulary. Use when asked to draw, diagram, sketch, visualize or illustrate a system, request flow, process, pipeline or state model for a reference architecture, reference implementation, design pattern, implementation guide or ADR. Output is one SVG rendered to PNG; no interactive viewer. Not for dashboards, charts or slides."
 license: MIT
 metadata:
-  version: "0.5.0"
+  version: "0.6.0"
   homepage: https://github.com/mrobinson2/archweave
 ---
 
@@ -32,7 +32,7 @@ Turn a prompt into one checked, house-styled static diagram: an SVG you author d
    ```
    If `scripts/render-png.*` are not present (Microsoft 365 skill sandbox), skip this step. The checker already wrote the PNG if `cairosvg` was available; otherwise deliver the SVG text and tell the user to render locally with `render-png` from the repository.
 7. **Look.** Open the PNG and inspect it yourself. Look for text overflowing boxes, lines crossing text, arrowheads hidden behind boxes, orphaned nodes, missing legend, missing metadata stamp. Fix in the SVG, rerun check and render. Three repair rounds maximum; after that, report what still fails.
-8. **Deliver.** Reply with the SVG and PNG paths, the diagram type, and any assumptions you made about platform components not stated in the prompt. In Microsoft 365, return the SVG as a file if the host allows it, otherwise as a code block, and always include the checker output.
+8. **Deliver.** Reply with the SVG and PNG paths, the diagram type, and any assumptions you made about platform components not stated in the prompt. In Microsoft 365, return the SVG as a file if the host allows it, otherwise as a code block, and always include the checker output. If the user asks for a slide or a PowerPoint, run `python scripts/export-pptx.py <folder>/<slug>.svg` after the render (add `--title "..."` for a title band); it writes `<slug>.pptx` beside the SVG: one 16:9 slide, PNG with the SVG embedded for crisp zoom, dark slide background when the theme is dark. Deliver the .pptx path with the others.
 
 Output folder: `out/<type>-<slug>-<YYYYMMDD-HHMM>/` under the workspace unless the user names a location. Keep `plan.json`, `<slug>.svg`, `<slug>.png` together.
 

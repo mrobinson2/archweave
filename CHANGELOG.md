@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0 (2026-10-22)
+
+- PowerPoint export: `scripts/export-pptx.py` (Python 3.9+, standard library only, no python-pptx) writes one 16:9 slide per diagram: the PNG fitted inside a 0.25 inch margin with the SVG embedded for crisp rendering in PowerPoint 2016 and later, a dark slide background for dark plans, optional `--title` band, `--no-svg` and `-o`. The .pptx is assembled from hand-written OOXML parts, so it runs in the Microsoft 365 sandbox too.
+- SKILL.md deliver step, the skill-route M365 instructions, INSTRUCTIONS and the prompt cookbook say how to ask for a slide.
+
 ## 0.5.0 (2026-10-22)
 
 - The skill folder moved from `.github/skills/archweave/` to `skills/archweave/` so references, examples and scripts are visible in file browsers and on GitHub. Install targets are unchanged: copy or unzip into `.github/skills/archweave/` (VS Code Copilot) or `~/.claude/skills/archweave/` (Claude Code), or upload the Agent Builder zip. Both release zips still have SKILL.md at the root.

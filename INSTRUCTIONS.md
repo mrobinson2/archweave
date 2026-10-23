@@ -96,6 +96,14 @@ Prompts that work well:
 - "Redraw this Mermaid in house style:" followed by the Mermaid block.
 - "Same diagram in dark mode for the slide deck." (sets `meta.theme` to `dark`; palette in `references/authoring-rules.md`, section Theme).
 
+PowerPoint: ask for "a slide" or run it yourself:
+
+```bash
+python skills/archweave/scripts/export-pptx.py out/<folder>/<slug>.svg --title "Internal API on App Service"
+```
+
+One 16:9 slide, the PNG fitted with a 0.25 inch margin and the SVG embedded (PowerPoint 2016 and later render the SVG; older versions show the PNG). A dark plan gets a dark slide. `--no-svg` embeds the PNG only; `-o` sets the output path.
+
 Repairing by hand: edit the SVG, rerun the checker and the renderer. The agent will pick up your version on the next request if you point it at the folder.
 
 ## 5. The check-render loop by hand

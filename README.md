@@ -16,6 +16,7 @@ It was built for enterprise architecture teams who need diagrams that say what i
 - **A checker** (`check-diagram.py`, Python 3.9+, standard library only) that validates the plan, matches every planned node, zone and edge to the SVG, blocks scripts, event handlers, SMIL, entities and every external or file reference, estimates text overflow, and requires the metadata stamp.
 - **Local renderers** for Windows (headless Edge or Chrome), macOS and Linux (rsvg or headless Chrome).
 - **A 40-symbol icon library** (`assets/icons.xml`, plain SVG markup) of simplified glyphs, so output needs no vendor assets.
+- **PowerPoint export** (`scripts/export-pptx.py`, standard library only): one 16:9 slide per diagram, PNG with the SVG embedded so it stays crisp, dark slide for dark plans, optional title band.
 - **Light and dark themes.** Default light; set `meta.theme` to `dark` (or just ask) for dark slides. Same layout, same icons, dark palette, checked by the checker.
 - **A prompt cookbook** (`references/prompt-cookbook.md`) with worked prompts for a dozen common technology diagrams.
 - **Six worked examples** that pass the checker: internal API architecture by DR strategy, API request sequence, Golden Path workflow, each in light and dark.

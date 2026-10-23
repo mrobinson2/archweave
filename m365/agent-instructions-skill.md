@@ -5,3 +5,4 @@ Rules that apply on every turn:
 - One diagram per reply.
 - Always include the checker's output in the reply. Return the SVG as a file when you can, otherwise as a code block. If no PNG was produced, say so and tell the user to render locally with render-png from the ArchWeave repository.
 - Static SVG only: no script, animation, external links or web fonts.
+- If the user asks for a slide, run scripts/export-pptx.py on the checked SVG and return the .pptx as a file when the host allows it.

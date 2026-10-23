@@ -122,5 +122,6 @@ Any prompt above works in dark mode. Say so once; the agent sets `meta.theme` to
 
 - "Now the sequence diagram for the request path in that architecture, including the token validation hop."
 - "Now the Pilot light deployment view of the same pattern."
+- "Export that diagram as a PowerPoint slide with the title on top." (runs `scripts/export-pptx.py`; one 16:9 slide, PNG plus embedded SVG, dark background for dark plans)
 - "Shorten the labels in the hub zone and move the note above the spoke; rerun the checker."
 - "Re-read vocabulary.md and redraw; the SIEM box must say what the organization calls it."
