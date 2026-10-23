@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Telemetry from the workload to the SIEM (dark)",
+    "subtitle": "internal-api v1.0 · what moves, who owns each hop, where retention and classification change",
+    "pattern_id": "internal-api",
+    "version": "1.0",
+    "diagram_index": "Diagram 4 of 4",
+    "dr_strategy": "n/a",
+    "date": "2026-10-23",
+    "status": "Draft",
+    "classification": "Internal",
+    "output": "telemetry-siem-dark.svg",
+    "canvas": [
+      1700,
+      900
+    ],
+    "theme": "dark"
+  },
+  "stages": [
+    {
+      "id": "emit",
+      "label": "Emit · workload",
+      "owner": "App team"
+    },
+    {
+      "id": "collect",
+      "label": "Collect · workload workspace",
+      "owner": "App team"
+    },
+    {
+      "id": "forward",
+      "label": "Forward · platform",
+      "owner": "SRE"
+    },
+    {
+      "id": "store",
+      "label": "Store and detect · platform",
+      "owner": "SRE"
+    },
+    {
+      "id": "act",
+      "label": "Act · SRE",
+      "owner": "SRE"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "appsvc",
+      "label": "App Service",
+      "sublabel": "app logs · requests · traces",
+      "stage": "emit",
+      "kind": "source",
+      "color": "blue",
+      "icon": "i-app",
+      "owner": "App team"
+    },
+    {
+      "id": "sql",
+      "label": "Azure SQL",
+      "sublabel": "audit log · metrics",
+      "stage": "emit",
+      "kind": "source",
+      "color": "blue",
+      "icon": "i-sql",
+      "owner": "App team"
+    },
+    {
+      "id": "diag",
+      "label": "Diagnostic settings",
+      "sublabel": "applied by Azure Policy DINE",
+      "stage": "collect",
+      "kind": "process",
+      "color": "grey",
+      "icon": "i-policy",
+      "owner": "Architecture"
+    },
+    {
+      "id": "law",
+      "label": "Log Analytics",
+      "sublabel": "per workload · 90 d",
+      "stage": "collect",
+      "kind": "store",
+      "color": "teal",
+      "icon": "i-law",
+      "owner": "App team"
+    },
+    {
+      "id": "eh",
+      "label": "Event Hubs",
+      "sublabel": "platform owned · export target",
+      "stage": "forward",
+      "kind": "process",
+      "color": "teal",
+      "icon": "i-eh",
+      "owner": "SRE"
+    },
+    {
+      "id": "sentinel",
+      "label": "Microsoft Sentinel",
+      "sublabel": "SIEM · system of record · 90 d hot",
+      "stage": "store",
+      "kind": "sink",
+      "color": "teal",
+      "icon": "i-siem",
+      "owner": "SRE"
+    },
+    {
+      "id": "archive",
+      "label": "Archive Storage",
+      "sublabel": "capture · cool tier · 365 d",
+      "stage": "store",
+      "kind": "store",
+      "color": "blue",
+      "icon": "i-storage",
+      "owner": "SRE"
+    },
+    {
+      "id": "alerts",
+      "label": "Alert collection",
+      "sublabel": "SRE rules · attached at intake",
+      "stage": "act",
+      "kind": "sink",
+      "color": "grey",
+      "icon": "i-monitor",
+      "owner": "SRE"
+    }
+  ],
+  "flows": [
+    {
+      "id": "f1",
+      "from": "appsvc",
+      "to": "law",
+      "label": "app logs · common-schema JSON",
+      "style": "telemetry",
+      "classification": "Internal"
+    },
+    {
+      "id": "f2",
+      "from": "sql",
+      "to": "law",
+      "label": "audit events · metrics",
+      "style": "telemetry"
+    },
+    {
+      "id": "f3",
+      "from": "diag",
+      "to": "appsvc",
+      "label": "diagnostic settings (DINE)",
+      "style": "control"
+    },
+    {
+      "id": "f4",
+      "from": "law",
+      "to": "eh",
+      "label": "export · AppTraces, AppRequests",
+      "style": "telemetry"
+    },
+    {
+      "id": "f5",
+      "from": "eh",
+      "to": "sentinel",
+      "label": "data connector pull",
+      "style": "telemetry"
+    },
+    {
+      "id": "f6",
+      "from": "eh",
+      "to": "archive",
+      "label": "capture to blob · hourly",
+      "style": "ingestion",
+      "async": true
+    },
+    {
+      "id": "f7",
+      "from": "sentinel",
+      "to": "alerts",
+      "label": "analytics rule hits",
+      "style": "telemetry",
+      "classification": "Confidential"
+    }
+  ],
+  "notes": [
+    {
+      "id": "note-fields",
+      "title": "Required log fields on every record",
+      "lines": [
+        "app_id · env · tier · correlation_id; the conformance test fails without them",
+        "Retention: Log Analytics 90 d, Sentinel 90 d hot, archive 365 d cool"
+      ]
+    }
+  ],
+  "legend": {
+    "colors": [
+      "blue: workload owned source or store",
+      "teal: observability path",
+      "grey: platform control plane"
+    ],
+    "lines": [
+      "solid teal: telemetry data movement",
+      "dashed grey: control plane",
+      "dashed orange: batch capture"
+    ]
+  }
+}

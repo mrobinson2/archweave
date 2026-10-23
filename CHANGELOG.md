@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1 (2026-10-23)
+
+- New worked examples for the two types that had none: `examples/dataflow-telemetry-siem/` (five ownership stages from emit to act, classification marks where they change, batch capture lettered) and `examples/lifecycle-pattern-status/` (main path on one row, rework and withdrawn below, terminal states double-bordered, every transition labeled trigger then owner). Both have `-dark` siblings. The SKILL.md router no longer says "author from rules" for any type.
+
 ## 0.6.0 (2026-10-22)
 
 - PowerPoint export: `scripts/export-pptx.py` (Python 3.9+, standard library only, no python-pptx) writes one 16:9 slide per diagram: the PNG fitted inside a 0.25 inch margin with the SVG embedded for crisp rendering in PowerPoint 2016 and later, a dark slide background for dark plans, optional `--title` band, `--no-svg` and `-o`. The .pptx is assembled from hand-written OOXML parts, so it runs in the Microsoft 365 sandbox too.

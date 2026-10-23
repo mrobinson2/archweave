@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="760" viewBox="0 0 1600 760" font-family="Segoe UI, Helvetica, Arial, sans-serif" data-plan="plan.json" data-theme="dark">
+  <title>pattern-lifecycle v1.0 pattern status from draft to retired (dark)</title>
+  <defs>
+    <marker id="ab" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#0F4C81"/></marker>
+    <marker id="ao" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#D97706"/></marker>
+    <marker id="ag" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#6B7280"/></marker>
+    <marker id="agb" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M12,0 L0,6 L12,12 z" fill="#6B7280"/></marker>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000" flood-opacity="0.12"/></filter>
+    <linearGradient id="az" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B9CE6"/><stop offset="1" stop-color="#0F6CBD"/></linearGradient>
+    <linearGradient id="az2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4FB3A9"/><stop offset="1" stop-color="#1E8A7E"/></linearGradient>
+    <linearGradient id="or" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6A623"/><stop offset="1" stop-color="#D97706"/></linearGradient>
+    <linearGradient id="gy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9CA3AF"/><stop offset="1" stop-color="#6B7280"/></linearGradient>
+    <linearGradient id="pu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9F7AEA"/><stop offset="1" stop-color="#6D44C9"/></linearGradient>
+
+    <!-- icon symbols, 44x44 -->
+    <symbol id="i-user" viewBox="0 0 44 44"><circle cx="22" cy="14" r="9" fill="url(#az)"/><path d="M5 42 C5 29 39 29 39 42 Z" fill="url(#az)"/></symbol>
+    <symbol id="i-edge" viewBox="0 0 44 44"><path d="M12 34 a8 8 0 0 1 -1 -16 a10 10 0 0 1 19 -4 a8 8 0 0 1 6 14 a6 6 0 0 1 -2 6 Z" fill="url(#or)"/><path d="M14 30 h16" stroke="#FFF" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="i-apim" viewBox="0 0 44 44"><path d="M22 3 L39 12.5 V31.5 L22 41 L5 31.5 V12.5 Z" fill="url(#az)"/><text x="22" y="26" font-size="11" font-weight="700" fill="#FFF" text-anchor="middle" font-family="Helvetica">API</text></symbol>
+    <symbol id="i-app" viewBox="0 0 44 44"><rect x="4" y="7" width="36" height="30" rx="4" fill="url(#az)"/><rect x="4" y="7" width="36" height="8" rx="4" fill="#0A4F8F"/><circle cx="9" cy="11" r="1.6" fill="#FFF"/><circle cx="14" cy="11" r="1.6" fill="#FFF"/><circle cx="22" cy="26" r="7" fill="none" stroke="#FFF" stroke-width="2"/><path d="M15 26 h14 M22 19 v14 M17 22 q5 3 10 0 M17 30 q5 -3 10 0" stroke="#FFF" stroke-width="1.5" fill="none"/></symbol>
+    <symbol id="i-func" viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="6" fill="url(#or)"/><path d="M25 7 L13 25 h9 l-3 12 L32 19 h-9 Z" fill="#FFF"/></symbol>
+    <symbol id="i-cosmos" viewBox="0 0 44 44"><circle cx="22" cy="22" r="13" fill="url(#az)"/><ellipse cx="22" cy="22" rx="20" ry="7" fill="none" stroke="#0A4F8F" stroke-width="2.5" transform="rotate(-25 22 22)"/><circle cx="34" cy="12" r="3" fill="#F6A623"/></symbol>
+    <symbol id="i-search" viewBox="0 0 44 44"><circle cx="18" cy="18" r="12" fill="url(#az)"/><circle cx="18" cy="18" r="6" fill="none" stroke="#FFF" stroke-width="2.5"/><path d="M27 27 L39 39" stroke="#0A4F8F" stroke-width="6" stroke-linecap="round"/></symbol>
+    <symbol id="i-openai" viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="8" fill="url(#az2)"/><path d="M22 9 L25 19 L35 22 L25 25 L22 35 L19 25 L9 22 L19 19 Z" fill="#FFF"/><circle cx="32" cy="12" r="2.5" fill="#FFF"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 44 44"><path d="M10 4 h16 l10 10 v26 h-26 Z" fill="url(#az2)"/><path d="M26 4 v10 h10" fill="#1E8A7E"/><path d="M15 20 h14 M15 26 h14 M15 32 h9" stroke="#FFF" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-speech" viewBox="0 0 44 44"><rect x="15" y="5" width="14" height="22" rx="7" fill="url(#az2)"/><path d="M10 20 a12 12 0 0 0 24 0" fill="none" stroke="#1E8A7E" stroke-width="3"/><path d="M22 32 v7 M15 39 h14" stroke="#1E8A7E" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="i-kv" viewBox="0 0 44 44"><circle cx="16" cy="16" r="11" fill="url(#or)"/><circle cx="16" cy="16" r="4" fill="#FFF"/><path d="M24 24 L38 38 M31 31 l4 -4 M35 35 l4 -4" stroke="#D97706" stroke-width="5" stroke-linecap="round"/></symbol>
+    <symbol id="i-storage" viewBox="0 0 44 44"><rect x="5" y="8" width="34" height="9" rx="2" fill="url(#az)"/><rect x="5" y="19" width="34" height="9" rx="2" fill="url(#az)"/><rect x="5" y="30" width="34" height="9" rx="2" fill="url(#az)"/><circle cx="33" cy="12.5" r="1.8" fill="#FFF"/><circle cx="33" cy="23.5" r="1.8" fill="#FFF"/><circle cx="33" cy="34.5" r="1.8" fill="#FFF"/></symbol>
+    <symbol id="i-ai" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="url(#pu)"/><path d="M8 24 h7 l4 -9 l6 16 l4 -10 l3 3 h4" fill="none" stroke="#FFF" stroke-width="2.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-law" viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="6" fill="url(#az)"/><rect x="10" y="24" width="6" height="11" fill="#FFF"/><rect x="19" y="16" width="6" height="19" fill="#FFF"/><rect x="28" y="10" width="6" height="25" fill="#FFF"/></symbol>
+    <symbol id="i-eh" viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="6" fill="url(#az)"/><path d="M9 14 h12 l6 8 l-6 8 h-12 Z" fill="#FFF"/><path d="M23 14 h5 l6 8 l-6 8 h-5 l6 -8 Z" fill="#CFE6F8"/></symbol>
+    <symbol id="i-siem" viewBox="0 0 44 44"><rect x="4" y="4" width="36" height="36" rx="6" fill="url(#az2)"/><path d="M22 9 L33 13 V22 C33 29 28 33.5 22 36 C16 33.5 11 29 11 22 V13 Z" fill="none" stroke="#FFF" stroke-width="2.5" stroke-linejoin="round"/><circle cx="20" cy="21" r="4.5" fill="none" stroke="#FFF" stroke-width="2.5"/><path d="M23.5 24.5 L28 29" stroke="#FFF" stroke-width="2.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-policy" viewBox="0 0 44 44"><path d="M22 3 L38 9 V22 C38 32 30 38 22 41 C14 38 6 32 6 22 V9 Z" fill="url(#az)"/><path d="M14 22 l6 6 l11 -12" fill="none" stroke="#FFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cmdb" viewBox="0 0 44 44"><ellipse cx="22" cy="10" rx="15" ry="6" fill="#0A4F8F"/><path d="M7 10 v24 a15 6 0 0 0 30 0 V10" fill="url(#az)"/><ellipse cx="22" cy="10" rx="15" ry="6" fill="#3B9CE6"/></symbol>
+    <symbol id="i-idp" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="url(#az)"/><circle cx="22" cy="22" r="9" fill="none" stroke="#FFF" stroke-width="3"/><circle cx="22" cy="22" r="3" fill="#FFF"/></symbol>
+    <symbol id="i-nva" viewBox="0 0 44 44"><rect x="4" y="8" width="36" height="28" rx="3" fill="#B91C1C"/><path d="M4 17 h36 M4 26 h36 M16 8 v9 M28 17 v9 M16 26 v10" stroke="#FFF" stroke-width="2"/></symbol>
+    <symbol id="i-dns" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="url(#az)"/><ellipse cx="22" cy="22" rx="8" ry="18" fill="none" stroke="#FFF" stroke-width="2"/><path d="M4 22 h36 M7 13 h30 M7 31 h30" stroke="#FFF" stroke-width="2"/></symbol>
+    <symbol id="i-pe" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#FFF" stroke="#0F6CBD" stroke-width="2.5"/><circle cx="10" cy="10" r="3.5" fill="#0F6CBD"/></symbol>
+      <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0 H0 V20" fill="none" stroke="#E9ECF0" stroke-width="1"/></pattern>
+
+    <!-- additional symbols v0.1 (network, compute, data, process) -->
+    <symbol id="i-dns-lb" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="url(#or)"/><circle cx="22" cy="11" r="3.5" fill="#FFF"/><path d="M22 14.5 V21 M11 21 H33 M11 21 V28 M22 21 V28 M33 21 V28" fill="none" stroke="#FFF" stroke-width="2.5" stroke-linecap="round"/><circle cx="11" cy="31" r="3" fill="#FFF"/><circle cx="22" cy="31" r="3" fill="#FFF"/><circle cx="33" cy="31" r="3" fill="#FFF"/></symbol>
+    <symbol id="i-switch" viewBox="0 0 44 44"><rect x="4" y="12" width="36" height="20" rx="3" fill="#1BA0D7"/><path d="M11 22h8M11 19l3 3-3 3M33 22h-8M33 19l-3 3 3 3" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="i-router" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="#1BA0D7"/><path d="M12 18h20M28 14l4 4-4 4M32 26H12M16 22l-4 4 4 4" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="i-firewall" viewBox="0 0 44 44"><rect x="4" y="8" width="36" height="28" rx="3" fill="#C0392B"/><path d="M4 17h36M4 27h36M16 8v9M28 8v9M10 17v10M22 17v10M34 17v10M16 27v9M28 27v9" stroke="#fff" stroke-width="2"/></symbol>
+    <symbol id="i-lb" viewBox="0 0 44 44"><rect x="14" y="4" width="16" height="12" rx="2" fill="url(#az)"/><rect x="3" y="28" width="12" height="12" rx="2" fill="url(#az)"/><rect x="16" y="28" width="12" height="12" rx="2" fill="url(#az)"/><rect x="29" y="28" width="12" height="12" rx="2" fill="url(#az)"/><path d="M22 16v6M22 22H9v6M22 22v6M22 22h13v6" stroke="#0F4C81" stroke-width="2" fill="none"/></symbol>
+    <symbol id="i-aks" viewBox="0 0 44 44"><path d="M22 3l17 10v18L22 41 5 31V13z" fill="url(#az)"/><path d="M22 12l9 5v10l-9 5-9-5V17z" fill="#fff" opacity="0.9"/><circle cx="22" cy="22" r="3" fill="#0F6CBD"/></symbol>
+    <symbol id="i-vm" viewBox="0 0 44 44"><rect x="4" y="7" width="36" height="24" rx="3" fill="url(#az)"/><rect x="8" y="11" width="28" height="16" fill="#fff" opacity="0.9"/><rect x="15" y="33" width="14" height="4" fill="#0F6CBD"/><rect x="10" y="37" width="24" height="3" fill="#0F6CBD"/></symbol>
+    <symbol id="i-sql" viewBox="0 0 44 44"><ellipse cx="22" cy="10" rx="15" ry="6" fill="url(#az)"/><path d="M7 10v22c0 3.3 6.7 6 15 6s15-2.7 15-6V10" fill="url(#az)"/><ellipse cx="22" cy="10" rx="15" ry="6" fill="#fff" opacity="0.35"/><path d="M7 21c0 3.3 6.7 6 15 6s15-2.7 15-6" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.8"/></symbol>
+    <symbol id="i-sb" viewBox="0 0 44 44"><rect x="4" y="16" width="36" height="12" rx="3" fill="url(#az)"/><rect x="8" y="19" width="6" height="6" fill="#fff"/><rect x="16" y="19" width="6" height="6" fill="#fff"/><rect x="24" y="19" width="6" height="6" fill="#fff"/><path d="M33 22h4M35 20l2 2-2 2" stroke="#fff" stroke-width="2" fill="none"/></symbol>
+    <symbol id="i-redis" viewBox="0 0 44 44"><path d="M22 6l16 8-16 8L6 14z" fill="#D82C20"/><path d="M6 22l16 8 16-8v6L22 36 6 28z" fill="#A41E11"/></symbol>
+    <symbol id="i-datacenter" viewBox="0 0 44 44"><rect x="6" y="4" width="32" height="36" rx="2" fill="url(#gy)"/><rect x="10" y="8" width="24" height="7" fill="#fff" opacity="0.85"/><rect x="10" y="18" width="24" height="7" fill="#fff" opacity="0.85"/><rect x="10" y="28" width="24" height="7" fill="#fff" opacity="0.85"/><circle cx="31" cy="11.5" r="1.5" fill="#16A34A"/><circle cx="31" cy="21.5" r="1.5" fill="#16A34A"/><circle cx="31" cy="31.5" r="1.5" fill="#16A34A"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 44 44"><path d="M12 34a8 8 0 0 1-1-15.9A11 11 0 0 1 32 15a7.5 7.5 0 0 1 2 14.8V34z" fill="url(#az)"/></symbol>
+    <symbol id="i-repo" viewBox="0 0 44 44"><rect x="6" y="5" width="32" height="34" rx="4" fill="#24292F"/><path d="M14 13h16M14 20h16M14 27h10" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-pipeline" viewBox="0 0 44 44"><circle cx="9" cy="22" r="5" fill="url(#az)"/><circle cx="22" cy="22" r="5" fill="url(#az)"/><circle cx="35" cy="22" r="5" fill="url(#az)"/><path d="M14 22h3M27 22h3" stroke="#0F4C81" stroke-width="2.5"/></symbol>
+    <symbol id="i-pim" viewBox="0 0 44 44"><circle cx="22" cy="13" r="8" fill="url(#or)"/><path d="M6 40c0-11 32-11 32 0z" fill="url(#or)"/><circle cx="33" cy="32" r="8" fill="#fff"/><path d="M33 27v5l3 2" stroke="#D97706" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 44 44"><rect x="4" y="7" width="36" height="24" rx="3" fill="url(#az2)"/><polyline points="9,24 15,17 20,21 27,12 35,19" stroke="#fff" stroke-width="2.5" fill="none" stroke-linejoin="round"/><rect x="17" y="33" width="10" height="4" fill="#1E8A7E"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 44 44"><rect x="5" y="10" width="34" height="24" rx="3" fill="url(#gy)"/><circle cx="5" cy="22" r="4" fill="#fff"/><circle cx="39" cy="22" r="4" fill="#fff"/><path d="M14 18h16M14 26h10" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-gate" viewBox="0 0 44 44"><path d="M22 4l16 18-16 18L6 22z" fill="url(#or)"/><path d="M15 22h14M24 17l5 5-5 5" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/></symbol>
+    <!-- dark theme: markers and grid (same geometry, dark palette) -->
+    <marker id="ab-d" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#60A5FA"/></marker>
+    <marker id="ao-d" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#F59E0B"/></marker>
+    <marker id="ag-d" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#94A3B8"/></marker>
+    <marker id="agb-d" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M12,0 L0,6 L12,12 z" fill="#94A3B8"/></marker>
+    <pattern id="grid-d" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0 H0 V20" fill="none" stroke="#1E293B" stroke-width="1"/></pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="#0F172A"/>
+  <rect width="100%" height="100%" fill="url(#grid-d)" opacity="0.6"/>
+  <text x="40" y="48" font-size="28" font-weight="700" fill="#F1F5F9">Pattern status · from draft to retired</text>
+  <text x="40" y="74" font-size="14" fill="#94A3B8">pattern-lifecycle v1.0 · every transition names its trigger and the owner who moves it · main path on one row, side paths below</text>
+
+  <!-- transitions: main path solid blue, side paths dashed -->
+  <path id="t1" data-edge="t1" d="M260 245 H308" fill="none" stroke="#60A5FA" stroke-width="2.5" marker-end="url(#ab-d)"/>
+  <path id="t2" data-edge="t2" d="M510 245 H558" fill="none" stroke="#60A5FA" stroke-width="2.5" marker-end="url(#ab-d)"/>
+  <path id="t3" data-edge="t3" d="M760 245 H808" fill="none" stroke="#60A5FA" stroke-width="2.5" marker-end="url(#ab-d)"/>
+  <path id="t4" data-edge="t4" d="M1010 245 H1058" fill="none" stroke="#60A5FA" stroke-width="2.5" marker-end="url(#ab-d)"/>
+  <path id="t5" data-edge="t5" d="M1260 245 H1308" fill="none" stroke="#60A5FA" stroke-width="2.5" marker-end="url(#ab-d)"/>
+  <path id="t6" data-edge="t6" d="M380 290 V418" fill="none" stroke="#F87171" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ag-d)"/>
+  <path id="t7" data-edge="t7" d="M310 465 H160 V292" fill="none" stroke="#F87171" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ag-d)"/>
+  <path id="t8" data-edge="t8" d="M470 290 V380 H660 V418" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ag-d)"/>
+
+  <!-- states: main row y=200, 200 x 90, gap 50 -->
+  <g id="n-draft" data-node="draft" transform="translate(60,200)"><rect width="200" height="90" rx="45" fill="#1E293B" stroke="#60A5FA" stroke-width="2" filter="url(#sh)"/><text x="100" y="42" text-anchor="middle" font-size="15" font-weight="600" fill="#F1F5F9">Draft</text><text x="100" y="62" text-anchor="middle" font-size="12" fill="#94A3B8">in the pattern repo</text></g>
+  <g id="n-review" data-node="review" transform="translate(310,200)"><rect width="200" height="90" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" filter="url(#sh)"/><text x="100" y="42" text-anchor="middle" font-size="15" font-weight="600" fill="#F1F5F9">Review</text><text x="100" y="62" text-anchor="middle" font-size="12" fill="#94A3B8">PR open · checks run</text></g>
+  <g id="n-approved" data-node="approved" transform="translate(560,200)"><rect width="200" height="90" rx="8" fill="#0F2A1A" stroke="#4ADE80" stroke-width="1.5" filter="url(#sh)"/><text x="100" y="42" text-anchor="middle" font-size="15" font-weight="600" fill="#F1F5F9">Approved</text><text x="100" y="62" text-anchor="middle" font-size="12" fill="#94A3B8">sign-offs recorded</text></g>
+  <g id="n-published" data-node="published" transform="translate(810,200)"><rect width="200" height="90" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5" filter="url(#sh)"/><text x="100" y="42" text-anchor="middle" font-size="15" font-weight="600" fill="#F1F5F9">Published</text><text x="100" y="62" text-anchor="middle" font-size="12" fill="#94A3B8">in the catalog · consumable</text></g>
+  <g id="n-deprecated" data-node="deprecated" transform="translate(1060,200)"><rect width="200" height="90" rx="8" fill="#3B2A0B" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="6 4" filter="url(#sh)"/><text x="100" y="42" text-anchor="middle" font-size="15" font-weight="600" fill="#F1F5F9">Deprecated</text><text x="100" y="62" text-anchor="middle" font-size="12" fill="#94A3B8">successor named · no new use</text></g>
+  <g id="n-retired" data-node="retired" transform="translate(1310,200)"><rect width="200" height="90" rx="8" fill="#1E293B" stroke="#F1F5F9" stroke-width="2" filter="url(#sh)"/><rect x="5" y="5" width="190" height="80" rx="6" fill="none" stroke="#F1F5F9" stroke-width="1"/><text x="100" y="42" text-anchor="middle" font-size="15" font-weight="600" fill="#F1F5F9">Retired</text><text x="100" y="62" text-anchor="middle" font-size="12" fill="#94A3B8">removed from catalog</text></g>
+  <!-- side states y=420 -->
+  <g id="n-rework" data-node="rework" transform="translate(310,420)"><rect width="200" height="90" rx="8" fill="#3F1D1D" stroke="#F87171" stroke-width="1.5" filter="url(#sh)"/><text x="100" y="42" text-anchor="middle" font-size="15" font-weight="600" fill="#FCA5A5">Changes requested</text><text x="100" y="62" text-anchor="middle" font-size="12" fill="#94A3B8">review comments open</text></g>
+  <g id="n-withdrawn" data-node="withdrawn" transform="translate(560,420)"><rect width="200" height="90" rx="8" fill="#1E293B" stroke="#F1F5F9" stroke-width="2" filter="url(#sh)"/><rect x="5" y="5" width="190" height="80" rx="6" fill="none" stroke="#F1F5F9" stroke-width="1"/><text x="100" y="42" text-anchor="middle" font-size="15" font-weight="600" fill="#F1F5F9">Withdrawn</text><text x="100" y="62" text-anchor="middle" font-size="12" fill="#94A3B8">closed without publishing</text></g>
+
+  <!-- transition labels: trigger on the first line, actor on the second, above the row centered on each gap -->
+  <text x="285" y="166" text-anchor="middle" font-size="12" fill="#CBD5E1">author opens PR</text><text x="285" y="182" text-anchor="middle" font-size="11" fill="#94A3B8">Architecture</text>
+  <text x="535" y="166" text-anchor="middle" font-size="12" fill="#CBD5E1">security and architecture sign-off</text><text x="535" y="182" text-anchor="middle" font-size="11" fill="#94A3B8">Security</text>
+  <text x="785" y="166" text-anchor="middle" font-size="12" fill="#CBD5E1">catalog entry merged</text><text x="785" y="182" text-anchor="middle" font-size="11" fill="#94A3B8">Enterprise Architecture</text>
+  <text x="1035" y="166" text-anchor="middle" font-size="12" fill="#CBD5E1">successor published</text><text x="1035" y="182" text-anchor="middle" font-size="11" fill="#94A3B8">Architecture</text>
+  <text x="1285" y="166" text-anchor="middle" font-size="12" fill="#CBD5E1">last consumer migrated</text><text x="1285" y="182" text-anchor="middle" font-size="11" fill="#94A3B8">Architecture</text>
+  <text x="392" y="350" font-size="12" fill="#F87171" paint-order="stroke" stroke="#0F172A" stroke-width="4">reviewer requests changes · Security</text>
+  <text x="172" y="392" font-size="12" fill="#F87171" paint-order="stroke" stroke="#0F172A" stroke-width="4">author revises</text>
+  <text x="480" y="374" font-size="12" fill="#CBD5E1" paint-order="stroke" stroke="#0F172A" stroke-width="4">author withdraws · Architecture</text>
+
+  <!-- note -->
+  <g id="note-gates" transform="translate(810,420)">
+    <rect width="700" height="90" rx="6" fill="#3B2F0B" stroke="#F59E0B" stroke-width="1"/>
+    <text x="12" y="22" font-size="13" font-weight="600" fill="#FCD34D">Who can move a pattern</text>
+    <text x="12" y="44" font-size="12" fill="#CBD5E1">Review to Approved needs both sign-offs in the PR; one is not enough.</text>
+    <text x="12" y="62" font-size="12" fill="#CBD5E1">Published to Deprecated needs a named successor pattern.</text>
+    <text x="12" y="80" font-size="12" fill="#CBD5E1">Deprecated to Retired waits for the CMDB to show zero consumers.</text>
+  </g>
+
+  <!-- legend -->
+  <g id="legend" transform="translate(40,560)">
+    <rect width="1520" height="100" rx="6" fill="#1E293B" stroke="#334155"/>
+    <rect x="14" y="12" width="36" height="18" rx="9" fill="#1E293B" stroke="#60A5FA" stroke-width="2"/><text x="58" y="25" font-size="12" fill="#CBD5E1">start</text>
+    <rect x="110" y="12" width="36" height="18" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1.5"/><text x="154" y="25" font-size="12" fill="#CBD5E1">active</text>
+    <rect x="210" y="12" width="36" height="18" rx="3" fill="#0F2A1A" stroke="#4ADE80" stroke-width="1.5"/><text x="254" y="25" font-size="12" fill="#CBD5E1">success gate</text>
+    <rect x="350" y="12" width="36" height="18" rx="3" fill="#3B2A0B" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="4 3"/><text x="394" y="25" font-size="12" fill="#CBD5E1">waiting</text>
+    <rect x="470" y="12" width="36" height="18" rx="3" fill="#3F1D1D" stroke="#F87171" stroke-width="1.5"/><text x="514" y="25" font-size="12" fill="#CBD5E1">failure</text>
+    <rect x="590" y="12" width="36" height="18" rx="3" fill="#1E293B" stroke="#F1F5F9" stroke-width="2"/><rect x="593" y="15" width="30" height="12" rx="2" fill="none" stroke="#F1F5F9" stroke-width="1"/><text x="634" y="25" font-size="12" fill="#CBD5E1">terminal (double border)</text>
+    <line x1="800" y1="21" x2="840" y2="21" stroke="#60A5FA" stroke-width="2.5" marker-end="url(#ab-d)"/><text x="850" y="25" font-size="12" fill="#CBD5E1">main path</text>
+    <line x1="940" y1="21" x2="980" y2="21" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ag-d)"/><text x="990" y="25" font-size="12" fill="#CBD5E1">side path</text>
+    <line x1="1070" y1="21" x2="1110" y2="21" stroke="#F87171" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ag-d)"/><text x="1120" y="25" font-size="12" fill="#CBD5E1">rework loop</text>
+    <text x="14" y="58" font-size="12" fill="#CBD5E1">Main path: Draft → Review → Approved → Published → Deprecated → Retired. Each label is the trigger first, then the owner lane that moves it.</text>
+    <text x="14" y="80" font-size="12" fill="#94A3B8">Not drawn on purpose: versioning inside Published (minor revisions stay Published), the CMDB consumer query, the catalog UI.</text>
+  </g>
+  <g id="meta" data-meta="true"><text x="40" y="730" font-size="11" fill="#94A3B8">pattern-lifecycle v1.0 · Diagram 1 of 1 · Pattern status lifecycle · 2026-10-23 · Internal · Draft · Architecture · Dark</text></g>
+</svg>

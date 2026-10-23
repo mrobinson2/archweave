@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Pattern status, from draft to retired",
+    "subtitle": "pattern-lifecycle v1.0 · every transition names its trigger and the owner who moves it",
+    "pattern_id": "pattern-lifecycle",
+    "version": "1.0",
+    "diagram_index": "Diagram 1 of 1",
+    "dr_strategy": "n/a",
+    "date": "2026-10-23",
+    "status": "Draft",
+    "classification": "Internal",
+    "output": "pattern-status.svg",
+    "canvas": [1600, 760]
+  },
+  "states": [
+    { "id": "draft", "label": "Draft", "sublabel": "in the pattern repo", "kind": "start", "owner": "Architecture" },
+    { "id": "review", "label": "Review", "sublabel": "PR open · checks run", "kind": "active", "owner": "Architecture" },
+    { "id": "approved", "label": "Approved", "sublabel": "sign-offs recorded", "kind": "success", "owner": "Security" },
+    { "id": "published", "label": "Published", "sublabel": "in the catalog · consumable", "kind": "active", "owner": "Enterprise Architecture" },
+    { "id": "deprecated", "label": "Deprecated", "sublabel": "successor named · no new use", "kind": "waiting", "owner": "Architecture" },
+    { "id": "retired", "label": "Retired", "sublabel": "removed from catalog", "kind": "terminal", "owner": "Enterprise Architecture" },
+    { "id": "rework", "label": "Changes requested", "sublabel": "review comments open", "kind": "failure", "owner": "Architecture" },
+    { "id": "withdrawn", "label": "Withdrawn", "sublabel": "closed without publishing", "kind": "terminal", "owner": "Architecture" }
+  ],
+  "transitions": [
+    { "id": "t1", "from": "draft", "to": "review", "label": "author opens PR", "actor": "Architecture", "style": "request" },
+    { "id": "t2", "from": "review", "to": "approved", "label": "security and architecture sign-off", "actor": "Security", "style": "request" },
+    { "id": "t3", "from": "approved", "to": "published", "label": "catalog entry merged", "actor": "Enterprise Architecture", "style": "request" },
+    { "id": "t4", "from": "published", "to": "deprecated", "label": "successor published", "actor": "Architecture", "style": "request" },
+    { "id": "t5", "from": "deprecated", "to": "retired", "label": "last consumer migrated", "actor": "Architecture", "style": "request" },
+    { "id": "t6", "from": "review", "to": "rework", "label": "reviewer requests changes", "actor": "Security", "style": "control" },
+    { "id": "t7", "from": "rework", "to": "draft", "label": "author revises", "actor": "Architecture", "style": "control" },
+    { "id": "t8", "from": "review", "to": "withdrawn", "label": "author withdraws", "actor": "Architecture", "style": "control" }
+  ],
+  "main_path": ["draft", "review", "approved", "published", "deprecated", "retired"],
+  "notes": [
+    { "id": "note-gates", "title": "Who can move a pattern", "lines": [
+      "Review to Approved needs both sign-offs in the PR; one is not enough",
+      "Published to Deprecated needs a named successor pattern",
+      "Deprecated to Retired waits for the CMDB to show zero consumers"
+    ] }
+  ],
+  "legend": { "lines": ["solid blue: main path", "dashed grey: side path", "dashed red: rework loop"] }
+}

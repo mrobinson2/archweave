@@ -19,7 +19,7 @@ It was built for enterprise architecture teams who need diagrams that say what i
 - **PowerPoint export** (`scripts/export-pptx.py`, standard library only): one 16:9 slide per diagram, PNG with the SVG embedded so it stays crisp, dark slide for dark plans, optional title band.
 - **Light and dark themes.** Default light; set `meta.theme` to `dark` (or just ask) for dark slides. Same layout, same icons, dark palette, checked by the checker.
 - **A prompt cookbook** (`references/prompt-cookbook.md`) with worked prompts for a dozen common technology diagrams.
-- **Six worked examples** that pass the checker: internal API architecture by DR strategy, API request sequence, Golden Path workflow, each in light and dark.
+- **Ten worked examples** that pass the checker, one per diagram type plus a deployment view, each in light and dark: internal API architecture, API request sequence, Golden Path workflow, telemetry-to-SIEM dataflow, pattern status lifecycle.
 - **Three hosts from one source:** VS Code GitHub Copilot agent mode or Claude Code (the agent runs the whole loop), Microsoft 365 Copilot custom skills (the checker runs in Copilot's sandbox, Frontier preview), and Microsoft 365 Copilot with knowledge files (the agent writes the SVG, a local script finishes it).
 
 ## How it works
