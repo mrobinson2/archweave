@@ -75,7 +75,7 @@ Everything organization-specific lives in one file: `.github/skills/archweave/re
 Optional:
 - **Icons.** Add a `<symbol id="i-yourthing" viewBox="0 0 44 44">` to `assets/icons.xml`. Keep it free of `<image href="http...">`. Reference it from the vocabulary row. Official vendor sets and their terms are listed in section 8.
 - **House style.** Palette, fonts and sizes are in `references/authoring-rules.md` and `references/svg-conventions.md`. Change the hex values in `assets/icons.xml` gradients and the rules together.
-- **Renderer.** Set `ARCHWEAVE_BROWSER` to a browser executable if auto-detection misses it or policy blocks Edge headless.
+- **Renderer.** Set `ARCHWEAVE_BROWSER` to a browser executable if auto-detection misses it or policy blocks Edge headless. The skill itself makes no network calls, but a headless Edge or Chrome may contact its vendor on launch for updates or safe-browsing lists; point `ARCHWEAVE_BROWSER` at a locked-down Chromium, or use `rsvg-convert`, if that matters in your environment.
 
 ## 4. Use in VS Code Copilot or Claude Code
 
@@ -104,7 +104,7 @@ python .github/skills/archweave/scripts/check-diagram.py out/<folder>/plan.json 
 .github/skills/archweave/scripts/render-png.sh out/<folder>/<slug>.svg 1.3      # second arg is scale
 ```
 
-What the checker enforces: plan parses and matches the schema's intent (ids, references, label lengths, required legend); every plan node, zone and edge has a matching `data-node`, `data-zone`, `data-edge` in the SVG and nothing extra; no `<script>`, `<animate>`, `<foreignObject>`, `http(s)` references, `@import` or `@font-face`; font floor 11 px; estimated text width inside node boxes; metadata stamp with pattern ID, date and classification. Exit code 0 is the only pass.
+What the checker enforces: plan parses and matches the schema's intent (ids, references, label lengths, required legend); every plan node, zone and edge has a matching `data-node`, `data-zone`, `data-edge` in the SVG and nothing extra; nothing active or external (`<script>`, `<animate>`, `<set>`, `<foreignObject>`, DOCTYPE or entity declarations, `on*=` handlers, `javascript:`, `http(s)` and `file:` URLs, `@import`, `@font-face`, any `href` or `url()` that is not a local `#id` or `data:`); font floor 11 px; estimated text width inside node boxes; metadata stamp with pattern ID, date and classification. Exit code 0 is the only pass.
 
 ## 6. Use with Microsoft 365 Copilot
 
@@ -136,6 +136,8 @@ Each diagram:
 Copilot Studio's code interpreter can render server-side, but diagram content then leaves the laptop. Decide that with your security team.
 
 ## 7. Writing a good prompt
+
+Worked prompts for a dozen common diagrams, one per diagram type, are in `.github/skills/archweave/references/prompt-cookbook.md`.
 
 Give the agent what the vocabulary cannot know: the pattern ID, the DR strategy, which components are in scope, and anything that differs from the defaults ("this one uses AKS, not App Service", "partner-facing, so the external APIM"). Do not give it addresses or hostnames unless they are real; it will otherwise use the vocabulary defaults and say so.
 

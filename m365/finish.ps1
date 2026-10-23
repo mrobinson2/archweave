@@ -33,10 +33,25 @@ $Svg = (Resolve-Path $Svg).Path
 
 # quick static guards even without a plan
 $text = Get-Content -Raw $Svg
-foreach ($bad in @('<script', '<animate', '<foreignObject', '@import', '@font-face')) {
-  if ($text -match [regex]::Escape($bad)) { throw "Refusing to render: SVG contains $bad" }
+# same list as scripts/check-diagram.py; this runs even when no plan.json is present, before Edge opens the file
+$guards = @(
+  @('<script[\s>]',                               'a <script> element'),
+  @('<animate',                                   'an <animate*> element'),
+  @('<set[\s/>]',                                 'a <set> (SMIL) element'),
+  @('<foreignObject',                             'a <foreignObject> element'),
+  @('<!DOCTYPE|<!ENTITY',                         'a DOCTYPE or entity declaration'),
+  @('\son[a-z]+\s*=',                             'an event handler attribute (on*=)'),
+  @('javascript:',                                'a javascript: URL'),
+  @('https?://(?!www\.w3\.org/)',                 'an external http(s) URL'),
+  @('file:',                                      'a file: URL'),
+  @('@\s*import|@\s*font-face',                   '@import or @font-face'),
+  @('<image[^>]*href="(?!data:)',                 'an <image> that is not inline data:'),
+  @('(?<![\w:-])(?:xlink:)?href\s*=\s*"(?!#|data:)', 'an href that is not a local #id or data: URL'),
+  @('url\(\s*["'']?(?!#)',                        'a url() that is not a local #id')
+)
+foreach ($g in $guards) {
+  if ($text -match $g[0]) { throw "Refusing to render: SVG contains $($g[1])" }
 }
-if ($text -match 'https?://(?!www\.w3\.org/)') { throw "Refusing to render: SVG references an external http(s) URL" }
 if ($text -notmatch 'data-meta="true"') { Write-Warning "Metadata stamp missing (no data-meta group)." }
 
 # full checker when a plan exists

@@ -42,12 +42,22 @@ M365_MAX_FILES = 350
 M365_MAX_DEPTH = 3          # counted as path components including the file name, from the zip root
 
 
+ALLOWED_TOP = {'SKILL.md', 'assets', 'examples', 'references', 'schemas', 'scripts'}
+
+
 def entries(target):
-    """Yield (source_path, archive_name) pairs for the chosen target."""
+    """Yield (source_path, archive_name) pairs for the chosen target.
+
+    Only SKILL.md and the five known folders ship; anything else under the skill
+    folder is reported and refused, so a stray file cannot end up in a public zip.
+    """
     for p in sorted(SKILL.rglob('*')):
         if p.is_dir() or '__pycache__' in p.parts or p.name == '.DS_Store':
             continue
         rel = p.relative_to(SKILL)
+        if rel.parts[0] not in ALLOWED_TOP:
+            print(f'FAIL {rel.as_posix()}: not in the allowed top-level set {sorted(ALLOWED_TOP)}', file=sys.stderr)
+            sys.exit(1)
         if target == 'agent-builder':
             if rel.parts[0] == 'scripts' and rel.name.startswith('render-png.'):
                 continue

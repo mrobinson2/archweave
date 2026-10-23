@@ -225,10 +225,17 @@ if not re.search(r'<title>[^<]+</title>', svg):
 for pattern, code, msg in [
     (r'<script[\s>]', 'svg/forbidden', '<script> not allowed'),
     (r'<animate', 'svg/forbidden', '<animate*> not allowed'),
+    (r'<set[\s/>]', 'svg/forbidden', '<set> (SMIL) not allowed'),
     (r'<foreignObject', 'svg/forbidden', '<foreignObject> not allowed'),
+    (r'<!DOCTYPE|<!ENTITY', 'svg/forbidden', 'DOCTYPE and entity declarations not allowed'),
+    (r'\son[a-z]+\s*=', 'svg/forbidden', 'event handler attribute (on*=) not allowed'),
+    (r'javascript:', 'svg/forbidden', 'javascript: URL not allowed'),
     (r'https?://(?!www\.w3\.org/)', 'svg/external', 'external http(s) reference found (only w3.org namespaces allowed)'),
-    (r'@import|@font-face', 'svg/external', '@import or @font-face not allowed'),
+    (r'file:', 'svg/external', 'file: URL not allowed'),
+    (r'@\s*import|@\s*font-face', 'svg/external', '@import or @font-face not allowed'),
     (r'<image[^>]*href="(?!data:)', 'svg/external', '<image> must be inline data: or absent'),
+    (r'(?<![\w:-])(?:xlink:)?href\s*=\s*"(?!#|data:)', 'svg/external', 'href must point at a local id (#...) or a data: URL'),
+    (r'url\(\s*["\']?(?!#)', 'svg/external', 'url() must reference a local id (#...)'),
 ]:
     if re.search(pattern, svg, re.IGNORECASE):
         fail(code, msg)
