@@ -9,7 +9,7 @@ Everything under `.github/skills/archweave/` is the single source: vocabulary, r
 | Step | VS Code Copilot or Claude Code | M365 Copilot declarative agent |
 |---|---|---|
 | Classify, plan, draw | agent, from SKILL.md | agent, from agent-instructions.md plus knowledge files |
-| Check (`check-diagram.mjs`) | agent runs it | `finish.ps1` runs it if `plan.json` sits beside the SVG |
+| Check (`check-diagram.py`) | agent runs it | `finish.ps1` runs it if `plan.json` sits beside the SVG |
 | Render PNG | agent runs `render-png.ps1` | `finish.ps1` runs `render-png.ps1` |
 | Look and repair | agent views the PNG itself | you view the PNG, paste the checker output or describe the defect, agent resends SVG |
 | Model | whatever the host offers | whatever the tenant exposes to declarative agents |
@@ -24,7 +24,7 @@ Everything under `.github/skills/archweave/` is the single source: vocabulary, r
 
 1. Upload to a SharePoint folder the agent can read: `references/vocabulary.md`, `references/authoring-rules.md`, `references/svg-conventions.md`, `assets/icons.svg`, and the three example SVGs from `examples/`.
 2. Paste `agent-instructions.md` into the agent's instructions. Point knowledge at the folder.
-3. Copy the whole repository to the laptop. Confirm Node 18 or later and Edge. Run once:
+3. Copy the whole repository to the laptop. Confirm Python 3.9 or later (`python` or `py -3`) and Edge. Run once:
    ```powershell
    Set-ExecutionPolicy -Scope Process Bypass
    .\m365\finish.ps1 .\.github\skills\archweave\examples\architecture-internal-api\internal-api.svg

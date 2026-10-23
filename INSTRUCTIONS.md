@@ -4,11 +4,11 @@
 
 | Need | Why | Check |
 |---|---|---|
-| Node 18 or later | runs the checker; nothing to `npm install` | `node --version` |
+| Python 3.9 or later | runs the checker; standard library only, nothing to `pip install` | `python --version` (Windows: `py -3 --version`) |
 | A browser or rsvg for PNG | Windows: Edge (ships with Windows) or Chrome. macOS/Linux: `rsvg-convert` (`brew install librsvg`) or Chrome/Chromium/Edge | `rsvg-convert --version` or the browser's path |
 | An agent host | VS Code with GitHub Copilot agent mode, Claude Code, or Microsoft 365 Copilot | |
 
-No Python, no npm packages, no network access at render time.
+No npm, no pip packages, no network access at check or render time.
 
 ## 2. Install
 
@@ -36,10 +36,10 @@ See section 6. Uses the same skill files as knowledge plus a short instruction b
 
 ```bash
 cd archweave
-node .github/skills/archweave/scripts/check-diagram.mjs \
+python .github/skills/archweave/scripts/check-diagram.py \
   .github/skills/archweave/examples/architecture-internal-api/plan.json \
   .github/skills/archweave/examples/architecture-internal-api/internal-api.svg
-# expect: 0 fail, 0 warn
+# expect: 0 fail, 0 warn, then a hint that the PNG is rendered locally (unless cairosvg is installed)
 .github/skills/archweave/scripts/render-png.sh .github/skills/archweave/examples/architecture-internal-api/internal-api.svg
 # Windows:
 .github\skills\archweave\scripts\render-png.ps1 .github\skills\archweave\examples\architecture-internal-api\internal-api.svg
@@ -87,7 +87,7 @@ Repairing by hand: edit the SVG, rerun the checker and the renderer. The agent w
 ## 5. The check-render loop by hand
 
 ```bash
-node .github/skills/archweave/scripts/check-diagram.mjs out/<folder>/plan.json out/<folder>/<slug>.svg
+python .github/skills/archweave/scripts/check-diagram.py out/<folder>/plan.json out/<folder>/<slug>.svg
 .github/skills/archweave/scripts/render-png.sh out/<folder>/<slug>.svg 1.3      # second arg is scale
 ```
 
@@ -142,4 +142,4 @@ To add one: paste its paths into a new `<symbol>` in `assets/icons.svg`, keep th
 
 ## 10. Contributing
 
-Issues and pull requests welcome. Keep the checker dependency-free, keep examples passing (`0 fail`), and keep organization-specific facts out of everything except `vocabulary.md` and the examples' fictional values.
+Issues and pull requests welcome. Keep the checker standard-library only (Python 3.9+), keep examples passing (`0 fail`), and keep organization-specific facts out of everything except `vocabulary.md` and the examples' fictional values.

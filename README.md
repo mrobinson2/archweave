@@ -13,7 +13,7 @@ It was built for enterprise architecture teams who need diagrams that say what i
 - **Five diagram types.** Architecture (zones, hub and spoke, private endpoints, regions), sequence, workflow (owner lanes, gates, removed hand-offs), dataflow, lifecycle.
 - **A vocabulary file** that holds your organization's component names, positions, owners, DR strategies and pattern IDs. Edit one file, every diagram follows.
 - **Authoring rules and SVG conventions** the agent reads before drawing: color means ownership, numbered request paths, metadata stamp, legend, no invented facts.
-- **A checker** (`check-diagram.mjs`, Node 18+, no dependencies) that validates the plan, matches every planned node, zone and edge to the SVG, blocks scripts and external references, estimates text overflow, and requires the metadata stamp.
+- **A checker** (`check-diagram.py`, Python 3.9+, standard library only) that validates the plan, matches every planned node, zone and edge to the SVG, blocks scripts and external references, estimates text overflow, and requires the metadata stamp.
 - **Local renderers** for Windows (headless Edge or Chrome), macOS and Linux (rsvg or headless Chrome).
 - **A 40-symbol icon library** of simplified glyphs, so output needs no vendor assets.
 - **Three worked examples** that pass the checker: internal API architecture by DR strategy, API request sequence, Golden Path workflow.
@@ -32,7 +32,7 @@ The agent plans in JSON against a small schema, draws the SVG using the shared i
 ```bash
 git clone https://github.com/mrobinson2/archweave.git
 cd archweave
-node .github/skills/archweave/scripts/check-diagram.mjs \
+python .github/skills/archweave/scripts/check-diagram.py \
   .github/skills/archweave/examples/architecture-internal-api/plan.json \
   .github/skills/archweave/examples/architecture-internal-api/internal-api.svg
 .github/skills/archweave/scripts/render-png.sh .github/skills/archweave/examples/architecture-internal-api/internal-api.svg

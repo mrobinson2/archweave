@@ -12,3 +12,4 @@ Thumbs.db
 # node, if someone adds tooling later
 node_modules/
 npm-debug.log*
+dist/

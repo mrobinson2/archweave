@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2026-10-22)
+
+- Checker ported from Node (`check-diagram.mjs`) to Python (`check-diagram.py`, 3.9+, standard library only). Same CLI, same checks, same messages, same exit codes; verified side by side on all examples and on broken variants before the Node file was removed.
+- After a passing check the Python checker renders the PNG itself when `cairosvg` is importable; otherwise it prints a hint to run `render-png` locally.
+- `m365/finish.ps1` calls `python`, falling back to `py -3`, instead of `node`.
+- Docs and SKILL.md updated; SKILL.md commands are now relative to the skill folder.
+- `dist/archweave-skill.zip` build: SKILL.md at the zip root with scripts, references, schemas, assets and examples beside it.
+
 ## 0.1.0 (2026-10-20)
 
 First public release.

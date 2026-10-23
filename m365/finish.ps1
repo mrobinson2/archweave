@@ -42,11 +42,13 @@ if ($text -notmatch 'data-meta="true"') { Write-Warning "Metadata stamp missing 
 # full checker when a plan exists
 if (-not $Plan) { $cand = Join-Path (Split-Path $Svg) "plan.json"; if (Test-Path $cand) { $Plan = $cand } }
 if ($Plan) {
-  $node = Get-Command node -ErrorAction SilentlyContinue
-  if ($node) {
-    & node (Join-Path $skill "scripts\check-diagram.mjs") $Plan $Svg
+  $pyCmd = $null; $pyArgs = @()
+  if (Get-Command python -ErrorAction SilentlyContinue) { $pyCmd = "python" }
+  elseif (Get-Command py -ErrorAction SilentlyContinue) { $pyCmd = "py"; $pyArgs = @("-3") }
+  if ($pyCmd) {
+    & $pyCmd @pyArgs (Join-Path $skill "scripts\check-diagram.py") $Plan $Svg
     if ($LASTEXITCODE -ne 0) { Write-Warning "Checker reported failures. Paste them back to Copilot and ask for a repair." }
-  } else { Write-Warning "node not found; skipping plan check." }
+  } else { Write-Warning "python not found (tried python, then py -3); skipping plan check." }
 }
 
 & (Join-Path $skill "scripts\render-png.ps1") -Svg $Svg -Scale $Scale
