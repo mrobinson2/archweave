@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2 (2026-10-22)
+
+- New worked example `examples/workflow-golden-path-dark/`: the Golden Path workflow in the dark theme. Every shipped example now has a dark counterpart.
+
 ## 0.4.1 (2026-10-22)
 
 - New worked example `examples/architecture-internal-api-dark/`: the internal API reference implementation in the dark theme, with a zone palette distinct from the inherited-node fill so grey hub components stay readable.

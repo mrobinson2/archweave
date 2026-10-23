@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Golden Path intake to go-live, internal API (dark)",
+    "subtitle": "internal-api-golden-path v1.0 · owner lanes, gates, and the hand-offs the Golden Path removes",
+    "pattern_id": "internal-api-golden-path",
+    "version": "1.0",
+    "diagram_index": "Diagram 1 of 2",
+    "dr_strategy": "n/a",
+    "date": "2026-10-20",
+    "status": "Draft",
+    "classification": "Internal",
+    "output": "golden-path-dark.svg",
+    "canvas": [
+      1700,
+      920
+    ],
+    "theme": "dark"
+  },
+  "lanes": [
+    {
+      "id": "lane-app",
+      "owner": "App team",
+      "label": "App team"
+    },
+    {
+      "id": "lane-p1",
+      "owner": "Platform Engineering",
+      "label": "Developer portal (Backstage)"
+    },
+    {
+      "id": "lane-arch",
+      "owner": "Architecture",
+      "label": "Architecture"
+    },
+    {
+      "id": "lane-net",
+      "owner": "Network",
+      "label": "Network"
+    },
+    {
+      "id": "lane-security",
+      "owner": "Security",
+      "label": "Security"
+    },
+    {
+      "id": "lane-sre",
+      "owner": "SRE",
+      "label": "SRE"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "label": "Request API",
+      "sublabel": "from the catalog",
+      "lane": "lane-app",
+      "kind": "start"
+    },
+    {
+      "id": "intake",
+      "label": "Intake form",
+      "sublabel": "asked inputs only (6)",
+      "lane": "lane-p1",
+      "kind": "step"
+    },
+    {
+      "id": "derive",
+      "label": "Derive inputs",
+      "sublabel": "CMDB · EA repo · GRC",
+      "lane": "lane-p1",
+      "kind": "automated"
+    },
+    {
+      "id": "render",
+      "label": "Render template",
+      "sublabel": "repo + pipeline",
+      "lane": "lane-p1",
+      "kind": "automated"
+    },
+    {
+      "id": "scan",
+      "label": "IaC policy scan",
+      "sublabel": "gate owner: Security",
+      "lane": "lane-security",
+      "kind": "gate",
+      "evidence": "scan report in PR"
+    },
+    {
+      "id": "ticket",
+      "label": "Firewall ticket",
+      "sublabel": "manual ticket queue",
+      "lane": "lane-net",
+      "kind": "handoff",
+      "removed_by_golden_path": true
+    },
+    {
+      "id": "security-review",
+      "label": "Manual security review",
+      "sublabel": "manual review meeting",
+      "lane": "lane-security",
+      "kind": "handoff",
+      "removed_by_golden_path": true
+    },
+    {
+      "id": "deploy",
+      "label": "Deploy + tests",
+      "sublabel": "tests emit evidence",
+      "lane": "lane-arch",
+      "kind": "automated",
+      "evidence": "conformance.json"
+    },
+    {
+      "id": "alerts",
+      "label": "Alert collection",
+      "sublabel": "App Service + SQL",
+      "lane": "lane-sre",
+      "kind": "automated"
+    },
+    {
+      "id": "golive",
+      "label": "Go-live",
+      "sublabel": "evidence in repo",
+      "lane": "lane-app",
+      "kind": "end"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "start",
+      "to": "intake",
+      "condition": "always"
+    },
+    {
+      "id": "e2",
+      "from": "intake",
+      "to": "derive",
+      "condition": "always"
+    },
+    {
+      "id": "e3",
+      "from": "derive",
+      "to": "render",
+      "condition": "always"
+    },
+    {
+      "id": "e4",
+      "from": "render",
+      "to": "scan",
+      "label": "PR opened",
+      "condition": "always"
+    },
+    {
+      "id": "e5",
+      "from": "scan",
+      "to": "deploy",
+      "label": "pass",
+      "condition": "pass"
+    },
+    {
+      "id": "e6",
+      "from": "scan",
+      "to": "start",
+      "label": "fail: fix in repo",
+      "condition": "fail"
+    },
+    {
+      "id": "e7",
+      "from": "deploy",
+      "to": "alerts",
+      "condition": "always"
+    },
+    {
+      "id": "e8",
+      "from": "alerts",
+      "to": "golive",
+      "condition": "always"
+    },
+    {
+      "id": "e9",
+      "from": "render",
+      "to": "ticket",
+      "label": "before: ticket",
+      "condition": "always"
+    },
+    {
+      "id": "e10",
+      "from": "render",
+      "to": "security-review",
+      "label": "before: review",
+      "condition": "always"
+    }
+  ],
+  "notes": [
+    {
+      "id": "note-removed",
+      "title": "Hand-offs removed by the Golden Path",
+      "lines": [
+        "Firewall ticket: Azure Firewall rules for the pattern are pre-approved per spoke class",
+        "Security review: the template's controls evidence file replaces the review meeting"
+      ]
+    }
+  ]
+}

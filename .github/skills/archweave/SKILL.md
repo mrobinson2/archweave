@@ -3,7 +3,7 @@ name: archweave
 description: "Turn system intent into architecture. Produce architecture, sequence, workflow, dataflow and lifecycle diagrams as static SVG and PNG from a prompt, in your organization's house style and vocabulary. Use when asked to draw, diagram, sketch, visualize or illustrate a system, request flow, process, pipeline or state model for a reference architecture, reference implementation, design pattern, implementation guide or ADR. Output is one SVG rendered to PNG; no interactive viewer. Not for dashboards, charts or slides."
 license: MIT
 metadata:
-  version: "0.4.1"
+  version: "0.4.2"
   homepage: https://github.com/mrobinson2/archweave
 ---
 
@@ -42,7 +42,7 @@ Output folder: `out/<type>-<slug>-<YYYYMMDD-HHMM>/` under the workspace unless t
 |---|---|---|---|
 | `architecture` | Components, zones, hub and spoke, private endpoints, regions, control plane. Reference architectures and reference implementations. | `schemas/architecture.schema.json` | `examples/architecture-internal-api/`, dark: `examples/architecture-internal-api-dark/` |
 | `sequence` | Request lifecycle across participants, auth hops, retries, async returns. | `schemas/sequence.schema.json` | `examples/sequence-api-request/`, dark: `examples/sequence-api-request-dark/` |
-| `workflow` | Processes with gates and swimlanes: intake, approval, pipeline, Golden Path, Day-2 runbook. | `schemas/workflow.schema.json` | `examples/workflow-golden-path/` |
+| `workflow` | Processes with gates and swimlanes: intake, approval, pipeline, Golden Path, Day-2 runbook. | `schemas/workflow.schema.json` | `examples/workflow-golden-path/`, dark: `examples/workflow-golden-path-dark/` |
 | `dataflow` | Pipelines, telemetry paths, log forwarding, lineage, ingestion. | `schemas/dataflow.schema.json` | (author from rules) |
 | `lifecycle` | State transitions: pattern status, deployment release, incident, ticket. | `schemas/lifecycle.schema.json` | (author from rules) |
 
