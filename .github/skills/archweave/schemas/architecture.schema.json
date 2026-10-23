@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "archweave/architecture.schema.json",
+  "title": "architecture diagram plan v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "diagram_type", "meta", "zones", "nodes", "edges", "legend"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "diagram_type": { "const": "architecture" },
+    "meta": { "$ref": "common.schema.json#/$defs/meta" },
+    "zones": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "label", "owner"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "kind": { "$ref": "common.schema.json#/$defs/zoneKind" },
+          "label": { "type": "string", "maxLength": 90 },
+          "owner": { "$ref": "common.schema.json#/$defs/owner" },
+          "parent": { "$ref": "common.schema.json#/$defs/id" },
+          "secondary": { "type": "boolean" }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "zone", "color", "icon", "owner"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "label": { "$ref": "common.schema.json#/$defs/shortText" },
+          "sublabel": { "type": "string", "maxLength": 70 },
+          "zone": { "$ref": "common.schema.json#/$defs/id" },
+          "color": { "$ref": "common.schema.json#/$defs/color" },
+          "icon": { "type": "string", "pattern": "^i-[a-z0-9]+$" },
+          "owner": { "$ref": "common.schema.json#/$defs/owner" },
+          "position": { "enum": ["hub", "spoke", "edge", "external", "onprem", "control", "secondary"] },
+          "private_endpoint": { "type": "boolean" },
+          "inherited": { "type": "boolean" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "from", "to", "style"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "from": { "$ref": "common.schema.json#/$defs/id" },
+          "to": { "$ref": "common.schema.json#/$defs/id" },
+          "label": { "type": "string", "maxLength": 50 },
+          "style": { "$ref": "common.schema.json#/$defs/lineStyle" },
+          "step": { "type": "string", "pattern": "^([0-9]{1,2}|[A-Z]|T)$" }
+        }
+      }
+    },
+    "notes": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/note" } },
+    "legend": { "$ref": "common.schema.json#/$defs/legend" }
+  }
+}

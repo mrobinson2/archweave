@@ -1,0 +1,14 @@
+# generated diagrams (examples keep their PNGs on purpose)
+out/*
+!out/.gitkeep
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/*
+!.vscode/extensions.json
+
+# node, if someone adds tooling later
+node_modules/
+npm-debug.log*

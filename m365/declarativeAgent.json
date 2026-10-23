@@ -1,0 +1,21 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.4/schema.json",
+  "version": "v1.4",
+  "name": "ArchWeave Agent",
+  "description": "Turns a prompt into an enterprise-styled static architecture, sequence, workflow, dataflow or lifecycle diagram as SVG code, following ArchWeave conventions. The user renders the SVG to PNG locally with finish.ps1.",
+  "instructions": "$[file('agent-instructions.md')]",
+  "capabilities": [
+    {
+      "name": "OneDriveAndSharePoint",
+      "items_by_url": [
+        { "url": "https://REPLACE-TENANT.sharepoint.com/sites/REPLACE-SITE/Shared%20Documents/archweave-knowledge" }
+      ]
+    }
+  ],
+  "conversation_starters": [
+    { "title": "Reference architecture", "text": "Draw the Warm standby deployment view for rag-chatbot as an architecture diagram." },
+    { "title": "Request sequence", "text": "Draw the request sequence for an external partner API through Cloudflare, external APIM and App Service." },
+    { "title": "Golden Path workflow", "text": "Draw the Golden Path intake-to-go-live workflow for an internal API, with owner lanes and the hand-offs removed." },
+    { "title": "Telemetry dataflow", "text": "Draw the dataflow from App Service diagnostics to Microsoft Sentinel via Log Analytics and Event Hubs, with required log fields." }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "archweave/dataflow.schema.json",
+  "title": "ArchWeave dataflow diagram plan v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "diagram_type", "meta", "stages", "nodes", "flows", "legend"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "diagram_type": { "const": "dataflow" },
+    "meta": { "$ref": "common.schema.json#/$defs/meta" },
+    "stages": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "label": { "$ref": "common.schema.json#/$defs/shortText" },
+          "owner": { "$ref": "common.schema.json#/$defs/owner" }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "stage", "kind", "color"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "label": { "$ref": "common.schema.json#/$defs/shortText" },
+          "sublabel": { "type": "string", "maxLength": 60 },
+          "stage": { "$ref": "common.schema.json#/$defs/id" },
+          "kind": { "enum": ["source", "process", "store", "sink", "external"] },
+          "color": { "$ref": "common.schema.json#/$defs/color" },
+          "icon": { "type": "string", "pattern": "^i-[a-z0-9]+$" },
+          "owner": { "$ref": "common.schema.json#/$defs/owner" }
+        }
+      }
+    },
+    "flows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "from", "to", "label"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "from": { "$ref": "common.schema.json#/$defs/id" },
+          "to": { "$ref": "common.schema.json#/$defs/id" },
+          "label": { "type": "string", "minLength": 1, "maxLength": 40 },
+          "style": { "$ref": "common.schema.json#/$defs/lineStyle" },
+          "classification": { "enum": ["Public", "Internal", "Confidential", "PII", "Restricted"] },
+          "async": { "type": "boolean" }
+        }
+      }
+    },
+    "notes": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/note" } },
+    "legend": { "$ref": "common.schema.json#/$defs/legend" }
+  }
+}

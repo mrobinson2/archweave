@@ -1,0 +1,54 @@
+# ArchWeave Agent, local finisher for Microsoft 365 Copilot output.
+# Takes the SVG the agent produced (file path, or clipboard if no path), saves it under out\,
+# runs the checker when a plan.json sits beside it, renders PNG with headless Edge, opens the PNG.
+# Usage:
+#   .\finish.ps1                      SVG is on the clipboard (copy the code block in Copilot)
+#   .\finish.ps1 .\out\my-diagram.svg
+#   .\finish.ps1 -Plan .\out\plan.json .\out\my-diagram.svg
+param(
+  [string]$Svg = "",
+  [string]$Plan = "",
+  [double]$Scale = 1.3
+)
+$ErrorActionPreference = "Stop"
+$root = Split-Path -Parent $PSScriptRoot          # diagram-skill\
+$skill = Join-Path $root ".github\skills\archweave"
+$outDir = Join-Path $root "out"
+New-Item -ItemType Directory -Force -Path $outDir | Out-Null
+
+if (-not $Svg) {
+  $clip = Get-Clipboard -Raw
+  if (-not $clip -or $clip -notmatch "<svg") { throw "No SVG path given and clipboard holds no <svg ...> markup. Copy the SVG code block from Copilot first." }
+  # strip a markdown fence if the user copied the whole block
+  $clip = $clip -replace '^\s*```[a-zA-Z]*\s*', '' -replace '\s*```\s*$', ''
+  $m = [regex]::Match($clip, '<title>([^<]+)</title>')
+  $slug = if ($m.Success) { ($m.Groups[1].Value -replace '[^A-Za-z0-9]+', '-').Trim('-').ToLower() } else { "diagram" }
+  if ($slug.Length -gt 60) { $slug = $slug.Substring(0, 60) }
+  $stamp = Get-Date -Format "yyyyMMdd-HHmm"
+  $Svg = Join-Path $outDir "$slug-$stamp.svg"
+  [System.IO.File]::WriteAllText($Svg, $clip, (New-Object System.Text.UTF8Encoding $false))
+  Write-Output "Saved clipboard SVG to $Svg"
+}
+$Svg = (Resolve-Path $Svg).Path
+
+# quick static guards even without a plan
+$text = Get-Content -Raw $Svg
+foreach ($bad in @('<script', '<animate', '<foreignObject', '@import', '@font-face')) {
+  if ($text -match [regex]::Escape($bad)) { throw "Refusing to render: SVG contains $bad" }
+}
+if ($text -match 'https?://(?!www\.w3\.org/)') { throw "Refusing to render: SVG references an external http(s) URL" }
+if ($text -notmatch 'data-meta="true"') { Write-Warning "Metadata stamp missing (no data-meta group)." }
+
+# full checker when a plan exists
+if (-not $Plan) { $cand = Join-Path (Split-Path $Svg) "plan.json"; if (Test-Path $cand) { $Plan = $cand } }
+if ($Plan) {
+  $node = Get-Command node -ErrorAction SilentlyContinue
+  if ($node) {
+    & node (Join-Path $skill "scripts\check-diagram.mjs") $Plan $Svg
+    if ($LASTEXITCODE -ne 0) { Write-Warning "Checker reported failures. Paste them back to Copilot and ask for a repair." }
+  } else { Write-Warning "node not found; skipping plan check." }
+}
+
+& (Join-Path $skill "scripts\render-png.ps1") -Svg $Svg -Scale $Scale
+$png = [System.IO.Path]::ChangeExtension($Svg, ".png")
+if (Test-Path $png) { Start-Process $png }

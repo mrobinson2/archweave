@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "archweave/lifecycle.schema.json",
+  "title": "ArchWeave lifecycle (state) diagram plan v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "diagram_type", "meta", "states", "transitions", "main_path"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "diagram_type": { "const": "lifecycle" },
+    "meta": { "$ref": "common.schema.json#/$defs/meta" },
+    "states": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "kind"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "label": { "$ref": "common.schema.json#/$defs/shortText" },
+          "sublabel": { "type": "string", "maxLength": 60 },
+          "kind": { "enum": ["start", "active", "waiting", "decision", "success", "failure", "terminal"] },
+          "owner": { "$ref": "common.schema.json#/$defs/owner" }
+        }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "from", "to", "label"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "from": { "$ref": "common.schema.json#/$defs/id" },
+          "to": { "$ref": "common.schema.json#/$defs/id" },
+          "label": { "type": "string", "minLength": 1, "maxLength": 50 },
+          "actor": { "$ref": "common.schema.json#/$defs/owner" },
+          "style": { "$ref": "common.schema.json#/$defs/lineStyle" }
+        }
+      }
+    },
+    "main_path": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "common.schema.json#/$defs/id" }
+    },
+    "notes": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/note" } },
+    "legend": { "$ref": "common.schema.json#/$defs/legend" }
+  }
+}

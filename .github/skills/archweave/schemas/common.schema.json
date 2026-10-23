@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "archweave/common.schema.json",
+  "title": "ArchWeave diagram shared definitions v0.1",
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$", "maxLength": 40 },
+    "shortText": { "type": "string", "minLength": 1, "maxLength": 60, "pattern": "^[^\\r\\n]+$" },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "pattern_id", "date", "classification", "output"],
+      "properties": {
+        "title": { "$ref": "#/$defs/shortText" },
+        "subtitle": { "type": "string", "maxLength": 120 },
+        "pattern_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "maxLength": 60 },
+        "version": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+){0,2}$" },
+        "diagram_index": { "type": "string", "pattern": "^Diagram [0-9]+ of [0-9]+$" },
+        "dr_strategy": { "enum": ["Active/Active", "Warm standby", "Pilot light", "Backup and restore", "n/a"] },
+        "date": { "type": "string", "pattern": "^20[0-9]{2}-[0-9]{2}-[0-9]{2}$" },
+        "status": { "enum": ["Draft", "Review", "Approved", "Deprecated"] },
+        "classification": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "output": { "type": "string", "pattern": "^[^/\\\\][^\\\\]*\\.svg$" },
+        "canvas": {
+          "type": "array", "prefixItems": [{ "type": "integer", "minimum": 800 }, { "type": "integer", "minimum": 500 }],
+          "items": false, "minItems": 2, "maxItems": 2
+        }
+      }
+    },
+    "color": { "enum": ["blue", "grey", "orange", "purple", "teal"] },
+    "lineStyle": { "enum": ["request", "ingestion", "telemetry", "control", "return"] },
+    "zoneKind": { "enum": ["trust", "network", "ownership", "region", "persistence", "service", "platform"] },
+    "owner": {
+      "enum": [
+        "App team", "Architecture", "Platform Engineering", "Network",
+        "Security", "SRE", "Enterprise Architecture", "FinOps", "Third party", "User"
+      ]
+    },
+    "legend": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "colors": { "type": "array", "items": { "$ref": "#/$defs/shortText" } },
+        "lines": { "type": "array", "items": { "$ref": "#/$defs/shortText" } },
+        "steps": { "type": "array", "items": { "type": "string", "maxLength": 100 } }
+      }
+    },
+    "note": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "lines"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/shortText" },
+        "lines": { "type": "array", "minItems": 1, "maxItems": 6, "items": { "type": "string", "maxLength": 70 } },
+        "anchor": { "$ref": "#/$defs/id" }
+      }
+    }
+  }
+}

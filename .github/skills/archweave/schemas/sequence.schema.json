@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "archweave/sequence.schema.json",
+  "title": "ArchWeave sequence diagram plan v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "diagram_type", "meta", "participants", "messages"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "diagram_type": { "const": "sequence" },
+    "meta": { "$ref": "common.schema.json#/$defs/meta" },
+    "participants": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "color"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "label": { "$ref": "common.schema.json#/$defs/shortText" },
+          "sublabel": { "type": "string", "maxLength": 50 },
+          "color": { "$ref": "common.schema.json#/$defs/color" },
+          "icon": { "type": "string", "pattern": "^i-[a-z0-9]+$" },
+          "owner": { "$ref": "common.schema.json#/$defs/owner" }
+        }
+      }
+    },
+    "messages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "from", "to", "label"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "from": { "$ref": "common.schema.json#/$defs/id" },
+          "to": { "$ref": "common.schema.json#/$defs/id" },
+          "label": { "type": "string", "maxLength": 70 },
+          "kind": { "enum": ["sync", "async", "return"] },
+          "note": { "type": "string", "maxLength": 120 },
+          "activates": { "type": "boolean" }
+        }
+      }
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "label", "from_message", "to_message"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "kind": { "enum": ["alt", "loop", "retry", "opt", "par"] },
+          "label": { "$ref": "common.schema.json#/$defs/shortText" },
+          "from_message": { "$ref": "common.schema.json#/$defs/id" },
+          "to_message": { "$ref": "common.schema.json#/$defs/id" }
+        }
+      }
+    },
+    "notes": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/note" } },
+    "legend": { "$ref": "common.schema.json#/$defs/legend" }
+  }
+}

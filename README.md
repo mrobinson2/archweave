@@ -1,0 +1,72 @@
+# ArchWeave
+
+**Turn system intent into architecture.**
+
+ArchWeave is an agent skill that turns a plain-language prompt into a static, house-styled architecture diagram: an SVG the agent writes by hand, a zero-dependency checker that refuses sloppy output, and a PNG rendered locally by the browser already on your laptop. No interactive viewer, no cloud render service, nothing leaves the machine.
+
+It was built for enterprise architecture teams who need diagrams that say what is unique about *their* platform (which hub, which shared gateway, which owner, which DR strategy) rather than restating vendor documentation.
+
+![Internal API reference implementation by DR strategy](.github/skills/archweave/examples/architecture-internal-api/internal-api.png)
+
+## What you get
+
+- **Five diagram types.** Architecture (zones, hub and spoke, private endpoints, regions), sequence, workflow (owner lanes, gates, removed hand-offs), dataflow, lifecycle.
+- **A vocabulary file** that holds your organization's component names, positions, owners, DR strategies and pattern IDs. Edit one file, every diagram follows.
+- **Authoring rules and SVG conventions** the agent reads before drawing: color means ownership, numbered request paths, metadata stamp, legend, no invented facts.
+- **A checker** (`check-diagram.mjs`, Node 18+, no dependencies) that validates the plan, matches every planned node, zone and edge to the SVG, blocks scripts and external references, estimates text overflow, and requires the metadata stamp.
+- **Local renderers** for Windows (headless Edge or Chrome), macOS and Linux (rsvg or headless Chrome).
+- **A 40-symbol icon library** of simplified glyphs, so output needs no vendor assets.
+- **Three worked examples** that pass the checker: internal API architecture by DR strategy, API request sequence, Golden Path workflow.
+- **Two hosts from one source:** VS Code GitHub Copilot agent mode or Claude Code (the agent runs the whole loop), and Microsoft 365 Copilot declarative agents (the agent writes the SVG, a local script finishes it).
+
+## How it works
+
+```
+prompt  ->  classify type  ->  plan.json  ->  hand-authored SVG  ->  check  ->  render PNG  ->  look  ->  repair
+```
+
+The agent plans in JSON against a small schema, draws the SVG using the shared icon defs, runs the checker until it exits zero, renders, looks at its own PNG, and repairs. Three repair rounds, then it reports what remains.
+
+## Quick start
+
+```bash
+git clone https://github.com/mrobinson2/archweave.git
+cd archweave
+node .github/skills/archweave/scripts/check-diagram.mjs \
+  .github/skills/archweave/examples/architecture-internal-api/plan.json \
+  .github/skills/archweave/examples/architecture-internal-api/internal-api.svg
+.github/skills/archweave/scripts/render-png.sh .github/skills/archweave/examples/architecture-internal-api/internal-api.svg
+```
+
+Then open the repo in VS Code with GitHub Copilot agent mode (or Claude Code) and ask:
+
+> Use archweave to draw the Warm standby deployment view for internal-api.
+
+Full install, configuration and usage, including the Microsoft 365 Copilot route and how to replace the sample vocabulary with your own: **[INSTRUCTIONS.md](INSTRUCTIONS.md)**.
+
+## Repository layout
+
+```
+.github/skills/archweave/   the skill (SKILL.md, references, schemas, assets, examples, scripts)
+m365/                        Microsoft 365 Copilot variant: instructions, manifest, local finisher
+out/                         generated diagrams land here (git-ignored)
+INSTRUCTIONS.md              install, configure, use
+CHANGELOG.md
+LICENSE                      MIT
+THIRD_PARTY_NOTICES.md       Archify attribution, trademark notes
+```
+
+## Design principles
+
+1. **The vocabulary is the product.** Generic diagrams are free from any vendor. The value is in the one file that says how your platform is actually arranged and who owns what.
+2. **Static beats interactive for most enterprise use.** A PNG goes into a deck, a wiki, a PR, an ADR. It needs no runtime.
+3. **The checker is the reviewer that never gets tired.** Overflowing labels, missing stamps and invented hostnames are caught before a human sees the diagram.
+4. **Keep everything local.** Architecture diagrams carry internal hostnames and address ranges. Rendering happens on the laptop.
+
+## Lineage
+
+ArchWeave is a deliberately scaled-back cousin of [Archify](https://github.com/tt-a1i/archify) (MIT), which produces interactive HTML diagrams with a browser-based gate pipeline. ArchWeave keeps Archify's workflow and type router, replaces the renderer with hand-authored SVG, and adds the organization vocabulary layer. See `THIRD_PARTY_NOTICES.md`.
+
+## License
+
+MIT. See `LICENSE`.
