@@ -18,7 +18,7 @@ It was built for enterprise architecture teams who need diagrams that say what i
 - **A 40-symbol icon library** (`assets/icons.xml`, plain SVG markup) of simplified glyphs, so output needs no vendor assets.
 - **Light and dark themes.** Default light; set `meta.theme` to `dark` (or just ask) for dark slides. Same layout, same icons, dark palette, checked by the checker.
 - **A prompt cookbook** (`references/prompt-cookbook.md`) with worked prompts for a dozen common technology diagrams.
-- **Three worked examples** that pass the checker: internal API architecture by DR strategy, API request sequence, Golden Path workflow.
+- **Five worked examples** that pass the checker: internal API architecture by DR strategy, API request sequence, Golden Path workflow, and dark-theme versions of the architecture and the sequence.
 - **Three hosts from one source:** VS Code GitHub Copilot agent mode or Claude Code (the agent runs the whole loop), Microsoft 365 Copilot custom skills (the checker runs in Copilot's sandbox, Frontier preview), and Microsoft 365 Copilot with knowledge files (the agent writes the SVG, a local script finishes it).
 
 ## How it works

@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Internal API on App Service, reference implementation (dark)",
+    "subtitle": "internal-api v1.0 · Pilot light · eastus primary, westus IaC only",
+    "pattern_id": "internal-api",
+    "version": "1.0",
+    "diagram_index": "Diagram 1 of 4",
+    "dr_strategy": "Pilot light",
+    "date": "2026-10-20",
+    "status": "Draft",
+    "classification": "Internal",
+    "output": "internal-api-dark.svg",
+    "canvas": [
+      1800,
+      1200
+    ],
+    "theme": "dark"
+  },
+  "zones": [
+    {
+      "id": "internet",
+      "kind": "trust",
+      "label": "Corporate users",
+      "owner": "User"
+    },
+    {
+      "id": "hub",
+      "kind": "network",
+      "label": "Hub VNet · hub-vnet-eastus 10.0.0.0/21 · platform owned",
+      "owner": "Platform Engineering"
+    },
+    {
+      "id": "spoke",
+      "kind": "network",
+      "label": "Spoke VNet · /22 from IPAM at intake · workload owned",
+      "owner": "App team"
+    },
+    {
+      "id": "app-subnet",
+      "kind": "network",
+      "label": "app-subnet · VNet integration",
+      "owner": "App team",
+      "parent": "spoke"
+    },
+    {
+      "id": "pe-subnet",
+      "kind": "network",
+      "label": "pe-subnet · private endpoints only",
+      "owner": "App team",
+      "parent": "spoke"
+    },
+    {
+      "id": "secondary",
+      "kind": "region",
+      "label": "Secondary · westus · Pilot light · IaC only",
+      "owner": "App team",
+      "secondary": true
+    },
+    {
+      "id": "control",
+      "kind": "platform",
+      "label": "Control plane · platform owned",
+      "owner": "Architecture"
+    },
+    {
+      "id": "observability",
+      "kind": "platform",
+      "label": "Observability · platform owned path",
+      "owner": "SRE"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "user",
+      "label": "Workforce user",
+      "sublabel": "browser or service",
+      "zone": "internet",
+      "color": "blue",
+      "icon": "i-user",
+      "owner": "User",
+      "position": "external"
+    },
+    {
+      "id": "entra",
+      "label": "Entra ID",
+      "sublabel": "workforce identity",
+      "zone": "internet",
+      "color": "blue",
+      "icon": "i-idp",
+      "owner": "Security",
+      "position": "external"
+    },
+    {
+      "id": "apim-int",
+      "label": "Internal APIM",
+      "sublabel": "shared · Premium · 10.0.4.0/26",
+      "zone": "hub",
+      "color": "grey",
+      "icon": "i-apim",
+      "owner": "Platform Engineering",
+      "position": "hub",
+      "inherited": true
+    },
+    {
+      "id": "azfw",
+      "label": "Azure Firewall",
+      "sublabel": "all spoke egress · rules via change request",
+      "zone": "hub",
+      "color": "grey",
+      "icon": "i-firewall",
+      "owner": "Network",
+      "position": "hub",
+      "inherited": true
+    },
+    {
+      "id": "dns",
+      "label": "Private DNS zones",
+      "sublabel": "hub owned · linked to spoke",
+      "zone": "hub",
+      "color": "grey",
+      "icon": "i-dns",
+      "owner": "Network",
+      "position": "hub",
+      "inherited": true
+    },
+    {
+      "id": "appsvc",
+      "label": "App Service",
+      "sublabel": "P1v3 · inbound PE · public off",
+      "zone": "app-subnet",
+      "color": "blue",
+      "icon": "i-app",
+      "owner": "App team",
+      "position": "spoke",
+      "private_endpoint": true
+    },
+    {
+      "id": "sql",
+      "label": "Azure SQL",
+      "sublabel": "PE · Entra auth only · geo-backup",
+      "zone": "pe-subnet",
+      "color": "blue",
+      "icon": "i-sql",
+      "owner": "App team",
+      "position": "spoke",
+      "private_endpoint": true
+    },
+    {
+      "id": "kv",
+      "label": "Key Vault",
+      "sublabel": "PE · access policy · purge protect",
+      "zone": "pe-subnet",
+      "color": "blue",
+      "icon": "i-kv",
+      "owner": "App team",
+      "position": "spoke",
+      "private_endpoint": true
+    },
+    {
+      "id": "storage",
+      "label": "Storage",
+      "sublabel": "PE · GRS · CMK · no public",
+      "zone": "pe-subnet",
+      "color": "blue",
+      "icon": "i-storage",
+      "owner": "App team",
+      "position": "spoke",
+      "private_endpoint": true
+    },
+    {
+      "id": "appsvc-dr",
+      "label": "App Service (pilot light)",
+      "sublabel": "IaC only · not deployed",
+      "zone": "secondary",
+      "color": "blue",
+      "icon": "i-app",
+      "owner": "App team",
+      "position": "secondary"
+    },
+    {
+      "id": "sql-geo",
+      "label": "SQL geo-backup",
+      "sublabel": "restore target · RPO 1 h",
+      "zone": "secondary",
+      "color": "blue",
+      "icon": "i-sql",
+      "owner": "App team",
+      "position": "secondary"
+    },
+    {
+      "id": "policy",
+      "label": "Azure Policy",
+      "sublabel": "DINE · diagnostics · PE DNS",
+      "zone": "control",
+      "color": "grey",
+      "icon": "i-policy",
+      "owner": "Architecture",
+      "position": "control",
+      "inherited": true
+    },
+    {
+      "id": "scan",
+      "label": "Policy scan",
+      "sublabel": "IaC scan · drift check",
+      "zone": "control",
+      "color": "grey",
+      "icon": "i-ai",
+      "owner": "Security",
+      "position": "control",
+      "inherited": true
+    },
+    {
+      "id": "pipeline",
+      "label": "Golden Path pipeline",
+      "sublabel": "Terraform from private module registry",
+      "zone": "control",
+      "color": "grey",
+      "icon": "i-pipeline",
+      "owner": "Platform Engineering",
+      "position": "control"
+    },
+    {
+      "id": "law",
+      "label": "Log Analytics",
+      "sublabel": "per workload · 90 d",
+      "zone": "observability",
+      "color": "teal",
+      "icon": "i-law",
+      "owner": "App team",
+      "position": "spoke"
+    },
+    {
+      "id": "eh",
+      "label": "Event Hubs",
+      "sublabel": "platform owned · diag target",
+      "zone": "observability",
+      "color": "teal",
+      "icon": "i-eh",
+      "owner": "SRE",
+      "position": "hub",
+      "inherited": true
+    },
+    {
+      "id": "sentinel",
+      "label": "Microsoft Sentinel",
+      "sublabel": "SIEM · system of record · required log fields",
+      "zone": "observability",
+      "color": "teal",
+      "icon": "i-siem",
+      "owner": "SRE",
+      "position": "hub",
+      "inherited": true
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-user-entra",
+      "from": "user",
+      "to": "entra",
+      "label": "sign-in, token",
+      "style": "request",
+      "step": "1"
+    },
+    {
+      "id": "e-user-apim",
+      "from": "user",
+      "to": "apim-int",
+      "label": "HTTPS 443 via Traffic Manager name",
+      "style": "request",
+      "step": "2"
+    },
+    {
+      "id": "e-entra-apim",
+      "from": "entra",
+      "to": "apim-int",
+      "label": "JWT validation",
+      "style": "control"
+    },
+    {
+      "id": "e-apim-app",
+      "from": "apim-int",
+      "to": "appsvc",
+      "label": "PE · backend policy",
+      "style": "request",
+      "step": "3"
+    },
+    {
+      "id": "e-app-azfw",
+      "from": "appsvc",
+      "to": "azfw",
+      "label": "egress",
+      "style": "control"
+    },
+    {
+      "id": "e-app-sql",
+      "from": "appsvc",
+      "to": "sql",
+      "label": "TDS 1433 · managed identity",
+      "style": "request",
+      "step": "4"
+    },
+    {
+      "id": "e-app-kv",
+      "from": "appsvc",
+      "to": "kv",
+      "label": "secrets, certs",
+      "style": "request",
+      "step": "5"
+    },
+    {
+      "id": "e-app-storage",
+      "from": "appsvc",
+      "to": "storage",
+      "label": "blobs",
+      "style": "request",
+      "step": "6"
+    },
+    {
+      "id": "e-dns-sql",
+      "from": "dns",
+      "to": "sql",
+      "label": "PE A-records auto-registered",
+      "style": "control"
+    },
+    {
+      "id": "e-sql-geo",
+      "from": "sql",
+      "to": "sql-geo",
+      "label": "geo-backup",
+      "style": "ingestion",
+      "step": "A"
+    },
+    {
+      "id": "e-policy-app",
+      "from": "policy",
+      "to": "appsvc",
+      "label": "DINE diagnostics",
+      "style": "control"
+    },
+    {
+      "id": "e-scan-pipeline",
+      "from": "scan",
+      "to": "pipeline",
+      "label": "scan gate",
+      "style": "control"
+    },
+    {
+      "id": "e-pipeline-app",
+      "from": "pipeline",
+      "to": "appsvc",
+      "label": "deploy",
+      "style": "control"
+    },
+    {
+      "id": "e-pipeline-dr",
+      "from": "pipeline",
+      "to": "appsvc-dr",
+      "label": "plan only",
+      "style": "control"
+    },
+    {
+      "id": "e-app-law",
+      "from": "appsvc",
+      "to": "law",
+      "label": "diagnostics",
+      "style": "telemetry",
+      "step": "T"
+    },
+    {
+      "id": "e-law-eh",
+      "from": "law",
+      "to": "eh",
+      "label": "export",
+      "style": "telemetry"
+    },
+    {
+      "id": "e-eh-sentinel",
+      "from": "eh",
+      "to": "sentinel",
+      "label": "data connector",
+      "style": "telemetry"
+    }
+  ],
+  "notes": [
+    {
+      "id": "note-hub",
+      "title": "Inherited from the hub, not built by the workload",
+      "lines": [
+        "APIM policies: JWT validation, rate limit, correlation header",
+        "Firewall egress rules requested through a change request",
+        "Private DNS zones linked at spoke creation by the developer portal"
+      ]
+    },
+    {
+      "id": "note-kv",
+      "title": "Why access policy, not RBAC",
+      "lines": [
+        "Platform automation hit RBAC propagation delay on first deploy",
+        "ADR-internal-api-003"
+      ],
+      "anchor": "kv"
+    }
+  ],
+  "legend": {
+    "colors": [
+      "blue: workload owned Azure resource",
+      "grey: shared or inherited platform component",
+      "teal: observability path"
+    ],
+    "lines": [
+      "solid blue: request path",
+      "solid orange: replication or batch",
+      "dashed grey: telemetry and control plane"
+    ],
+    "steps": [
+      "1 user signs in with Entra",
+      "2 request to the internal APIM name steered by Traffic Manager",
+      "3 APIM to App Service over private endpoint",
+      "4 SQL over PE with managed identity",
+      "5 secrets and certs from Key Vault",
+      "6 blobs to Storage over PE",
+      "A geo-backup to westus, restore on declared DR",
+      "T diagnostics to Log Analytics, Event Hubs, Sentinel"
+    ]
+  }
+}
