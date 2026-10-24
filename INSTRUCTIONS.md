@@ -64,6 +64,16 @@ A PNG appears next to the SVG. If PowerShell blocks the script: `Set-ExecutionPo
 
 Everything organization-specific lives in one file: `skills/archweave/references/vocabulary.md`. It ships with a fictional "Example Corporation" so the examples render. Replace it.
 
+**Start from Azure, not from memory.** The platform rows (hub VNets, shared APIM, egress firewall, private DNS zones, DNS steering, Log Analytics, Event Hubs) can be generated from an Azure Resource Graph export so the addresses, SKUs and names are the real ones:
+
+```bash
+# run the query in the docstring of scripts/build-vocabulary.py, export JSON or CSV, then:
+python skills/archweave/scripts/build-vocabulary.py export.json                                   # preview the rows
+python skills/archweave/scripts/build-vocabulary.py export.json --apply skills/archweave/references/vocabulary.md
+```
+
+The generator fills facts only. Owners and the position-and-default sentence are left as `TBD` for a human; the checker treats the vocabulary as truth, so fill them before relying on it. `scripts/resource-graph-sample.json` is a fictional export to try it on.
+
 1. **Zones.** Keep the ids (`hub`, `spoke`, `edge`, `control`, `observability`, ...) and rewrite the labels and default content to match your landing zone.
 2. **Components.** One row per platform component: the name your organization uses, icon id, color (ownership, not product), and the position-and-default sentence. That sentence is what the agent writes into sublabels and notes, so make it true: hub or spoke, inherited or built, who owns it, the SKU or address if it is fixed.
 3. **Owner lanes.** List your real teams. Then update the `owner` enum in `schemas/common.schema.json` to the same list; the checker enforces it.
@@ -113,7 +123,7 @@ python skills/archweave/scripts/check-diagram.py out/<folder>/plan.json out/<fol
 skills/archweave/scripts/render-png.sh out/<folder>/<slug>.svg 1.3      # second arg is scale
 ```
 
-What the checker enforces: plan parses and matches the schema's intent (ids, references, label lengths, required legend); every plan node, zone and edge has a matching `data-node`, `data-zone`, `data-edge` in the SVG and nothing extra; nothing active or external (`<script>`, `<animate>`, `<set>`, `<foreignObject>`, DOCTYPE or entity declarations, `on*=` handlers, `javascript:`, `http(s)` and `file:` URLs, `@import`, `@font-face`, any `href` or `url()` that is not a local `#id` or `data:`); font floor 11 px; estimated text width inside node boxes; metadata stamp with pattern ID, date and classification. Exit code 0 is the only pass.
+What the checker enforces: plan parses and matches the schema's intent (ids, references, label lengths, required legend); every plan node, zone and edge has a matching `data-node`, `data-zone`, `data-edge` in the SVG and nothing extra; nothing active or external (`<script>`, `<animate>`, `<set>`, `<foreignObject>`, DOCTYPE or entity declarations, `on*=` handlers, `javascript:`, `http(s)` and `file:` URLs, `@import`, `@font-face`, any `href` or `url()` that is not a local `#id` or `data:`); font floor 11 px; estimated text width inside node boxes; metadata stamp with pattern ID, date and classification; free labels must not overlap any node, note or legend box (fail) and should not sit on an edge (warn). Exit code 0 is the only pass.
 
 ## 6. Use with Microsoft 365 Copilot
 
@@ -126,7 +136,9 @@ Requires a tenant enrolled in the Microsoft Frontier Program. The skill runs ins
 1. Build the package: `python skills/archweave/scripts/build-zip.py --target agent-builder` writes `dist/archweave-skill-agent-builder.zip`. It is the same skill with the example diagrams stored as `.xml`, and without the render scripts and example PNGs, because Microsoft's upload accepts only listed file types (`.svg` and `.ps1` are not on the list). The release page carries a prebuilt copy.
 2. In Agent Builder, Configure tab, Skills, Add: upload the zip. Do not upload SKILL.md alone.
 3. Paste `m365/agent-instructions-skill.md` into Instructions. Add no embedded files and no knowledge sources for the skill's own files; the package carries them.
-4. On the Try it tab, run the prompts in `m365/README.md` under "Preview test plan". They confirm the sandbox runtime and whether files come back as downloads. If `cairosvg` is not preinstalled, the agent returns the SVG text and you render locally with `render-png` from this repository.
+4. On the Try it tab, run the prompts in `m365/README.md` under "Preview test plan".
+
+Configuring for your organization on this route: Agent Builder has no settings screen for a skill, so every environment-specific value lives in the package. Edit `references/vocabulary.md` (or generate its platform rows from a Resource Graph export, section 3) and the `owner` and `dr_strategy` enums in `schemas/common.schema.json`, rebuild with `build-zip.py --target agent-builder`, then in Agent Builder remove the old skill and add the new zip; Microsoft's docs do not describe updating a skill in place. Per-agent overrides that are not organization facts (classification value, default DR strategy, always dark) go in the Instructions box, one line each. Do not also attach the vocabulary as an embedded knowledge file. They confirm the sandbox runtime and whether files come back as downloads. If `cairosvg` is not preinstalled, the agent returns the SVG text and you render locally with `render-png` from this repository.
 
 ### Route B: knowledge files (any tenant)
 

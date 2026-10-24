@@ -96,7 +96,7 @@
   <text x="785" y="166" text-anchor="middle" font-size="12" fill="#CBD5E1">catalog entry merged</text><text x="785" y="182" text-anchor="middle" font-size="11" fill="#94A3B8">Enterprise Architecture</text>
   <text x="1035" y="166" text-anchor="middle" font-size="12" fill="#CBD5E1">successor published</text><text x="1035" y="182" text-anchor="middle" font-size="11" fill="#94A3B8">Architecture</text>
   <text x="1285" y="166" text-anchor="middle" font-size="12" fill="#CBD5E1">last consumer migrated</text><text x="1285" y="182" text-anchor="middle" font-size="11" fill="#94A3B8">Architecture</text>
-  <text x="392" y="350" font-size="12" fill="#F87171" paint-order="stroke" stroke="#0F172A" stroke-width="4">reviewer requests changes · Security</text>
+  <text x="392" y="404" font-size="12" fill="#F87171" paint-order="stroke" stroke="#0F172A" stroke-width="4">reviewer requests changes · Security</text>
   <text x="172" y="392" font-size="12" fill="#F87171" paint-order="stroke" stroke="#0F172A" stroke-width="4">author revises</text>
   <text x="480" y="374" font-size="12" fill="#CBD5E1" paint-order="stroke" stroke="#0F172A" stroke-width="4">author withdraws · Architecture</text>
 

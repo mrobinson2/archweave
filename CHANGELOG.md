@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0 (2026-10-24)
+
+- Checker: label collision pass. Free text outside any group (edge labels, transition labels, classification marks) now fails when it overlaps a node, note or legend box and warns when it sits on an edge segment. Running it over the shipped examples found four real collisions and seven line crossings that visual review had missed; all fixed. New test case in `scripts/test-checker.py`.
+- `scripts/build-vocabulary.py`: fills the platform rows of the vocabulary (hub VNets, shared APIM, egress firewall, private DNS zones, DNS steering, Log Analytics, Event Hubs) from an Azure Resource Graph export, JSON or CSV, standard library only. Preview, write to a file, or `--apply` in place; owners and default sentences stay `TBD` for a human. `scripts/resource-graph-sample.json` is a fictional export to try.
+- INSTRUCTIONS: how to configure the skill for a tenant on the Agent Builder route (edit, rebuild, remove and re-add), and where per-agent overrides go.
+
 ## 0.6.1 (2026-10-23)
 
 - New worked examples for the two types that had none: `examples/dataflow-telemetry-siem/` (five ownership stages from emit to act, classification marks where they change, batch capture lettered) and `examples/lifecycle-pattern-status/` (main path on one row, rework and withdrawn below, terminal states double-bordered, every transition labeled trigger then owner). Both have `-dark` siblings. The SKILL.md router no longer says "author from rules" for any type.

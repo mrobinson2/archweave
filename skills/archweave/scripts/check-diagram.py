@@ -15,7 +15,8 @@
 #         data-meta stamp containing pattern_id, date, meta.classification and v<version> when set,
 #         text overflow heuristic for node labels/sublabels inside data-node groups,
 #         fonts not smaller than 11px, SVG elements not in plan (data-node unknown),
-#         canvas color matches meta.theme (light default, dark = #0F172A) and dark stamps say Dark.
+#         canvas color matches meta.theme (light default, dark = #0F172A) and dark stamps say Dark,
+#         free labels (outside any <g>) must not overlap node, note or legend boxes (fail) or sit on an edge (warn).
 #
 # Optional render: after a passing check, if cairosvg imports, <slug>.png is written
 # beside the SVG at 1.3x scale. Otherwise a one-line hint says to render locally.
@@ -341,6 +342,91 @@ for m in re.finditer(r'<g[^>]*data-node="([^"]+)"[^>]*>([\s\S]*?)</g>', body):
         avail = w - 12 if anchor == 'middle' else w - x - 6
         if est > avail:
             fail('svg/overflow', f'node "{gid}" text "{txt[:40]}" est {js_round(est)}px > {js_round(avail)}px available')
+
+# label collisions: free text (outside any <g>) must not overlap a node, note or legend box,
+# and should not sit on an edge path segment. Boxes come from <g transform="translate(x,y)"> groups
+# whose first child is a <rect>; the group's own texts are excluded because they are inside the group.
+def _text_box(attrs, txt):
+    ms = re.search(r'font-size="(\d+(?:\.\d+)?)"', attrs)
+    size = float(ms.group(1)) if ms else 12.0
+    mx = re.search(r'\bx="(-?\d+(?:\.\d+)?)"', attrs)
+    my = re.search(r'\by="(-?\d+(?:\.\d+)?)"', attrs)
+    if not mx or not my:
+        return None
+    x, y = float(mx.group(1)), float(my.group(1))
+    w = 0.52 * size * len(txt)
+    ma = re.search(r'text-anchor="(\w+)"', attrs)
+    anchor = ma.group(1) if ma else 'start'
+    x0 = x - w / 2 if anchor == 'middle' else (x - w if anchor == 'end' else x)
+    return (x0, y - size * 0.8, x0 + w, y + size * 0.2)
+
+
+boxes = []
+for m in re.finditer(r'<g([^>]*)transform="translate\((-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)\)"[^>]*>([\s\S]*?)</g>', body):
+    gattrs, gx, gy, inner = m.group(1), float(m.group(2)), float(m.group(3)), m.group(4)
+    mr = re.search(r'<rect([^>]*)/?>', inner)
+    if not mr:
+        continue
+    ra = mr.group(1)
+    rw = re.search(r'(?<![-\w])width="(\d+(?:\.\d+)?)"', ra)
+    rh = re.search(r'(?<![-\w])height="(\d+(?:\.\d+)?)"', ra)
+    if not rw or not rh:
+        continue
+    rx = re.search(r'\bx="(-?\d+(?:\.\d+)?)"', ra)
+    ry = re.search(r'\by="(-?\d+(?:\.\d+)?)"', ra)
+    bx = gx + (float(rx.group(1)) if rx else 0.0)
+    by = gy + (float(ry.group(1)) if ry else 0.0)
+    mid = re.search(r'\bid="([^"]+)"', gattrs) or re.search(r'data-node="([^"]+)"', gattrs)
+    boxes.append((mid.group(1) if mid else 'group', bx, by, bx + float(rw.group(1)), by + float(rh.group(1))))
+
+segments = []
+for m in re.finditer(r'<path[^>]*data-edge="([^"]+)"[^>]*\bd="([^"]+)"', body):
+    eid, d = m.group(1), m.group(2)
+    cx = cy = None
+    for tok in re.finditer(r'([MHVLA])\s*([-\d.\s,]+)', d):
+        cmd, nums = tok.group(1), [float(v) for v in re.findall(r'-?\d+(?:\.\d+)?', tok.group(2))]
+        if cmd == 'M' and len(nums) >= 2:
+            cx, cy = nums[0], nums[1]
+        elif cmd == 'H' and cx is not None:
+            for nx in nums:
+                segments.append((eid, min(cx, nx), cy, max(cx, nx), cy)); cx = nx
+        elif cmd == 'V' and cy is not None:
+            for ny in nums:
+                segments.append((eid, cx, min(cy, ny), cx, max(cy, ny))); cy = ny
+        elif cmd == 'L' and len(nums) >= 2:
+            segments.append((eid, min(cx, nums[0]), min(cy, nums[1]), max(cx, nums[0]), max(cy, nums[1]))); cx, cy = nums[0], nums[1]
+        elif cmd == 'A' and len(nums) >= 7:
+            cx, cy = nums[5], nums[6]
+
+depth = 0
+free_texts = []
+for m in re.finditer(r'<(/?)g\b[^>]*>|<text([^>]*)>([^<]*)</text>', body):
+    if m.group(0).startswith('</g'):
+        depth = max(0, depth - 1)
+    elif m.group(0).startswith('<g'):
+        if not m.group(0).endswith('/>'):
+            depth += 1
+    elif depth == 0 and m.group(3).strip():
+        free_texts.append((m.group(2), m.group(3)))
+
+
+def _overlap(a, b, pad=0.0):
+    return a[0] < b[2] - pad and a[2] > b[0] + pad and a[1] < b[3] - pad and a[3] > b[1] + pad
+
+
+for attrs, txt in free_texts:
+    tb = _text_box(attrs, txt)
+    if not tb:
+        continue
+    for bid, *bb in boxes:
+        if _overlap(tb, bb, pad=2.0):
+            fail('svg/label-collision', f'label "{txt[:40]}" overlaps box "{bid}"')
+            break
+    for eid, x1, y1, x2, y2 in segments:
+        seg = (x1 - 1, y1 - 1, x2 + 1, y2 + 1)
+        if _overlap(tb, seg):
+            warn('svg/label-on-line', f'label "{txt[:40]}" sits on edge "{eid}"')
+            break
 
 fails_now = [f for f in findings if f[0] == 'FAIL']
 if fails_now:

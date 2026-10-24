@@ -1,0 +1,96 @@
+{
+  "data": [
+    {
+      "name": "hub-vnet-eastus",
+      "type": "microsoft.network/virtualnetworks",
+      "location": "eastus",
+      "resourceGroup": "rg-platform-network-eastus",
+      "subscriptionId": "00000000-0000-0000-0000-000000000001",
+      "sku": null,
+      "properties": {
+        "addressSpace": { "addressPrefixes": ["10.0.0.0/21"] },
+        "subnets": [
+          { "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-platform-network-eastus/providers/Microsoft.Network/virtualNetworks/hub-vnet-eastus/subnets/AzureFirewallSubnet", "name": "AzureFirewallSubnet", "properties": { "addressPrefix": "10.0.0.0/26" } },
+          { "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-platform-network-eastus/providers/Microsoft.Network/virtualNetworks/hub-vnet-eastus/subnets/GatewaySubnet", "name": "GatewaySubnet", "properties": { "addressPrefix": "10.0.1.0/27" } },
+          { "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-platform-network-eastus/providers/Microsoft.Network/virtualNetworks/hub-vnet-eastus/subnets/AzureBastionSubnet", "name": "AzureBastionSubnet", "properties": { "addressPrefix": "10.0.2.0/26" } },
+          { "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-platform-network-eastus/providers/Microsoft.Network/virtualNetworks/hub-vnet-eastus/subnets/snet-apim", "name": "snet-apim", "properties": { "addressPrefix": "10.0.4.0/26" } }
+        ],
+        "virtualNetworkPeerings": [ { "name": "to-spoke-payments" }, { "name": "to-spoke-internal-api" }, { "name": "to-spoke-data" }, { "name": "to-hub-westus" } ]
+      }
+    },
+    {
+      "name": "hub-vnet-westus",
+      "type": "microsoft.network/virtualnetworks",
+      "location": "westus",
+      "resourceGroup": "rg-platform-network-westus",
+      "subscriptionId": "00000000-0000-0000-0000-000000000001",
+      "sku": null,
+      "properties": {
+        "addressSpace": { "addressPrefixes": ["10.1.0.0/21"] },
+        "subnets": [
+          { "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-platform-network-westus/providers/Microsoft.Network/virtualNetworks/hub-vnet-westus/subnets/AzureFirewallSubnet", "name": "AzureFirewallSubnet", "properties": { "addressPrefix": "10.1.0.0/26" } },
+          { "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-platform-network-westus/providers/Microsoft.Network/virtualNetworks/hub-vnet-westus/subnets/snet-apim", "name": "snet-apim", "properties": { "addressPrefix": "10.1.4.0/26" } }
+        ],
+        "virtualNetworkPeerings": [ { "name": "to-hub-eastus" }, { "name": "to-spoke-payments-dr" } ]
+      }
+    },
+    {
+      "name": "spoke-internal-api-prod",
+      "type": "microsoft.network/virtualnetworks",
+      "location": "eastus",
+      "resourceGroup": "rg-internal-api-prod",
+      "subscriptionId": "00000000-0000-0000-0000-000000000002",
+      "sku": null,
+      "properties": {
+        "addressSpace": { "addressPrefixes": ["10.230.4.0/22"] },
+        "subnets": [
+          { "id": "/subscriptions/00000000-0000-0000-0000-000000000002/resourceGroups/rg-internal-api-prod/providers/Microsoft.Network/virtualNetworks/spoke-internal-api-prod/subnets/snet-app", "name": "snet-app", "properties": { "addressPrefix": "10.230.4.0/24" } },
+          { "id": "/subscriptions/00000000-0000-0000-0000-000000000002/resourceGroups/rg-internal-api-prod/providers/Microsoft.Network/virtualNetworks/spoke-internal-api-prod/subnets/snet-integration", "name": "snet-integration", "properties": { "addressPrefix": "10.230.5.0/24" } },
+          { "id": "/subscriptions/00000000-0000-0000-0000-000000000002/resourceGroups/rg-internal-api-prod/providers/Microsoft.Network/virtualNetworks/spoke-internal-api-prod/subnets/snet-pe", "name": "snet-pe", "properties": { "addressPrefix": "10.230.6.0/24" } }
+        ],
+        "virtualNetworkPeerings": [ { "name": "to-hub-eastus" } ]
+      }
+    },
+    {
+      "name": "apim-shared-eastus",
+      "type": "microsoft.apimanagement/service",
+      "location": "eastus",
+      "resourceGroup": "rg-platform-apim-eastus",
+      "subscriptionId": "00000000-0000-0000-0000-000000000001",
+      "sku": { "name": "Premium", "capacity": 2 },
+      "properties": {
+        "virtualNetworkType": "Internal",
+        "virtualNetworkConfiguration": { "subnetResourceId": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-platform-network-eastus/providers/Microsoft.Network/virtualNetworks/hub-vnet-eastus/subnets/snet-apim" },
+        "gatewayUrl": "https://apim-shared-eastus.azure-api.net"
+      }
+    },
+    {
+      "name": "afw-hub-eastus",
+      "type": "microsoft.network/azurefirewalls",
+      "location": "eastus",
+      "resourceGroup": "rg-platform-network-eastus",
+      "subscriptionId": "00000000-0000-0000-0000-000000000001",
+      "sku": null,
+      "properties": {
+        "sku": { "name": "AZFW_VNet", "tier": "Premium" },
+        "ipConfigurations": [ { "name": "ipc", "properties": { "subnet": { "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg-platform-network-eastus/providers/Microsoft.Network/virtualNetworks/hub-vnet-eastus/subnets/AzureFirewallSubnet" } } } ]
+      }
+    },
+    { "name": "privatelink.database.windows.net", "type": "microsoft.network/privatednszones", "location": "global", "resourceGroup": "rg-platform-dns", "subscriptionId": "00000000-0000-0000-0000-000000000001", "sku": null, "properties": {} },
+    { "name": "privatelink.vaultcore.azure.net", "type": "microsoft.network/privatednszones", "location": "global", "resourceGroup": "rg-platform-dns", "subscriptionId": "00000000-0000-0000-0000-000000000001", "sku": null, "properties": {} },
+    { "name": "privatelink.blob.core.windows.net", "type": "microsoft.network/privatednszones", "location": "global", "resourceGroup": "rg-platform-dns", "subscriptionId": "00000000-0000-0000-0000-000000000001", "sku": null, "properties": {} },
+    { "name": "privatelink.azurewebsites.net", "type": "microsoft.network/privatednszones", "location": "global", "resourceGroup": "rg-platform-dns", "subscriptionId": "00000000-0000-0000-0000-000000000001", "sku": null, "properties": {} },
+    {
+      "name": "tm-api-internal",
+      "type": "microsoft.network/trafficmanagerprofiles",
+      "location": "global",
+      "resourceGroup": "rg-platform-dns",
+      "subscriptionId": "00000000-0000-0000-0000-000000000001",
+      "sku": null,
+      "properties": { "trafficRoutingMethod": "Priority", "dnsConfig": { "fqdn": "api-internal.example.com", "relativeName": "api-internal" } }
+    },
+    { "name": "law-internal-api-prod", "type": "microsoft.operationalinsights/workspaces", "location": "eastus", "resourceGroup": "rg-internal-api-prod", "subscriptionId": "00000000-0000-0000-0000-000000000002", "sku": { "name": "PerGB2018" }, "properties": { "retentionInDays": 90 } },
+    { "name": "law-payments-prod", "type": "microsoft.operationalinsights/workspaces", "location": "eastus", "resourceGroup": "rg-payments-prod", "subscriptionId": "00000000-0000-0000-0000-000000000003", "sku": { "name": "PerGB2018" }, "properties": { "retentionInDays": 90 } },
+    { "name": "evhns-platform-telemetry-eastus", "type": "microsoft.eventhub/namespaces", "location": "eastus", "resourceGroup": "rg-platform-observability", "subscriptionId": "00000000-0000-0000-0000-000000000001", "sku": { "name": "Standard" }, "properties": {} }
+  ]
+}

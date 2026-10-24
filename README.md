@@ -11,9 +11,9 @@ It was built for enterprise architecture teams who need diagrams that say what i
 ## What you get
 
 - **Five diagram types.** Architecture (zones, hub and spoke, private endpoints, regions), sequence, workflow (owner lanes, gates, removed hand-offs), dataflow, lifecycle.
-- **A vocabulary file** that holds your organization's component names, positions, owners, DR strategies and pattern IDs. Edit one file, every diagram follows.
+- **A vocabulary file** that holds your organization's component names, positions, owners, DR strategies and pattern IDs. Edit one file, every diagram follows. `scripts/build-vocabulary.py` fills the platform rows from an Azure Resource Graph export so addresses and SKUs are never typed by hand.
 - **Authoring rules and SVG conventions** the agent reads before drawing: color means ownership, numbered request paths, metadata stamp, legend, no invented facts.
-- **A checker** (`check-diagram.py`, Python 3.9+, standard library only) that validates the plan, matches every planned node, zone and edge to the SVG, blocks scripts, event handlers, SMIL, entities and every external or file reference, estimates text overflow, and requires the metadata stamp.
+- **A checker** (`check-diagram.py`, Python 3.9+, standard library only) that validates the plan, matches every planned node, zone and edge to the SVG, blocks scripts, event handlers, SMIL, entities and every external or file reference, estimates text overflow, flags labels that overlap boxes or sit on lines, and requires the metadata stamp.
 - **Local renderers** for Windows (headless Edge or Chrome), macOS and Linux (rsvg or headless Chrome).
 - **A 40-symbol icon library** (`assets/icons.xml`, plain SVG markup) of simplified glyphs, so output needs no vendor assets.
 - **PowerPoint export** (`scripts/export-pptx.py`, standard library only): one 16:9 slide per diagram, PNG with the SVG embedded so it stays crisp, dark slide for dark plans, optional title band.

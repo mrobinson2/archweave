@@ -54,6 +54,8 @@ python skills/archweave/scripts/build-zip.py --target agent-builder
 ```
 Agent Builder, Configure tab, Skills, Add, upload the zip. Paste `agent-instructions-skill.md` into Instructions. Add nothing else.
 
+Configuring for your tenant: edit the vocabulary and the schema enums, rebuild the zip, remove and re-add the skill. Details in `INSTRUCTIONS.md`, section 6, Route A.
+
 ### Preview test plan
 
 Run these on the Try it tab, in order. Stop at the first failure and report it.

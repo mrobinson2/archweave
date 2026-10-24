@@ -47,6 +47,7 @@ def main():
         'foreign-object': (inject('<foreignObject><div/></foreignObject>'), 'svg/forbidden'),
         'css-import-space': (inject('<style>@ import url(x)</style>'), 'svg/external'),
         'font-face': (inject('<style>@font-face{src:url(x)}</style>'), 'svg/external'),
+        'label-collision': (inject('<text x="70" y="130" font-size="12">this label sits on top of the Client box</text>'), 'svg/label-collision'),
     }
     bad = 0
     with tempfile.TemporaryDirectory() as td:

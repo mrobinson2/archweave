@@ -97,8 +97,8 @@
 
   <!-- flow labels and classification marks -->
   <text x="288" y="242" font-size="12" fill="#374151" paint-order="stroke" stroke="#FFFFFF" stroke-width="4">app logs</text>
-  <text x="288" y="258" font-size="12" fill="#374151" paint-order="stroke" stroke="#FFFFFF" stroke-width="4">common-schema JSON</text>
-  <text x="288" y="276" font-size="11" font-weight="600" fill="#92400E" paint-order="stroke" stroke="#FFFFFF" stroke-width="4">Internal</text>
+  <text x="288" y="266" font-size="12" fill="#374151" paint-order="stroke" stroke="#FFFFFF" stroke-width="4">common schema</text>
+  <text x="288" y="284" font-size="11" font-weight="600" fill="#92400E" paint-order="stroke" stroke="#FFFFFF" stroke-width="4">Internal</text>
   <text x="290" y="444" font-size="12" fill="#374151" paint-order="stroke" stroke="#FFFFFF" stroke-width="4">audit + metrics</text>
   <text x="290" y="214" font-size="12" fill="#374151" paint-order="stroke" stroke="#FFFFFF" stroke-width="4">diag settings (DINE)</text>
   <text x="606" y="413" font-size="12" fill="#374151" paint-order="stroke" stroke="#FFFFFF" stroke-width="4">export</text>
