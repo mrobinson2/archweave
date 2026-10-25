@@ -3,7 +3,7 @@ name: archweave
 description: "Turn system intent into architecture. Produce architecture, sequence, workflow, dataflow and lifecycle diagrams as static SVG and PNG from a prompt, in your organization's house style and vocabulary. Use when asked to draw, diagram, sketch, visualize or illustrate a system, request flow, process, pipeline or state model for a reference architecture, reference implementation, design pattern, implementation guide or ADR. Output is one SVG rendered to PNG; no interactive viewer. Not for dashboards, charts or slides."
 license: MIT
 metadata:
-  version: "0.7.1"
+  version: "0.7.2"
   homepage: https://github.com/mrobinson2/archweave
 ---
 

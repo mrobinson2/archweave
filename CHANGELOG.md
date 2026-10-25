@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.2 (2026-10-25)
+
+- Fix: the Agent Builder upload still failed with "File type '.json' is not supported for skill script files" after 0.7.1, with a correct zip. Agent Builder evidently accepts `.json` and `.xml` only under `references/` and `assets/`; `schemas/` and `examples/` were being treated as script folders. The Agent Builder package now ships `references/schemas/*.schema.json` and flat `assets/examples/<name>-plan.json` and `<name>.xml`, leaves out `scripts/build-zip.py` and `scripts/test-checker.py` (repository-only), and rewrites the schema and example paths in every packaged `.md`. The repository layout and the standard zip are unchanged. `build-zip.py` refuses a `.json`, `.xml` or `.png` outside `references/` and `assets/` in this target.
+
 ## 0.7.1 (2026-10-25)
 
 - Fix: the Agent Builder upload rejected 0.7.0 with "File type '.json' is not supported for skill script files". Agent Builder treats everything under `scripts/` as a script file, and 0.7.0 shipped `scripts/resource-graph-sample.json`. The sample moved to `references/resource-graph-sample.json`. `build-zip.py --target agent-builder` now fails the build if anything under `scripts/` is not a script type, so this cannot recur.

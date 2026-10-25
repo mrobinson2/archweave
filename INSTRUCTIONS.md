@@ -133,7 +133,7 @@ Two routes. Pick one per agent; do not combine them, since Microsoft's preview d
 
 Requires a tenant enrolled in the Microsoft Frontier Program. The skill runs inside Copilot's script sandbox (no network, no package installs).
 
-1. Build the package: `python skills/archweave/scripts/build-zip.py --target agent-builder` writes `dist/archweave-skill-agent-builder.zip`. It is the same skill with the example diagrams stored as `.xml`, and without the render scripts and example PNGs, because Microsoft's upload accepts only listed file types (`.svg` and `.ps1` are not on the list). The release page carries a prebuilt copy.
+1. Build the package: `python skills/archweave/scripts/build-zip.py --target agent-builder` writes `dist/archweave-skill-agent-builder.zip`. It is the same skill repackaged for Microsoft's upload rules: example diagrams stored as `.xml`, the schemas under `references/schemas/`, the examples as flat files under `assets/examples/` (`<name>-plan.json`, `<name>.xml`), and no render scripts or example PNGs. Agent Builder accepts `.json` and `.xml` only under `references/` or `assets/`, never next to the scripts or in custom folders, and `.svg` and `.ps1` are not on its list at all. The paths inside the packaged SKILL.md and references are rewritten to match. The release page carries a prebuilt copy.
 2. In Agent Builder, Configure tab, Skills, Add: upload the zip. Do not upload SKILL.md alone.
 3. Paste `m365/agent-instructions-skill.md` into Instructions. Add no embedded files and no knowledge sources for the skill's own files; the package carries them.
 4. On the Try it tab, run the prompts in `m365/README.md` under "Preview test plan".

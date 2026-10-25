@@ -13,14 +13,20 @@ schemas/ and scripts/ beside it.
 Copilot custom-skill upload rules (checked against the Microsoft docs on
 2026-10-22): only listed file types, zip under 50 MB, files under 25 MB,
 at most 350 files, directory depth at most 3. For that target:
-  * examples/*/<slug>.svg are stored as <slug>.xml (same bytes),
-  * scripts/render-png.ps1 and scripts/render-png.sh are left out,
-  * examples/*/<slug>.png are left out,
-  * every remaining entry's extension is asserted against Microsoft's list,
-  * files under scripts/ must be script types (no .json, .md, .xml there).
+  * only SKILL.md, scripts/, references/ and assets/ are used. Agent Builder rejects .json outside
+    resource folders ("File type '.json' is not supported for skill script files"), so:
+      schemas/<x>.schema.json          -> references/schemas/<x>.schema.json
+      examples/<name>/plan.json        -> assets/examples/<name>-plan.json
+      examples/<name>/<slug>.svg       -> assets/examples/<name>.xml   (same bytes, renamed)
+    and every .md in the package has its schemas/ and examples/ paths rewritten to match,
+  * scripts/render-png.*, scripts/build-zip.py, scripts/test-checker.py and examples/*/*.png are left out
+    (the first two work only inside the repository, the last is dead weight here),
+  * files under scripts/ must be script types; .json, .xml and .png may sit only under references/ or assets/,
+  * every remaining entry's extension is asserted against Microsoft's list.
 """
 import argparse
 import hashlib
+import re
 import sys
 import zipfile
 from pathlib import Path
@@ -40,6 +46,7 @@ M365_ALLOWED = {
 # Agent Builder treats every file under scripts/ as a script file; a .json there is rejected
 # ("File type '.json' is not supported for skill script files"), although .json is fine elsewhere.
 M365_SCRIPT_EXT = {'.py', '.js', '.mjs', '.cjs', '.ts', '.mts', '.sh', '.bash'}
+M365_RESOURCE_DIRS = {'references', 'assets'}
 M365_MAX_ZIP = 50 * 1024 * 1024
 M365_MAX_FILE = 25 * 1024 * 1024
 M365_MAX_FILES = 350
@@ -49,8 +56,16 @@ M365_MAX_DEPTH = 3          # counted as path components including the file name
 ALLOWED_TOP = {'SKILL.md', 'assets', 'examples', 'references', 'schemas', 'scripts'}
 
 
+def rewrite_paths(text):
+    """Point schemas/ and examples/ mentions at the Agent Builder layout."""
+    text = re.sub(r'(?<![\w/])schemas/', 'references/schemas/', text)
+    text = re.sub(r'(?<![\w/])examples/([a-z0-9-]+)/', r'assets/examples/\1-plan.json and assets/examples/\1.xml', text)
+    text = text.replace('Each example folder holds `plan.json` and the finished diagram.', 'Each example is two flat files under `assets/examples/`: `<name>-plan.json` and `<name>.xml`.')
+    return text
+
+
 def entries(target):
-    """Yield (source_path, archive_name) pairs for the chosen target.
+    """Yield (source_path, archive_name, transform) for the chosen target.
 
     Only SKILL.md and the five known folders ship; anything else under the skill
     folder is reported and refused, so a stray file cannot end up in a public zip.
@@ -62,14 +77,26 @@ def entries(target):
         if rel.parts[0] not in ALLOWED_TOP:
             print(f'FAIL {rel.as_posix()}: not in the allowed top-level set {sorted(ALLOWED_TOP)}', file=sys.stderr)
             sys.exit(1)
+        transform = None
         if target == 'agent-builder':
-            if rel.parts[0] == 'scripts' and rel.name.startswith('render-png.'):
+            if rel.parts[0] == 'scripts' and (rel.name.startswith('render-png.') or rel.name in ('build-zip.py', 'test-checker.py')):
                 continue
-            if rel.parts[0] == 'examples' and rel.suffix == '.png':
-                continue
-            if rel.parts[0] == 'examples' and rel.suffix == '.svg':
-                rel = rel.with_suffix('.xml')
-        yield p, rel.as_posix()
+            if rel.parts[0] == 'examples':
+                if rel.suffix == '.png':
+                    continue
+                name = rel.parts[1]
+                if rel.name == 'plan.json':
+                    rel = Path('assets/examples') / f'{name}-plan.json'
+                elif rel.suffix == '.svg':
+                    rel = Path('assets/examples') / f'{name}.xml'
+                else:
+                    print(f'FAIL {rel.as_posix()}: unexpected file in an example folder', file=sys.stderr)
+                    sys.exit(1)
+            elif rel.parts[0] == 'schemas':
+                rel = Path('references/schemas') / rel.name
+            if rel.suffix == '.md':
+                transform = rewrite_paths
+        yield p, rel.as_posix(), transform
 
 
 def build(target):
@@ -80,7 +107,7 @@ def build(target):
     depth = 0
     problems = []
     with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
-        for src, arc in entries(target):
+        for src, arc, transform in entries(target):
             size = src.stat().st_size
             parts = arc.split('/')
             depth = max(depth, len(parts))
@@ -90,9 +117,14 @@ def build(target):
                     problems.append(f'{arc}: extension {ext or "(none)"} not in Microsoft list')
                 if parts[0] == 'scripts' and ext not in M365_SCRIPT_EXT:
                     problems.append(f'{arc}: only script types are allowed under scripts/ ({", ".join(sorted(M365_SCRIPT_EXT))}); move it to references/')
+                if ext in ('.json', '.xml', '.png') and parts[0] not in M365_RESOURCE_DIRS:
+                    problems.append(f'{arc}: {ext} files may sit only under references/ or assets/ in an Agent Builder package')
                 if size > M365_MAX_FILE:
                     problems.append(f'{arc}: {size} bytes exceeds 25 MB')
-            z.write(src, arc)
+            if transform:
+                z.writestr(arc, transform(src.read_text(encoding='utf-8')))
+            else:
+                z.write(src, arc)
             count += 1
     if target == 'agent-builder':
         if count > M365_MAX_FILES:
