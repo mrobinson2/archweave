@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1 (2026-10-25)
+
+- Fix: the Agent Builder upload rejected 0.7.0 with "File type '.json' is not supported for skill script files". Agent Builder treats everything under `scripts/` as a script file, and 0.7.0 shipped `scripts/resource-graph-sample.json`. The sample moved to `references/resource-graph-sample.json`. `build-zip.py --target agent-builder` now fails the build if anything under `scripts/` is not a script type, so this cannot recur.
+
 ## 0.7.0 (2026-10-24)
 
 - Checker: label collision pass. Free text outside any group (edge labels, transition labels, classification marks) now fails when it overlaps a node, note or legend box and warns when it sits on an edge segment. Running it over the shipped examples found four real collisions and seven line crossings that visual review had missed; all fixed. New test case in `scripts/test-checker.py`.

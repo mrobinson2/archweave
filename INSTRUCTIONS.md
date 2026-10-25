@@ -72,7 +72,7 @@ python skills/archweave/scripts/build-vocabulary.py export.json                 
 python skills/archweave/scripts/build-vocabulary.py export.json --apply skills/archweave/references/vocabulary.md
 ```
 
-The generator fills facts only. Owners and the position-and-default sentence are left as `TBD` for a human; the checker treats the vocabulary as truth, so fill them before relying on it. `scripts/resource-graph-sample.json` is a fictional export to try it on.
+The generator fills facts only. Owners and the position-and-default sentence are left as `TBD` for a human; the checker treats the vocabulary as truth, so fill them before relying on it. `references/resource-graph-sample.json` is a fictional export to try it on.
 
 1. **Zones.** Keep the ids (`hub`, `spoke`, `edge`, `control`, `observability`, ...) and rewrite the labels and default content to match your landing zone.
 2. **Components.** One row per platform component: the name your organization uses, icon id, color (ownership, not product), and the position-and-default sentence. That sentence is what the agent writes into sublabels and notes, so make it true: hub or spoke, inherited or built, who owns it, the SKU or address if it is fixed.

@@ -16,7 +16,8 @@ at most 350 files, directory depth at most 3. For that target:
   * examples/*/<slug>.svg are stored as <slug>.xml (same bytes),
   * scripts/render-png.ps1 and scripts/render-png.sh are left out,
   * examples/*/<slug>.png are left out,
-  * every remaining entry's extension is asserted against Microsoft's list.
+  * every remaining entry's extension is asserted against Microsoft's list,
+  * files under scripts/ must be script types (no .json, .md, .xml there).
 """
 import argparse
 import hashlib
@@ -36,6 +37,9 @@ M365_ALLOWED = {
     '.html', '.htm', '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.log',
     '.py', '.js', '.mjs', '.cjs', '.ts', '.mts', '.sh', '.bash',
 }
+# Agent Builder treats every file under scripts/ as a script file; a .json there is rejected
+# ("File type '.json' is not supported for skill script files"), although .json is fine elsewhere.
+M365_SCRIPT_EXT = {'.py', '.js', '.mjs', '.cjs', '.ts', '.mts', '.sh', '.bash'}
 M365_MAX_ZIP = 50 * 1024 * 1024
 M365_MAX_FILE = 25 * 1024 * 1024
 M365_MAX_FILES = 350
@@ -84,6 +88,8 @@ def build(target):
                 ext = Path(arc).suffix.lower()
                 if ext not in M365_ALLOWED:
                     problems.append(f'{arc}: extension {ext or "(none)"} not in Microsoft list')
+                if parts[0] == 'scripts' and ext not in M365_SCRIPT_EXT:
+                    problems.append(f'{arc}: only script types are allowed under scripts/ ({", ".join(sorted(M365_SCRIPT_EXT))}); move it to references/')
                 if size > M365_MAX_FILE:
                     problems.append(f'{arc}: {size} bytes exceeds 25 MB')
             z.write(src, arc)
